@@ -1,5 +1,6 @@
 // src/app/page.tsx
 import Image from "next/image";
+import Testimonios from "./components/Testimonials";
 
 export default function Home() {
   return (
@@ -90,84 +91,88 @@ export default function Home() {
             </div>
 
             {/* DERECHA: TARJETA CALCULADORA */}
-            <div className="flex w-full max-w-md flex-col gap-4 pt-10">
+            <div className="w-full max-w-md flex flex-col gap-6 pt-3">
 
-              <div className="self-end text-xs font-medium text-[#003566] hover:underline cursor-pointer">
-                Ver precio histórico &gt;&gt;
-              </div>
-
-              <div className="rounded-3xl bg-white p-6 shadow-[0_20px_50px_rgba(15,23,42,0.15)]">
-                <h2 className="mb-4 text-lg font-semibold text-slate-900">
-                  Tipo de cambio hoy
-                </h2>
-
-                {/* Compra / Venta */}
-                <div className="mb-4 flex items-center justify-between rounded-full bg-slate-100 p-1 text-xs font-medium">
-                  <button className="flex-1 rounded-full bg-white py-2 text-center shadow">
-                    <span className="text-slate-500">Compra:</span>{" "}
-                    <span className="font-semibold text-slate-900">3.354</span>
-                  </button>
-                  <button className="flex-1 rounded-full py-2 text-center text-white bg-[#0053A4]">
-                    <span className="text-slate-100">Venta:</span>{" "}
-                    <span className="font-semibold">3.379</span>
-                  </button>
+              {/* Header con gradient */}
+              <div className="rounded-3xl overflow-hidden shadow-xl">
+                <div className="bg-gradient-to-b from-[#B63A42] to-[#D6756A] px-6 py-5 text-center">
+                  <h2 className="text-white text-xl font-semibold tracking-wide">
+                    Currency Converter
+                  </h2>
                 </div>
 
-                {/* Tú recibes */}
-                <div className="mb-3">
-                  <label className="mb-1 block text-xs font-semibold text-slate-600">
-                    Tu recibes dólares
-                  </label>
-                  <div className="flex items-center rounded-xl border border-slate-200 px-3 py-2">
-                    <input
-                      type="number"
-                      defaultValue={500}
-                      className="w-full bg-transparent text-lg font-semibold text-[#0053A4] outline-none"
-                    />
-                    <span className="ml-2 text-xs font-semibold text-slate-500">
-                      USD
-                    </span>
+                {/* Contenido */}
+                <div className="bg-white p-6 space-y-5">
+
+                  {/* Servicios */}
+                  <div>
+                    <label className="text-xs text-slate-500 font-semibold">
+                      Currency Services
+                    </label>
+                    <div className="mt-1 w-full bg-white border border-slate-200 rounded-xl px-4 py-3 flex justify-between items-center text-sm font-medium text-slate-700 shadow-sm">
+                      <span>Transfer</span>
+                      <span className="text-lg">⌄</span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Tú envías */}
-                <div className="mb-3">
-                  <label className="mb-1 block text-xs font-semibold text-slate-600">
-                    Tú envías soles
-                  </label>
-                  <div className="flex items-center rounded-xl border border-slate-200 px-3 py-2">
-                    <input
-                      type="number"
-                      defaultValue={1689.5}
-                      className="w-full bg-transparent text-lg font-semibold text-slate-900 outline-none"
-                    />
-                    <span className="ml-2 text-xs font-semibold text-slate-500">
-                      PEN
-                    </span>
+                  {/* Monto */}
+                  <div>
+                    <label className="text-xs text-slate-500 font-semibold">Enter Amount</label>
+                    <div className="mt-1 flex items-center rounded-xl border border-slate-200 px-4 py-3 bg-white shadow-sm">
+                      <input
+                        type="number"
+                        defaultValue={100}
+                        className="w-full bg-transparent text-xl font-semibold text-[#B63A42] outline-none"
+                      />
+                    </div>
                   </div>
+
+                  {/* Países */}
+                  <div className="flex gap-3">
+
+                    {/* De */}
+                    <div className="flex-1">
+                      <label className="text-xs text-slate-500 font-semibold">Country From</label>
+
+                      <div className="mt-1 flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-4 py-3 shadow-sm">
+                        <img src="/flags/usd.png" alt="USD" className="h-6 w-6 rounded-full" />
+                        <span className="text-sm font-medium">USD</span>
+                        <span className="ml-auto text-lg">⌄</span>
+                      </div>
+                    </div>
+
+                    {/* A */}
+                    <div className="flex-1">
+                      <label className="text-xs text-slate-500 font-semibold">Country To</label>
+
+                      <div className="mt-1 flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-4 py-3 shadow-sm">
+                        <img src="/flags/pen.png" alt="PEN" className="h-6 w-6 rounded-full" />
+                        <span className="text-sm font-medium">PEN</span>
+                        <span className="ml-auto text-lg">⌄</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Botón */}
+                  <button className="w-full bg-[#11334D] text-white py-3 rounded-xl text-base font-semibold shadow hover:bg-[#0D2639] transition">
+                    Convert
+                  </button>
+
+                  {/* Resultado */}
+                  <div className="w-full text-center rounded-xl bg-slate-100 py-3 text-[#B63A42] text-xl font-semibold tracking-wide">
+                    1300.00 PEN
+                  </div>
+
+                  {/* Nota */}
+                  <p className="text-[10px] text-slate-400 leading-tight mt-1">
+                    * Las tasas son referenciales y pueden variar según horario o banco.
+                    <br />* Última actualización: 23-Mayo-2024 15:54
+                  </p>
+
                 </div>
-
-                {/* Cupón */}
-                <div className="mb-1 flex items-center justify-between text-xs">
-                  <span className="text-slate-600">Usar cupón</span>
-                  <span className="cursor-pointer text-[#0053A4] underline">
-                    Agregar
-                  </span>
-                </div>
-
-                <button className="mt-4 w-full rounded-full bg-[#D1391D] py-3 text-sm font-semibold text-white shadow hover:bg-[#b32d17]">
-                  Iniciar operación
-                </button>
-
               </div>
-
-              {/* Registrados */}
-              <div className="mt-4 flex flex-col items-center gap-2 text-xs text-slate-700">
-                <span>Registrados en:</span>
-                <div className="h-10 w-48 rounded-lg border border-slate-300 bg-white" />
-              </div>
-
             </div>
+
 
           </div>
 
@@ -229,7 +234,11 @@ export default function Home() {
                       bg-gradient-to-br from-yellow-400 to-yellow-500 
                       shadow-lg flex items-center justify-center text-white text-xl 
                       group-hover:scale-110 transition-transform duration-300">
-              📝
+              <img
+                src="/icons/register.png"
+                alt="registro"
+                className="mx-auto w-[60px] h-[65px]"
+              />
             </div>
 
             <h3 className="mt-10 text-2xl font-bold text-[#02254A]">Regístrate</h3>
@@ -246,7 +255,11 @@ export default function Home() {
                       bg-gradient-to-br from-blue-400 to-blue-600 
                       shadow-lg flex items-center justify-center text-white text-xl 
                       group-hover:scale-110 transition-transform duration-300">
-              💱
+              <img
+                src="/icons/cotization.png"
+                alt="cotizacion"
+                className="mx-auto w-[60px] h-[65px]"
+              />
             </div>
 
             <h3 className="mt-10 text-2xl font-bold text-[#02254A]">Cotiza</h3>
@@ -263,7 +276,11 @@ export default function Home() {
                       bg-gradient-to-br from-yellow-400 to-yellow-500 
                       shadow-lg flex items-center justify-center text-white text-xl 
                       group-hover:scale-110 transition-transform duration-300">
-              💳
+              <img
+                src="/icons/transfer.png"
+                alt="transferencia"
+                className="mx-auto w-[60px] h-[65px]"
+              />
             </div>
 
             <h3 className="mt-10 text-2xl font-bold text-[#02254A]">Transfiere a Dollariza</h3>
@@ -280,7 +297,11 @@ export default function Home() {
                       bg-gradient-to-br from-blue-400 to-blue-600 
                       shadow-lg flex items-center justify-center text-white text-xl 
                       group-hover:scale-110 transition-transform duration-300">
-              💵
+              <img
+                src="/icons/change.png"
+                alt="cambio"
+                className="mx-auto w-[60px] h-[65px]"
+              />
             </div>
 
             <h3 className="mt-10 text-2xl font-bold text-[#02254A]">Recibe tu cambio</h3>
@@ -293,7 +314,7 @@ export default function Home() {
 
         {/* BOTÓN / CTA */}
         <div className="text-center mt-12">
-          <button className="bg-[#D1391D] text-[#ffffff] font-semibold px-8 py-3 rounded-xl shadow-md 
+          <button className="bg-[#D1391D] text-[#ffffff] cursor-pointer font-semibold px-8 py-3 rounded-xl shadow-md 
                        hover:bg-yellow-300 hover:shadow-lg transition-all duration-200">
             Regístrate ahora
           </button>
@@ -455,66 +476,130 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
 
           {/* Alertas */}
-          <div className="bg-gradient-to-b from-yellow-300 to-yellow-400 rounded-3xl p-10 shadow-md">
-            <h3 className="text-3xl font-bold text-[#02254A] mb-4">Alertas de tipo de cambio</h3>
-            <p className="text-slate-700 text-sm mb-6">
+          <div className="bg-gradient-to-b from-[#B63A42] to-[#3A475F] rounded-3xl p-10 shadow-md">
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Tu dinero vale más aquí, porque cada cambio suma más para ti.
+            </h3>
+
+            <p className="text-white/90 text-sm mb-6">
               ¡Te avisamos cuando el tipo de cambio sea el que más te beneficie!
             </p>
-            <button className="bg-white text-[#02254A] font-semibold px-6 py-2 rounded-xl shadow">
+
+            <button className="bg-yellow-400 text-[#02254A] font-semibold px-6 py-2 rounded-xl shadow mt-10 mb-5 cursor-pointer">
               Regístrate
             </button>
+
+            {/* LOGOS DE SBS Y SUNAT */}
+            <div className="flex items-center justify-center gap-6 mt-8">
+              <img
+                src="/icons/sbs.png"
+                alt="SBS"
+                className="h-[38px] w-auto opacity-90"
+              />
+              <img
+                src="/icons/sunat.png"
+                alt="SUNAT"
+                className="h-[38px] w-auto opacity-90"
+              />
+            </div>
           </div>
+
+
 
           {/* Por qué elegirnos */}
           <div>
             <h3 className="text-4xl font-bold text-[#02254A] mb-3">
               ¿Por qué <span className="text-[#02254A]/90">elegirnos?</span>
             </h3>
-            <p className="text-slate-700 mb-8">
-              Te ofrecemos una experiencia segura, rápida y sin comisiones.
-            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-              <div className="bg-yellow-200 rounded-3xl p-6 shadow">
-                <h4 className="font-bold text-[#02254A]">Ahorro</h4>
-                <p className="text-sm text-slate-600 mt-1">+36 millones de soles ahorrados por nuestros clientes</p>
+              {/* AHORRO */}
+              <div className="bg-yellow-400 rounded-3xl p-6 shadow">
+
+                <div className="relative w-[45px] h-[45px] mb-3 mx-auto">
+                  <div className="absolute inset-0 rounded-full bg-[linear-gradient(145deg,#c1122f,#02254A)] opacity-95"></div>
+
+                  <img
+                    src="/icons/saving.png"
+                    alt="ahorro"
+                    className="absolute inset-0 m-auto w-[22px] h-[22px]"
+                  />
+                </div>
+
+                <h4 className="font-bold text-[#02254A] text-xl">Ahorro</h4>
+                <p className="text-sm text-slate-600 mt-1">
+                  +40 millones de soles ahorrados por nuestros clientes
+                </p>
               </div>
 
+              {/* RAPIDEZ */}
               <div className="bg-yellow-100 rounded-3xl p-6 shadow">
-                <h4 className="font-bold text-[#02254A]">Rapidez</h4>
-                <p className="text-sm text-slate-600 mt-1">Transferencias entre 15 y 40 min</p>
+
+                <div className="relative w-[45px] h-[45px] mb-3 mx-auto">
+                  <div className="absolute inset-0 rounded-full bg-[linear-gradient(145deg,#c1122f,#02254A)] opacity-95"></div>
+
+                  <img
+                    src="/icons/speed.png"
+                    alt="rapidez"
+                    className="absolute inset-0 m-auto w-[22px] h-[22px]"
+                  />
+                </div>
+
+                <h4 className="font-bold text-[#02254A] text-xl">Rapidez</h4>
+                <p className="text-sm text-slate-600 mt-1">
+                  Transferencias entre 15 y 40 min
+                </p>
               </div>
 
+              {/* CONFIANZA */}
               <div className="bg-yellow-200 rounded-3xl p-6 shadow">
-                <h4 className="font-bold text-[#02254A]">Horario extendido</h4>
-                <p className="text-sm text-slate-600 mt-1">Lunes - Sábado 8:30am a 7:30pm</p>
+
+                <div className="relative w-[45px] h-[45px] mb-3 mx-auto">
+                  <div className="absolute inset-0 rounded-full bg-[linear-gradient(145deg,#c1122f,#02254A)] opacity-95"></div>
+
+                  <img
+                    src="/icons/trust.png"
+                    alt="confianza"
+                    className="absolute inset-0 m-auto w-[22px] h-[22px]"
+                  />
+                </div>
+
+                <h4 className="font-bold text-[#02254A] text-xl">Confianza</h4>
+                <p className="text-sm text-slate-600 mt-1">
+                  Confianza que se siente en cada cambio
+                </p>
               </div>
 
+              {/* SEGURIDAD */}
               <div className="bg-[#02254A] text-white rounded-3xl p-6 shadow">
-                <h4 className="font-bold">Seguridad</h4>
-                <p className="text-sm mt-1">Respaldados por SBS y SUNAT</p>
+
+                <div className="relative w-[45px] h-[45px] mb-3 mx-auto">
+                  <div className="absolute inset-0 rounded-full bg-[linear-gradient(145deg,#c1122f,#02254A)] opacity-95"></div>
+
+                  <img
+                    src="/icons/security.png"
+                    alt="seguridad"
+                    className="absolute inset-0 m-auto w-[22px] h-[22px]"
+                  />
+                </div>
+
+                <h4 className="font-bold text-xl">Seguridad</h4>
+                <p className="text-sm mt-1">
+                  Respaldados por SBS y SUNAT
+                </p>
               </div>
 
             </div>
           </div>
 
+
         </div>
 
       </section>
       {/* SECCIÓN 5 — Clientes */}
-      <section className="mt-10 mb-20 px-4 max-w-6xl mx-auto">
 
-        <h2 className="text-center text-4xl font-bold text-[#02254A] mb-10">
-          Nuestros <span className="text-[#02254A]/90">clientes</span>
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-3xl p-6 shadow">Testimonio 1</div>
-          <div className="bg-white rounded-3xl p-6 shadow">Testimonio 2</div>
-          <div className="bg-white rounded-3xl p-6 shadow">Testimonio 3</div>
-        </div>
-      </section>
+      <Testimonios />
 
       {/* FOOTER */}
       <footer className="bg-[#02254A] text-white py-12 mt-20">
