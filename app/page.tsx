@@ -1,17 +1,234 @@
-// src/app/page.tsx
+"use client";
+
 import Image from "next/image";
 import Testimonios from "./components/Testimonials";
+import { useState } from "react";
+import ScrollAlertsHorizontal from "./components/ScrollAlertsHorizontal";
+import { useRouter } from "next/navigation";
+
+
+// =============================================================
+// 🚀 COMPONENTE CONVERTIDOR (TÚ ENVÍAS / TÚ RECIBES)
+// =============================================================
+function ConverterCard() {
+
+  const compra = 3.3465;
+  const venta = 3.3765;
+
+  const [mode, setMode] = useState<"compra" | "venta">("venta");
+  const [rate, setRate] = useState(venta);
+
+  const [fromCurrency, setFromCurrency] = useState("PEN");
+  const [toCurrency, setToCurrency] = useState("USD");
+
+  const [amount, setAmount] = useState(100);
+  const [converted, setConverted] = useState(amount / rate);
+
+  // 🔄 NUEVO: estado para animar la flecha
+  const [rotating, setRotating] = useState(false);
+
+  // CAMBIAR ENTRE COMPRA / VENTA
+  const changeMode = (newMode: "compra" | "venta") => {
+    setMode(newMode);
+
+    // también girar la flecha cuando cambia compra/venta
+    setRotating(true);
+    setTimeout(() => setRotating(false), 400);
+
+    if (newMode === "compra") {
+      setRate(compra);
+      setFromCurrency("USD");
+      setToCurrency("PEN");
+      setConverted(amount * compra);
+    } else {
+      setRate(venta);
+      setFromCurrency("PEN");
+      setToCurrency("USD");
+      setConverted(amount / venta);
+    }
+  };
+
+  // AL ESCRIBIR
+  const handleAmountChange = (e: any) => {
+    const val = Number(e.target.value);
+    setAmount(val);
+
+    if (mode === "compra") {
+      setConverted(val * rate);
+    } else {
+      setConverted(val / rate);
+    }
+  };
+
+  // INTERCAMBIO FLECHA
+  const swapCurrencies = () => {
+
+    // 🔄 activar animación
+    setRotating(true);
+    setTimeout(() => setRotating(false), 400);
+
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
+
+    if (mode === "compra") {
+      setConverted(amount / rate);
+    } else {
+      setConverted(amount * rate);
+    }
+
+    setMode(mode === "compra" ? "venta" : "compra");
+    setRate(mode === "compra" ? venta : compra);
+  };
+
+  return (
+    <div className="rounded-3xl overflow-hidden shadow-xl">
+
+      {/* HEADER */}
+      <div className="bg-gradient-to-b from-[#B63A42] to-[#3A475F] px-6 py-5 text-center">
+        <h2 className="text-white text-xl font-bold">Realiza tu conversión</h2>
+      </div>
+
+      {/* COMPRA / VENTA */}
+      <div className="flex justify-center gap-3 bg-white px-6 pt-4 text-sm font-semibold">
+
+        <button
+          onClick={() => changeMode("compra")}
+          className={`px-4 py-1 rounded-full cursor-pointer border transition ${mode === "compra"
+            ? "bg-blue-600 text-white"
+            : "bg-gray-100 text-slate-600"
+            }`}
+        >
+          Compra: {compra}
+        </button>
+
+        <button
+          onClick={() => changeMode("venta")}
+          className={`px-4 py-1 cursor-pointer rounded-full border transition ${mode === "venta"
+            ? "bg-blue-600 text-white"
+            : "bg-gray-100 text-slate-600"
+            }`}
+        >
+          Venta: {venta}
+        </button>
+
+      </div>
+
+      {/* CUERPO */}
+      <div className="bg-white p-6 pb-1 relative space-y-4">
+
+        {/* TÚ ENVÍAS */}
+        <div>
+          <label className="text-xs text-slate-500 font-semibold">Tú envías</label>
+
+          <div className="mt-1 flex items-center rounded-xl border border-slate-300 px-4 py-3 shadow-sm">
+            <input
+              type="number"
+              value={amount}
+              onChange={handleAmountChange}
+              className="w-full bg-transparent text-2xl font-bold text-[#11334D] outline-none"
+            />
+
+            <span className="mr-2 text-lg font-bold">{fromCurrency}</span>
+
+            <img
+              src={`/flags/${fromCurrency.toLowerCase()}.png`}
+              className="h-6 w-6 rounded-full"
+            />
+          </div>
+        </div>
+
+        {/* FLECHA INTERCAMBIO */}
+        <button
+          onClick={swapCurrencies}
+          className="
+            absolute 
+            left-[calc(50%-20px)]
+            top-[105px]
+            w-[55px] h-[55px]
+            rounded-full 
+            shadow-lg
+            flex items-center justify-center
+            cursor-pointer
+            bg-[linear-gradient(145deg,#c1122f,#02254A)]
+            transition-transform duration-500
+          "
+        >
+          <img
+            src="/icons/arrows.png"
+            alt="swap"
+            className={`w-[26px] h-[26px] transition-transform duration-500 ${rotating ? "rotate-180" : ""
+              }`}
+          />
+        </button>
+
+        {/* TÚ RECIBES */}
+        <div className="">
+          <label className="text-xs text-slate-500 font-semibold">Tú recibes</label>
+
+          <div className="mt-1 flex items-center rounded-xl border border-slate-300 px-4 py-3 shadow-sm">
+            <input
+              type="text"
+              readOnly
+              value={converted.toFixed(2)}
+              className="w-full bg-transparent text-2xl font-bold text-[#11334D] outline-none"
+            />
+
+            <span className="mr-2 text-lg font-bold">{toCurrency}</span>
+
+            <img
+              src={`/flags/${toCurrency.toLowerCase()}.png`}
+              className="h-6 w-6 rounded-full"
+            />
+          </div>
+        </div>
+
+        {/* BOTÓN */}
+        <button className="w-full mt-4 bg-gradient-to-b from-[#B63A42] to-[#3A475F] text-[#ffffff] py-3 rounded-xl text-base font-semibold shadow cursor-pointer hover:bg-yellow-300">
+          Iniciar operación
+        </button>
+
+        <p className="text-[10px] text-slate-400 mt-2 text-center">
+          * Las tasas pueden variar según horario o banco.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 
 export default function Home() {
+
+  const router = useRouter();
+
+  const goRegister = () => {
+    router.push("/register");
+  };
+
+  const goLogin = () => {
+    router.push("/login");
+  }
   return (
     <main className="min-h-screen bg-[#F5F7FF] text-slate-900">
       {/* NAVBAR */}
+      <div className="w-full bg-white border border-b-gray-200">
+  <div className="max-w-6xl mx-auto flex space-x-10 relative xl:-left-5 px-4 md:px-0 h-9">
+      <nav className="flex items-center gap-6 text-sm font-medium text-slate-700">
+        <div className="flex flex-col justify-between items-center h-9 pt-2">
+          <p className="hover:text-[#0053A4] text-sm text-tc-blue-500 font-bold">Personas</p>
+        </div>
+        <div className="flex flex-col justify-between items-center h-9 pt-2">
+          <p className="hover:text-[#0053A4] text-sm text-tc-blue-500 font-bold">Empresas</p>
+        </div>
+      </nav>
+  </div>
+</div>
+
       <header className="w-full border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 lg:px-0">
           {/* Left links */}
           <nav className="flex items-center gap-6 text-sm font-medium text-slate-700">
-            <button className="hover:text-[#0053A4]">Personas</button>
-            <button className="hover:text-[#0053A4]">Empresas</button>
+            <button className="hover:text-[#0053A4] font-extrabold cursor-pointer">¿Quiénes somos?</button>
+            <button className="hover:text-[#0053A4] font-extrabold cursor-pointer">Contacto</button>
           </nav>
 
           {/* Logo */}
@@ -25,201 +242,209 @@ export default function Home() {
 
           {/* Right links */}
           <div className="flex items-center gap-4 text-sm font-medium">
-            <button className="rounded-full border border-[#0053A4] px-4 py-1 text-[#0053A4] hover:bg-[#0053A4] hover:text-white">
+
+            {/* Botón Regístrate */}
+            <button onClick={goRegister}
+              className="
+      px-5 py-2
+      rounded-full
+      border border-[#0053A4]
+      text-[#0053A4]
+      bg-white
+      cursor-pointer
+      shadow-sm
+      hover:bg-[#0053A4]
+      hover:text-white
+      hover:shadow-md
+      transition-all
+      duration-300
+      text-[15px]
+      font-semibold
+    "
+            >
               Regístrate
             </button>
-            <button className="rounded-full border border-[#0053A4] px-4 py-1 text-[#0053A4] hover:bg-[#0053A4] hover:text-white">
+
+            {/* Botón Iniciar Sesión */}
+            <button onClick={goLogin}
+              className="
+      px-5 py-2
+      rounded-full
+      bg-[#0053A4]
+      text-white
+      shadow-sm
+      hover:bg-[#003f7c]
+      hover:shadow-md
+      transition-all
+      duration-300
+      cursor-pointer
+      text-[15px]
+      font-semibold
+    "
+            >
               Iniciar sesión
             </button>
+
           </div>
+
         </div>
       </header>
 
       {/* HERO con amarillo solo en la parte superior */}
       <section className="w-full bg-[#F5F7FF]">
+        {/* Contenedor principal */}
+        <div className="w-[1200px] mx-auto relative pb-8">
 
-        {/* BLOQUE AMARILLO con bordes inferiores redondeados */}
-        <div className="w-[1200px] mx-auto bg-[#FFC700] rounded-b-[60px] shadow-md pb-20">
+          {/* Parte superior del corte */}
+          <div
+            className="bg-[#02254A] rounded-b-[60px] shadow-md relative z-10"
+            style={{
+              clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 100%, 50% 60%, 0 60%)',
+              borderRadius: '0 0 40px 40px'
+            }}
+          >
+            <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 lg:flex-row lg:items-start pb-10">
+              {/* IZQUIERDA */}
+              <div className="flex-1 pt-10">
+                <h1 className="mb-4 text-4xl font-bold pb-7 leading-tight text-[#ffffff] lg:text-4xl">
+                  Dollariza{" "}
+                  <span className="text-[#F5F7FF]">
+                    cambia moneda extranjera 100% online y obtén el mejor tipo de cambio del mercado
+                  </span>
+                </h1>
 
-          {/* Contenido centrado */}
-          <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 lg:flex-row lg:items-start">
+                <p className="mb-6 text-lg text-[#F5F7FF]">
+                  al mejor precio en
+                  <br />
+                  nuestra casa de cambio online
+                </p>
+              </div>
 
-            {/* IZQUIERDA */}
-            <div className="flex-1 pt-10">
+              {/* DERECHA: TARJETA CALCULADORA */}
+              <div className="w-full max-w-md flex flex-col gap-6 pt-3 pb-20">
+                <ConverterCard />
+              </div>
+            </div>
+          </div>
 
-              <h1 className="mb-4 text-4xl font-bold leading-tight text-[#003566] lg:text-5xl">
-                Dollariza{" "}
-                <span className="text-black">rapidez, seguridad y confianza</span>
-              </h1>
-
-              <p className="mb-6 text-lg text-[#003566]">
-                al mejor precio
-                <br />
-                en nuestra casa de cambio online
+          {/* Parte inferior separada - LA CAJITA PEQUEÑA */}
+          <div
+            className="bg-[#FFC700] shadow-md absolute z-0 rounded-[40px]"
+            style={{
+              width: '49%',
+              height: '223px',
+              top: '57%',
+              left: 0,
+              marginTop: '8px'
+            }}
+          >
+            <div className="flex items-center justify-center h-full px-12">
+              <p className="text-[#003566] text-lg leading-relaxed">
+                Si requieres atención personalizada comunícate con nosotros al teléfono{" "}
+                <span className="font-bold text-xl text-[#003566]">956-767-180</span>
+                {" "}estaremos respondiendo tus consultas
               </p>
-
-              {/* Aliados */}
-              <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center">
-                <div>
-                  <p className="text-sm text-black">Nuestros</p>
-                  <p className="text-sm font-semibold text-black">aliados</p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="h-8 w-16 rounded-full bg-[#6D6015]/40" />
-                  <div className="h-8 w-16 rounded-full bg-[#6D6015]/40" />
-                  <div className="h-8 w-16 rounded-full bg-[#6D6015]/40" />
-                </div>
-              </div>
-
-              {/* Banner rojo */}
-              <div className="flex items-center justify-between rounded-2xl bg-[#D1391D] px-6 py-4 text-white shadow-lg">
-                <div>
-                  <p className="text-xs font-bold uppercase">
-                    ¡Por tiempo limitado!
-                  </p>
-                  <p className="text-xs">
-                    Usa el cupón: <span className="font-semibold">NOVIEMBRE</span>
-                    <br />
-                    y aprovecha este descuento
-                  </p>
-                </div>
-                <button className="rounded-full bg-[#003566] px-6 py-2 text-xs font-semibold text-white">
-                  NOVIEMBRE
-                </button>
-              </div>
-
             </div>
-
-            {/* DERECHA: TARJETA CALCULADORA */}
-            <div className="w-full max-w-md flex flex-col gap-6 pt-3">
-
-              {/* Header con gradient */}
-              <div className="rounded-3xl overflow-hidden shadow-xl">
-                <div className="bg-gradient-to-b from-[#B63A42] to-[#D6756A] px-6 py-5 text-center">
-                  <h2 className="text-white text-xl font-semibold tracking-wide">
-                    Currency Converter
-                  </h2>
-                </div>
-
-                {/* Contenido */}
-                <div className="bg-white p-6 space-y-5">
-
-                  {/* Servicios */}
-                  <div>
-                    <label className="text-xs text-slate-500 font-semibold">
-                      Currency Services
-                    </label>
-                    <div className="mt-1 w-full bg-white border border-slate-200 rounded-xl px-4 py-3 flex justify-between items-center text-sm font-medium text-slate-700 shadow-sm">
-                      <span>Transfer</span>
-                      <span className="text-lg">⌄</span>
-                    </div>
-                  </div>
-
-                  {/* Monto */}
-                  <div>
-                    <label className="text-xs text-slate-500 font-semibold">Enter Amount</label>
-                    <div className="mt-1 flex items-center rounded-xl border border-slate-200 px-4 py-3 bg-white shadow-sm">
-                      <input
-                        type="number"
-                        defaultValue={100}
-                        className="w-full bg-transparent text-xl font-semibold text-[#B63A42] outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Países */}
-                  <div className="flex gap-3">
-
-                    {/* De */}
-                    <div className="flex-1">
-                      <label className="text-xs text-slate-500 font-semibold">Country From</label>
-
-                      <div className="mt-1 flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-4 py-3 shadow-sm">
-                        <img src="/flags/usd.png" alt="USD" className="h-6 w-6 rounded-full" />
-                        <span className="text-sm font-medium">USD</span>
-                        <span className="ml-auto text-lg">⌄</span>
-                      </div>
-                    </div>
-
-                    {/* A */}
-                    <div className="flex-1">
-                      <label className="text-xs text-slate-500 font-semibold">Country To</label>
-
-                      <div className="mt-1 flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-4 py-3 shadow-sm">
-                        <img src="/flags/pen.png" alt="PEN" className="h-6 w-6 rounded-full" />
-                        <span className="text-sm font-medium">PEN</span>
-                        <span className="ml-auto text-lg">⌄</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Botón */}
-                  <button className="w-full bg-[#11334D] text-white py-3 rounded-xl text-base font-semibold shadow hover:bg-[#0D2639] transition">
-                    Convert
-                  </button>
-
-                  {/* Resultado */}
-                  <div className="w-full text-center rounded-xl bg-slate-100 py-3 text-[#B63A42] text-xl font-semibold tracking-wide">
-                    1300.00 PEN
-                  </div>
-
-                  {/* Nota */}
-                  <p className="text-[10px] text-slate-400 leading-tight mt-1">
-                    * Las tasas son referenciales y pueden variar según horario o banco.
-                    <br />* Última actualización: 23-Mayo-2024 15:54
-                  </p>
-
-                </div>
-              </div>
-            </div>
-
-
           </div>
 
         </div>
-
       </section>
 
 
       {/* FRANJA BANCOS + KPIs */}
-      <section className="mx-auto mt-10 max-w-6xl px-4 pb-16 lg:px-0">
-        <div className="grid gap-4 md:grid-cols-[2fr_1fr_1fr]">
-          {/* Bancos */}
-          <div className="rounded-3xl bg-white p-4 shadow-sm">
-            <p className="text-sm">
-              <span className="font-semibold">A todos los bancos,</span>{" "}
-              en minutos
-            </p>
-            <p className="mt-1 flex items-center gap-2 text-xs text-slate-500">
+      <section className="mx-auto mt-16 max-w-6xl px-4 pb-5 lg:px-0">
+
+        <div className="grid gap-6 md:grid-cols-3">
+
+          {/* BLOQUE 1 — BANCOS */}
+          <div className="rounded-3xl bg-white p-8 shadow-md border border-slate-100">
+            <h3 className="text-xl font-bold text-[#02254A]">
+              Transferencias a todos los bancos
+            </h3>
+
+            <p className="mt-1 flex items-center gap-2 text-sm text-slate-600">
               <span className="h-2 w-2 rounded-full bg-[#0053A4]" />
-              Entre 15 y 40 min
+              Entre <strong>30 y 55 minutos</strong>
             </p>
-            <div className="mt-3 flex flex-wrap items-center gap-2">
-              {Array.from({ length: 8 }).map((_, i) => (
+
+            {/* Lista de bancos */}
+            <div className="mt-5 grid grid-cols-3 gap-4">
+              {[
+                "bcp.png",
+                "bbva.png",
+                "pichincha.svg",
+              ].map((banco, i) => (
                 <div
                   key={i}
-                  className="h-8 w-8 rounded-lg bg-slate-100"
-                />
+                  className="flex items-center justify-center rounded-2xl bg-slate-50 py-3 shadow-sm"
+                >
+                  <img
+                    src={`/assets/${banco}`}
+                    className="h-[50px] w-[50px] object-contain"
+                    alt={banco}
+                  />
+                </div>
               ))}
             </div>
           </div>
 
-          {/* KPI 1 */}
-          <div className="rounded-3xl bg-white p-4 text-sm shadow-sm">
-            <p className="font-semibold">+ de S/ 7,090 millones cambiados</p>
-          </div>
-
-          {/* KPI 2 */}
-          <div className="rounded-3xl bg-white p-4 text-sm shadow-sm">
-            <p className="font-semibold">
-              + 156 mil usuarios y + 8,600 empresas
+          {/* BLOQUE 2 — KPI MILLONES */}
+          <div className="rounded-3xl bg-white p-8 shadow-md border border-slate-100 flex flex-col justify-center">
+            <p className="text-3xl font-bold text-[#02254A] leading-tight">
+              + S/ 5,120 millones
+            </p>
+            <p className="text-slate-600 mt-1 text-sm">
+              cambiados de manera segura y rápida
             </p>
           </div>
+
+          {/* BLOQUE 3 — KPI USUARIOS */}
+          <div className="rounded-3xl bg-white p-8 shadow-md border border-slate-100 flex flex-col justify-center">
+            <p className="text-3xl font-bold text-[#02254A] leading-tight">
+              + 100 mil usuarios
+            </p>
+            <p className="text-slate-600 text-sm">
+              y más de <strong>5,000 empresas</strong> que confían en nosotros
+            </p>
+          </div>
+
         </div>
+
+        {/* EXTRA: UNA FILA COMPLEMENTARIA OPCIONAL */}
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
+
+          {/* Beneficio 1 */}
+          <div className="rounded-3xl bg-white p-6 shadow-sm border border-slate-100">
+            <p className="text-lg font-bold text-[#02254A]">Seguridad garantizada</p>
+            <p className="text-sm text-slate-600 mt-1">
+              Procesos auditados y cifrado de nivel bancario.
+            </p>
+          </div>
+
+          {/* Beneficio 2 */}
+          <div className="rounded-3xl bg-white p-6 shadow-sm border border-slate-100">
+            <p className="text-lg font-bold text-[#02254A]">Atención inmediata</p>
+            <p className="text-sm text-slate-600 mt-1">
+              Soporte humano para ayudarte en cualquier operación.
+            </p>
+          </div>
+
+          {/* Beneficio 3 */}
+          <div className="rounded-3xl bg-white p-6 shadow-sm border border-slate-100">
+            <p className="text-lg font-bold text-[#02254A]">Horario de atención</p>
+            <div className="text-sm text-slate-600 mt-2 leading-relaxed">
+              <p><strong>Lunes a viernes:</strong> 8:30 am – 6:30 pm</p>
+              <p className="mt-1"><strong>Sábado:</strong> 9:00 am – 1:00 pm</p>
+            </div>
+          </div>
+
+        </div>
+
       </section>
 
+
       {/* SECCIÓN 1 — ¿Cómo funciona? */}
-      <section className="mt-28 mb-24 px-4">
+      <section className="mt-28 mb-25 px-4">
         <h2 className="text-center text-5xl font-extrabold text-[#02254A] mb-16">
           ¿<span className="text-[#02254A]/90">Cómo</span> funciona en Dollariza?
         </h2>
@@ -314,47 +539,15 @@ export default function Home() {
 
         {/* BOTÓN / CTA */}
         <div className="text-center mt-12">
-          <button className="bg-[#D1391D] text-[#ffffff] cursor-pointer font-semibold px-8 py-3 rounded-xl shadow-md 
+          <button onClick={goRegister} className="bg-[#D1391D] text-[#ffffff] cursor-pointer font-semibold px-8 py-3 rounded-xl shadow-md 
                        hover:bg-yellow-300 hover:shadow-lg transition-all duration-200">
             Regístrate ahora
           </button>
         </div>
       </section>
 
-
-      {/* SECCIÓN 2 — Descarga nuestra app */}
-      <section className="mt-10 mb-20 px-4">
-        <div className="bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-3xl max-w-6xl mx-auto p-10 flex flex-col md:flex-row items-center gap-10">
-
-          {/* Mockup teléfono */}
-          <div className="w-full md:w-1/2 flex justify-center">
-            <div className="h-96 w-48 bg-slate-100 rounded-3xl shadow-inner"></div>
-          </div>
-
-          {/* Info */}
-          <div className="w-full md:w-1/2">
-            <h3 className="text-3xl font-bold text-[#02254A] mb-3">
-              Descarga nuestra app
-            </h3>
-            <p className="text-slate-700 mb-5">
-              y cambia tus soles y dólares donde quieras, cuando quieras
-            </p>
-
-            <div className="flex gap-4 mb-6">
-              <div className="h-12 w-36 bg-black rounded-xl"></div>
-              <div className="h-12 w-36 bg-black rounded-xl"></div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="h-32 w-32 bg-white rounded-xl shadow"></div>
-              <span className="text-sm text-slate-700">¡Escanea el QR y descarga la app!</span>
-            </div>
-          </div>
-
-        </div>
-      </section>
       {/* SECCIÓN 3 — Tipo de cambio en vivo */}
-      <section className="mt-20 mb-20 px-4">
+      <section className="mt-20 mb-32 px-4">
 
         <h2 className="text-center text-4xl font-bold text-[#02254A] mb-2">
           Sigue el tipo de <span className="text-[#02254A]/90">cambio en vivo</span>
@@ -417,61 +610,12 @@ export default function Home() {
       </section>
 
       {/* SECCIÓN — Alertas de tipo de cambio (Banner + Slider + Texto) */}
-      <section className="mt-20 px-4 max-w-6xl mx-auto mb-20">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-
-          {/* IZQUIERDA: Banner + Slider */}
-          <div>
-            {/* Banner amarillo */}
-            <div className="relative bg-gradient-to-b from-yellow-300 to-yellow-400 rounded-[40px] p-10 shadow-lg flex items-center gap-6">
-
-              {/* Imagen megáfono (puedes reemplazar la caja por un <Image />) */}
-              <div className="hidden md:block h-36 w-36 bg-yellow-600/20 rounded-3xl"></div>
-
-              {/* Texto */}
-              <div>
-                <h3 className="text-3xl font-extrabold text-[#02254A] leading-tight">
-                  ALERTAS <span className="block text-blue-600">de TIPO DE CAMBIO</span>
-                </h3>
-
-                <p className="bg-white text-[#02254A] text-sm mt-4 px-5 py-3 rounded-2xl shadow font-medium">
-                  ¡Te avisamos cuando el tipo de cambio sea el que <span className="font-bold">más te beneficie!</span>
-                </p>
-              </div>
-
-              {/* Barra vertical a la derecha */}
-              <div className="absolute right-[-30px] top-1/2 -translate-y-1/2 h-40 w-10 bg-gradient-to-b from-yellow-300 to-yellow-400 rounded-full shadow-md flex items-end justify-center pb-2">
-                <div className="h-10 w-10 bg-white rounded-full shadow-lg"></div>
-              </div>
-            </div>
-
-            {/* Slider azul (las 3 barritas) */}
-            <div className="flex justify-center mt-4 gap-2">
-              <span className="h-2 w-10 rounded-full bg-blue-700"></span>
-              <span className="h-2 w-10 rounded-full bg-blue-300"></span>
-              <span className="h-2 w-10 rounded-full bg-slate-200"></span>
-            </div>
-          </div>
-
-          {/* DERECHA: Texto y botón */}
-          <div className="pl-6">
-            <h3 className="text-4xl font-bold text-[#02254A] leading-tight mb-4">
-              Regístrate y accede<br />a los beneficios que<br />tenemos para ti
-            </h3>
-
-            <button className="bg-yellow-400 text-[#02254A] font-semibold px-6 py-3 rounded-xl shadow hover:bg-yellow-300 mt-3">
-              Regístrate
-            </button>
-          </div>
-
-        </div>
-
-      </section>
+      <ScrollAlertsHorizontal />
 
 
       {/* SECCIÓN 4 — Alertas + Beneficios */}
-      <section className="mt-20 px-4 max-w-6xl mx-auto mb-20">
+      <section className="mt-30 px-4 max-w-6xl mx-auto mb-20">
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
 
@@ -485,7 +629,7 @@ export default function Home() {
               ¡Te avisamos cuando el tipo de cambio sea el que más te beneficie!
             </p>
 
-            <button className="bg-yellow-400 text-[#02254A] font-semibold px-6 py-2 rounded-xl shadow mt-10 mb-5 cursor-pointer">
+            <button onClick={goRegister} className="bg-yellow-400 text-[#02254A] font-semibold px-6 py-2 rounded-xl shadow mt-10 mb-5 cursor-pointer">
               Regístrate
             </button>
 
@@ -601,12 +745,64 @@ export default function Home() {
 
       <Testimonios />
 
+      
+
       {/* FOOTER */}
-      <footer className="bg-[#02254A] text-white py-12 mt-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <p className="text-center">TU FOOTER AQUÍ</p>
-        </div>
-      </footer>
+      <footer className="bg-[#02254A] text-white py-8 mt-10">
+  <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
+
+    {/* --- Columna 1: Marca --- */}
+    <div>
+      <h2 className="text-2xl font-bold mb-3">Ayuda</h2>
+      <ul className="space-y-2 text-gray-300 text-sm">
+        <li>
+          <a href="#" className="hover:text-white transition">Política de privacidad</a>
+        </li>
+        <li>
+          <a href="#" className="hover:text-white transition">Términos y condiciones</a>
+        </li>
+        <li>
+          <a href="#" className="hover:text-white transition">Libro de reclamaciones</a>
+        </li>
+      </ul>
+    </div>
+
+    {/* --- Columna 2: Navegación --- */}
+    <div>
+      <h3 className="text-lg font-semibold mb-3">Enlaces</h3>
+      <ul className="space-y-2 text-gray-300 text-sm">
+        <li>
+          <a href="#" className="hover:text-white transition">Inicio</a>
+        </li>
+        <li>
+          <a href="#" className="hover:text-white transition">Quiénes somos</a>
+        </li>
+        <li>
+          <a href="#" className="hover:text-white transition">Preguntas frecuentes</a>
+        </li>
+      </ul>
+    </div>
+
+    {/* --- Columna 3: Contacto --- */}
+    <div>
+      <h3 className="text-lg font-semibold mb-3">Contáctanos</h3>
+      <ul className="space-y-2 text-gray-300 text-sm">
+        <li>
+          <span className="font-medium">Teléfono:</span> 956-767-180
+        </li>
+        <li>
+          <span className="font-medium">Correo:</span> info.dollariza@gmail.com
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {/* --- línea inferior --- */}
+  <div className="border-t border-[#ffffff33] mt-12 pt-6 text-center text-gray-400 text-sm">
+    © {new Date().getFullYear()} Dollariza — Todos los derechos reservados.
+  </div>
+</footer>
+
 
     </main>
   );

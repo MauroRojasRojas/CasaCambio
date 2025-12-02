@@ -5,45 +5,45 @@ import { useState } from "react";
 const testimonios = [
   {
     id: 1,
-    nombre: "Abdulaziz Ali",
+    nombre: "María Fernanda Salazar",
     texto:
-      "Gulf Exchange is a great model of professionalism in dealing with customers. I have been dealing with them for many years.",
-    foto: "/testimonials/user1.jpg",
+      "Cambié dólares para un viaje y me sorprendió lo rápido que fue todo. El tipo de cambio fue mejor que en cualquier banco y me llegó el dinero en minutos. Totalmente recomendado.",
+    foto: "/assets/rostro1.jpg",
   },
   {
     id: 2,
-    nombre: "Magesh John",
+    nombre: "Ricardo Méndez",
     texto:
-      "Their services are always fast, accurate and extremely reliable. Looking forward to use them again.",
-    foto: "/testimonials/user2.jpg",
+      "Uso Dollariza desde hace meses para mis pagos del negocio. Es seguro, confiable y siempre encuentro un tipo de cambio competitivo. El servicio al cliente también es excelente.",
+    foto: "/assets/rostro2.jpg",
   },
   {
     id: 3,
-    nombre: "Laura Pérez",
+    nombre: "Valeria Ortiz",
     texto:
-      "Excelente servicio, muy rápido y con el mejor tipo de cambio del mercado.",
-    foto: "/testimonials/user3.jpg",
+      "Mi experiencia fue muy buena. Me gusta que la plataforma sea simple y clara, sin pasos innecesarios. El dinero llegó súper rápido y el proceso fue seguro.",
+    foto: "/assets/rostro3.jpg",
   },
   {
     id: 4,
-    nombre: "Carlos Mendoza",
+    nombre: "Jorge Ramírez",
     texto:
-      "Siempre me atienden rápido, seguro y sin complicaciones. Muy recomendado.",
-    foto: "/testimonials/user4.jpg",
+      "He probado varias casas de cambio online, pero Dollariza es la que me generó más confianza. Todo el proceso es transparente y se nota que cuidan mucho la seguridad.",
+    foto: "/assets/rostro4.jpg",
   },
   {
     id: 5,
-    nombre: "Sandra Rojas",
+    nombre: "Carolina Rivas",
     texto:
-      "Lo uso para mis operaciones personales y de negocio. Excelente servicio.",
-    foto: "/testimonials/user5.jpg",
+      "Cambio constantemente por motivos de trabajo y Dollariza me ha facilitado la vida. Es rápido, seguro y los tipos de cambio son realmente buenos.",
+    foto: "/assets/rostro5.jpg",
   },
   {
     id: 6,
-    nombre: "Ricardo Núñez",
+    nombre: "Sebastián Aguilar",
     texto:
-      "Me encanta lo rápido que es el proceso. El tipo de cambio siempre es muy bueno.",
-    foto: "/testimonials/user6.jpg",
+      "Me llegó el depósito en menos de 10 minutos. Nunca pensé que cambiar dinero online fuera tan sencillo. Sin dudas seguiré usándolo.",
+    foto: "/assets/rostro6.jpg",
   },
 ];
 
@@ -80,8 +80,8 @@ export default function Testimonios() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto max-w-5xl">
 
           {/* Testimonio A */}
-          <div className="bg-white rounded-3xl p-10 shadow-lg transition-all duration-500">
-            <div className="text-red-600 text-8xl mb-1">“</div>
+          <div className="bg-white rounded-lg p-10 shadow-lg transition-all duration-500">
+            <div className="text-red-600 text-5xl mb-1">“</div>
 
             <p className="text-slate-700 leading-relaxed mb-6">
               {testimonios[index].texto}
@@ -95,14 +95,14 @@ export default function Testimonios() {
               <img
                 src={testimonios[index].foto}
                 className="h-20 w-20 rounded-full object-cover shadow"
-                alt="Foto"
+                alt={testimonios[index].nombre}
               />
             </div>
           </div>
 
           {/* Testimonio B */}
-          <div className="bg-white rounded-3xl p-10 shadow-lg transition-all duration-500">
-            <div className="text-red-600 text-8xl mb-1">“</div>
+          <div className="bg-white rounded-lg p-10 shadow-lg transition-all duration-500">
+            <div className="text-red-600 text-5xl mb-1">“</div>
 
             <p className="text-slate-700 leading-relaxed mb-6">
               {testimonios[index + 1]?.texto}
@@ -116,7 +116,7 @@ export default function Testimonios() {
               <img
                 src={testimonios[index + 1]?.foto}
                 className="h-20 w-20 rounded-full object-cover shadow"
-                alt="Foto"
+                alt={testimonios[index + 1]?.nombre}
               />
             </div>
           </div>
