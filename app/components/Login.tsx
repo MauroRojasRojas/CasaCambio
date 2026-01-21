@@ -115,11 +115,11 @@ export default function Login() {
         {/* ========================= */}
         <div className="hidden lg:flex items-center justify-center bg-white">
           <Image
-            src="/assets/register.png"
+            src="/assets/loggin.svg"
             alt="Login banner"
-            width={580}
-            height={580}
-            className="object-contain p-8"
+            width={600}
+            height={600}
+            className="object-contain p-3 rounded-xl"
           />
         </div>
 

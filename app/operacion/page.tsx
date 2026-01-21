@@ -13,8 +13,7 @@ export default function Operacion() {
 
                 {/* LOGO */}
                 <div className="flex items-center gap-3">
-                    <img src="/logo.png" alt="logo" className="h-8 w-8 rounded-full" />
-                    <span className="text-xl font-bold text-[#02254A]">Dollariza</span>
+                    <img src="/icons/logomejorado1.png" alt="logo" className="h-24 w-24 rounded-full" />
                 </div>
 
                 {/* USUARIO */}
@@ -156,17 +155,17 @@ export default function Operacion() {
                     <div className="flex justify-center gap-16 mb-8 pt-4 text-[#02254A]">
                         <div className="flex flex-col items-center">
                             <span className="font-bold">1. Cotiza</span>
-                            <div className="w-20 h-[2px] bg-[#FFC700] mt-1"></div>
+                            <div className="w-20 h-2px bg-[#FFC700] mt-1"></div>
                         </div>
 
                         <div className="flex flex-col items-center opacity-40">
                             <span className="font-semibold">2. Registra</span>
-                            <div className="w-20 h-[2px] bg-slate-300 mt-1"></div>
+                            <div className="w-20 h-2px bg-slate-300 mt-1"></div>
                         </div>
 
                         <div className="flex flex-col items-center opacity-40">
                             <span className="font-semibold">3. Transfiere</span>
-                            <div className="w-20 h-[2px] bg-slate-300 mt-1"></div>
+                            <div className="w-20 h-2px bg-slate-300 mt-1"></div>
                         </div>
                     </div>
 
