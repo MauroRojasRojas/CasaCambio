@@ -1,173 +1,245 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/context/AuthContext';
 
-export default function ConverterCard() {
-  const compra = 3.3465;
-  const venta = 3.3765;
+interface ConverterCardProps {
+	onComplete?: (isComplete: boolean) => void;
+	showButton?: boolean;
+	onButtonClick?: () => void;
+}
 
-  const [mode, setMode] = useState<"compra" | "venta">("venta");
-  const [rate, setRate] = useState(venta);
+export default function ConverterCard({ onComplete, showButton = true, onButtonClick }: ConverterCardProps) {
+	const router = useRouter();
+	const { user } = useAuth();
+	const compra = 3.3465;
+	const venta = 3.3765;
 
-  const [fromCurrency, setFromCurrency] = useState("PEN");
-  const [toCurrency, setToCurrency] = useState("USD");
+	const [mode, setMode] = useState<'compra' | 'venta'>('venta');
+	const [rate, setRate] = useState(venta);
+	const [fromCurrency, setFromCurrency] = useState('PEN');
+	const [toCurrency, setToCurrency] = useState('USD');
+	const [amount, setAmount] = useState(100);
+	const [converted, setConverted] = useState(100 * venta);
+	const [rotating, setRotating] = useState(false);
 
-  const [amount, setAmount] = useState(100);
-  const [converted, setConverted] = useState(amount / rate);
+	// Cargar valores del localStorage al montar el componente
+	useEffect(() => {
+		const savedSentAmount = localStorage.getItem('converterSentAmount');
+		const savedSentCurrency = localStorage.getItem('converterSentCurrency');
+		const savedReceivedAmount = localStorage.getItem('converterReceivedAmount');
+		const savedReceivedCurrency = localStorage.getItem('converterReceivedCurrency');
 
-  const [rotating, setRotating] = useState(false);
+		if (savedSentAmount && savedSentCurrency && savedReceivedAmount && savedReceivedCurrency) {
+			setAmount(Number(savedSentAmount));
+			setFromCurrency(savedSentCurrency);
+			setConverted(Number(savedReceivedAmount));
+			setToCurrency(savedReceivedCurrency);
+			
+			const isBuyMode = savedSentCurrency === 'USD';
+			setMode(isBuyMode ? 'compra' : 'venta');
+			setRate(isBuyMode ? compra : venta);
+		}
+		
+		if (onComplete) {
+			onComplete(true);
+		}
+	}, [onComplete, compra, venta]);
 
-  const changeMode = (newMode: "compra" | "venta") => {
-    setMode(newMode);
+	const changeMode = (newMode: 'compra' | 'venta') => {
+		setMode(newMode);
 
-    setRotating(true);
-    setTimeout(() => setRotating(false), 400);
+		setRotating(true);
+		setTimeout(() => setRotating(false), 400);
 
-    if (newMode === "compra") {
-      setRate(compra);
-      setFromCurrency("USD");
-      setToCurrency("PEN");
-      setConverted(amount * compra);
-    } else {
-      setRate(venta);
-      setFromCurrency("PEN");
-      setToCurrency("USD");
-      setConverted(amount / venta);
-    }
-  };
+		if (newMode === 'compra') {
+			setRate(compra);
+			setFromCurrency('USD');
+			setToCurrency('PEN');
+			const converted = amount * compra;
+			setConverted(converted);
+			// Guardar en localStorage
+			localStorage.setItem('converterSentAmount', amount.toString());
+			localStorage.setItem('converterSentCurrency', 'USD');
+			localStorage.setItem('converterReceivedAmount', converted.toString());
+			localStorage.setItem('converterReceivedCurrency', 'PEN');
+		} else {
+			setRate(venta);
+			setFromCurrency('PEN');
+			setToCurrency('USD');
+			const converted = amount / venta;
+			setConverted(converted);
+			// Guardar en localStorage
+			localStorage.setItem('converterSentAmount', amount.toString());
+			localStorage.setItem('converterSentCurrency', 'PEN');
+			localStorage.setItem('converterReceivedAmount', converted.toString());
+			localStorage.setItem('converterReceivedCurrency', 'USD');
+		}
+	};
 
-  const handleAmountChange = (e: any) => {
-    const val = Number(e.target.value);
-    setAmount(val);
+	const defaultOnButtonClick = () => {
+		// Guardar estado en localStorage
+		localStorage.setItem('converterSentAmount', amount.toString());
+		localStorage.setItem('converterSentCurrency', fromCurrency);
+		localStorage.setItem('converterReceivedAmount', converted.toString());
+		localStorage.setItem('converterReceivedCurrency', toCurrency);
+		if (user) {
+			router.push('/operacion');
+		} else {
+			router.push('/login');
+		}
+	};
 
-    if (mode === "compra") {
-      setConverted(val * rate);
-    } else {
-      setConverted(val / rate);
-    }
-  };
+	const handleButtonClick = onButtonClick || defaultOnButtonClick;
 
-  const swapCurrencies = () => {
-    setRotating(true);
-    setTimeout(() => setRotating(false), 400);
+	const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const val = Math.max(100, Number(e.target.value));
+		setAmount(val);
 
-    setFromCurrency(toCurrency);
-    setToCurrency(fromCurrency);
+		let converted = 0;
+		if (mode === 'compra') {
+			converted = val * rate;
+		} else {
+			converted = val / rate;
+		}
+		setConverted(converted);
 
-    if (mode === "compra") {
-      setConverted(amount / rate);
-    } else {
-      setConverted(amount * rate);
-    }
+		// Guardar en localStorage
+		localStorage.setItem('converterSentAmount', val.toString());
+		localStorage.setItem('converterSentCurrency', fromCurrency);
+		localStorage.setItem('converterReceivedAmount', converted.toString());
+		localStorage.setItem('converterReceivedCurrency', toCurrency);
+	};
 
-    setMode(mode === "compra" ? "venta" : "compra");
-    setRate(mode === "compra" ? venta : compra);
-  };
+	const swapCurrencies = () => {
+		setRotating(true);
+		setTimeout(() => setRotating(false), 400);
 
-  return (
-    <div className="rounded-3xl overflow-hidden shadow-xl">
+		setFromCurrency(toCurrency);
+		setToCurrency(fromCurrency);
 
-      {/* HEADER */}
-      <div className="bg-gradient-to-b from-[#B63A42] to-[#3A475F] px-6 py-5 text-center">
-        <h2 className="text-white text-xl font-bold">Realiza tu conversión</h2>
-      </div>
+		let converted = 0;
+		const newMode = mode === 'compra' ? 'venta' : 'compra';
+		const newRate = mode === 'compra' ? venta : compra;
+		
+		if (newMode === 'compra') {
+			converted = amount * newRate;
+		} else {
+			converted = amount / newRate;
+		}
+		setConverted(converted);
 
-      {/* COMPRA / VENTA */}
-      <div className="flex justify-center gap-3 bg-white px-6 pt-4 text-sm font-semibold">
+		setMode(newMode);
+		setRate(newRate);
 
-        <button
-          onClick={() => changeMode("compra")}
-          className={`px-4 py-1 rounded-full cursor-pointer border transition ${
-            mode === "compra" ? "bg-blue-600 text-white" : "bg-gray-100 text-slate-600"
-          }`}
-        >
-          Compra: {compra}
-        </button>
+		// Guardar en localStorage
+		localStorage.setItem('converterSentAmount', amount.toString());
+		localStorage.setItem('converterSentCurrency', toCurrency);
+		localStorage.setItem('converterReceivedAmount', converted.toString());
+		localStorage.setItem('converterReceivedCurrency', fromCurrency);
+	};
 
-        <button
-          onClick={() => changeMode("venta")}
-          className={`px-4 py-1 cursor-pointer rounded-full border transition ${
-            mode === "venta" ? "bg-blue-600 text-white" : "bg-gray-100 text-slate-600"
-          }`}
-        >
-          Venta: {venta}
-        </button>
-      </div>
+	return (
+		<div className='w-full rounded-3xl overflow-hidden shadow-xl'>
+			{/* HEADER */}
+			<div className='bg-linear-to-b from-[#B63A42] to-[#3A475F] p-3 text-center'>
+				<h2 className='text-white text-xl font-bold'>Realiza tu conversión</h2>
+			</div>
 
-      {/* CUERPO */}
-      <div className="bg-white p-6 pb-1 relative space-y-4">
-        
-        {/* TÚ ENVÍAS */}
-        <div>
-          <label className="text-xs text-slate-500 font-semibold">Tú envías</label>
+			{/* COMPRA / VENTA */}
+			<div className='flex justify-center gap-3 bg-white px-4 pt-3 text-sm font-semibold'>
+				<button
+					onClick={() => changeMode('compra')}
+					className={`px-4 py-1 rounded-lg cursor-pointer border transition ${mode === 'compra' ? 'bg-[#0053A4] text-white' : 'bg-gray-50 text-slate-600'}`}
+				>
+					Compra: {compra}
+				</button>
 
-          <div className="mt-1 flex items-center rounded-xl border border-slate-300 px-4 py-3 shadow-sm">
-            <input
-              type="number"
-              value={amount}
-              onChange={handleAmountChange}
-              className="w-full bg-transparent text-2xl font-bold text-[#11334D] outline-none"
-            />
+				<button
+					onClick={() => changeMode('venta')}
+					className={`px-4 py-1 cursor-pointer rounded-lg border transition ${mode === 'venta' ? 'bg-[#0053A4] text-white' : 'bg-gray-50 text-slate-600'}`}
+				>
+					Venta: {venta}
+				</button>
+			</div>
 
-            <span className="mr-2 text-lg font-bold">{fromCurrency}</span>
+			{/* CUERPO */}
+			<div className='bg-white p-4 relative space-y-4'>
+				{/* TÚ ENVÍAS */}
+				<div>
+					<label className='text-xs text-slate-500 font-semibold'>Tú envías</label>
 
-            <img
-              src={`/flags/${fromCurrency.toLowerCase()}.png`}
-              className="h-6 w-6 rounded-full"
-            />
-          </div>
-        </div>
+					<div className='mt-1 flex items-center rounded-xl border border-slate-300 px-2 py-1 shadow-sm'>
+						<input
+							type='number'
+							min={100}
+							value={amount}
+							onChange={handleAmountChange}
+							className='w-full bg-transparent text-xl font-bold text-[#11334D] outline-none'
+						/>
 
-        {/* FLECHA */}
-        <button
-          onClick={swapCurrencies}
-          className="
-            absolute left-[calc(50%-20px)] top-[105px]
+						<span className='ml-4 mr-2 text-lg font-bold text-zinc-900'>{fromCurrency}</span>
+
+						<Image src={`/icons/flags/${fromCurrency.toLowerCase()}.svg`} alt={`Bandera de ${fromCurrency}`} height={24} width={30} style={{ width: 'auto' }} />
+					</div>
+				</div>
+
+				{/* FLECHA */}
+				<button
+					onClick={swapCurrencies}
+					className='
+            absolute left-[calc(50%-20px)] top-[95px]
             w-[55px] h-[55px] rounded-full shadow-lg flex items-center justify-center
             cursor-pointer
             bg-[linear-gradient(145deg,#c1122f,#02254A)]
             transition-transform duration-500
-          "
-        >
-          <img
-            src="/icons/arrows.png"
-            alt="swap"
-            className={`w-[26px] h-[26px] transition-transform duration-500 ${
-              rotating ? "rotate-180" : ""
-            }`}
-          />
-        </button>
+          '
+				>
+					<Image
+						src='/icons/arrows.png'
+						alt='swap'
+						width={26}
+						height={26}
+						className={`w-[26px] h-[26px] transition-transform duration-500 ${rotating ? 'rotate-180' : ''}`}
+					/>
+				</button>
 
-        {/* TÚ RECIBES */}
-        <div>
-          <label className="text-xs text-slate-500 font-semibold">Tú recibes</label>
+				{/* TÚ RECIBES */}
+				<div>
+					<label className='text-xs text-slate-500 font-semibold'>Tú recibes</label>
 
-          <div className="mt-1 flex items-center rounded-xl border border-slate-300 px-4 py-3 shadow-sm">
-            <input
-              type="text"
-              readOnly
-              value={converted.toFixed(2)}
-              className="w-full bg-transparent text-2xl font-bold text-[#11334D] outline-none"
-            />
+					<div className='mt-1 flex items-center rounded-xl border border-slate-300 px-2 py-1 shadow-sm'>
+						<input type='text' readOnly value={converted.toFixed(2)} className='w-full bg-transparent text-xl font-bold text-[#11334D] outline-none' />
 
-            <span className="mr-2 text-lg font-bold">{toCurrency}</span>
+						<span className='ml-4 mr-2 text-lg font-bold text-zinc-900'>{toCurrency}</span>
 
-            <img
-              src={`/flags/${toCurrency.toLowerCase()}.png`}
-              className="h-6 w-6 rounded-full"
-            />
-          </div>
-        </div>
+						<Image src={`/icons/flags/${toCurrency.toLowerCase()}.svg`} alt={`Bandera de ${toCurrency}`} height={24} width={30} style={{ height: 'auto' }} />
+					</div>
+				</div>
 
-        {/* BOTÓN */}
-        <button className="w-full mt-4 bg-gradient-to-b from-[#B63A42] to-[#3A475F] text-[#ffffff] py-3 rounded-xl text-base font-semibold shadow cursor-pointer">
-          Iniciar operación
-        </button>
+				{/* BOTÓN */}
+				{showButton && (
+					<button
+						onClick={handleButtonClick}
+						className='w-full bg-linear-to-b from-[#B63A42] to-[#3A475F] text-[#ffffff] py-2 rounded-xl text-base font-semibold shadow cursor-pointer'
+					>
+						Iniciar operación
+					</button>
+				)}
 
-        <p className="text-[10px] text-slate-400 mt-2 text-center">
-          * Las tasas pueden variar según horario o banco.
-        </p>
-      </div>
-    </div>
-  );
+				<div className='flex flex-col'>
+					<span className='text-[10px] text-slate-400 text-center'>* Las tasas pueden variar según horario o banco.</span>
+					<span className='text-[10px] text-slate-400 text-center'>* Monto mínimo de conversión: 100 PEN o 100 USD.</span>
+				</div>
+			</div>
+			<div className='bg-white px-4 pt-1 pb-2'>
+				<p className='text-xs text-slate-500 font-semibold text-center'>Registrados</p>
+				<div className='flex justify-center mt-1'>
+					<Image src='/icons/sbs.png' alt='SBS' width={120} height={40} className='object-contain' />
+				</div>
+			</div>
+		</div>
+	);
 }

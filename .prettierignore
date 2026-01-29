@@ -1,0 +1,14 @@
+# Dependencies
+node_modules
+
+# Build outputs
+.next
+out
+build
+dist
+
+# Cache
+.cache
+
+# Generated files
+next-env.d.ts

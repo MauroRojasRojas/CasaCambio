@@ -1,120 +1,89 @@
-"use client";
+'use client';
 
-import * as motion from "motion/react-client";
-import type { Variants } from "motion/react";
+import * as motion from 'motion/react-client';
+import type { Variants } from 'motion/react';
 
 export default function ScrollAlertsHorizontal() {
-    const items = [
-        { title: "Accede", text: "A todos los beneficios que tenemos para ti." },
-        { title: "Ahorra Más", text: "Dollariza te ayuda a obtener siempre el mejor precio para tus operaciones." },
-        { title: "Automatiza tu Cambio", text: "Configura metas y deja que Dollariza trabaje por ti." },
-    ];
+	const items = [
+		{ title: 'Accede', text: 'A todos los beneficios que tenemos para ti.' },
+		{
+			title: 'Ahorra Más',
+			text: 'Dollariza te ayuda a obtener siempre el mejor precio para tus operaciones.',
+		},
+		{ title: 'Automatiza tu Cambio', text: 'Configura metas y deja que Dollariza trabaje por ti.' },
+		{
+			title: 'Opera Seguro',
+			text: 'Transacciones protegidas y respaldadas por entidades reguladas.',
+		},
+	];
 
-    return (
-        <div style={container}>
-            <div style={horizontalScroll}>
-                {items.map((item, i) => (
-                    <Card key={i} i={i} title={item.title} text={item.text} />
-                ))}
-            </div>
-        </div>
-    );
+	return (
+		<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-8 md:gap-8 lg:gap-12 4k:gap-16 justify-items-center py-12 md:py-16 lg:py-20 4k:py-24 px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 max-w-[1800px] mx-auto'>
+			{items.map((item, i) => (
+				<Card key={i} i={i} title={item.title} text={item.text} />
+			))}
+		</div>
+	);
 }
 
 interface CardProps {
-    title: string;
-    text: string;
-    i: number;
+	title: string;
+	text: string;
+	i: number;
 }
 
 function Card({ title, text, i }: CardProps) {
-    return (
-        <motion.div
-            className={`card-container-${i}`}
-            style={cardContainer}
-            initial="offscreen"
-            whileInView="onscreen"
-            viewport={{ amount: 0.5 }}
-        >
-            <div style={{ ...splash, background: "linear-gradient(306deg, #3A475F, #B63A42)" }} />
+	return (
+		<motion.div className={`card-container-${i} mb-4 md:-mb-10`} style={cardContainer} initial='offscreen' whileInView='onscreen' viewport={{ amount: 0.5 }}>
+			<div style={{ ...splash, background: 'linear-gradient(306deg, #3A475F, #B63A42)' }} />
 
-            <motion.div style={card} variants={cardVariants} className="card">
-                <h3 style={titleStyle}>{title}</h3>
-                <p style={textStyle}>{text}</p>
-            </motion.div>
-        </motion.div>
-    );
+			<motion.div style={card} variants={cardVariants} className='card w-64 sm:w-72 md:w-80 lg:w-96'>
+				<h3 className='text-xl sm:text-2xl md:text-[28px] font-extrabold text-[#02254A] mb-3 md:mb-4'>{title}</h3>
+				<p className='text-sm sm:text-base text-[#4A5568] leading-relaxed'>{text}</p>
+			</motion.div>
+		</motion.div>
+	);
 }
 
 const cardVariants: Variants = {
-    offscreen: { y: 200, opacity: 0 },
-    onscreen: {
-        y: 0,
-        opacity: 1,
-        rotate: -6,
-        transition: { type: "spring", bounce: 0.4, duration: 0.9 },
-    },
-};
-
-const container: React.CSSProperties = {
-    margin: "80px auto",
-    maxWidth: "1100px",
-    paddingBottom: "40px",
-    overflow: "hidden",
-};
-
-const horizontalScroll: React.CSSProperties = {
-    display: "flex",
-    gap: "60px",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "flex-start",
+	offscreen: { y: 200, opacity: 0 },
+	onscreen: {
+		y: 0,
+		opacity: 1,
+		rotate: -6,
+		transition: { type: 'spring', bounce: 0.4, duration: 0.9 },
+	},
 };
 
 const cardContainer: React.CSSProperties = {
-    overflow: "hidden",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-    marginBottom: "-40px",
-    paddingTop: 20,
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	position: 'relative',
+	paddingTop: 20,
+	paddingBottom: 20,
 };
 
 const splash: React.CSSProperties = {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    clipPath: `path("M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.085 218.033 480 228.454 480 239.5 L 500 430 C 500 441.046 491.046 450 480 450 L 20 450 C 8.954 450 0 441.046 0 430 Z")`,
+	position: 'absolute',
+	top: 0,
+	left: 0,
+	right: 0,
+	bottom: 0,
+	clipPath:
+		'path("M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.085 218.033 480 228.454 480 239.5 L 500 430 C 500 441.046 491.046 450 480 450 L 20 450 C 8.954 450 0 441.046 0 430 Z")',
 };
 
 const card: React.CSSProperties = {
-    width: 380,
-    height: 380,
-    borderRadius: 25,
-    background: "#ffffff",
-    boxShadow:
-        "0 0 4px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.08)",
-    transformOrigin: "10% 60%",
-    padding: "20px 15px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    zIndex: 10,
-    textAlign: "center",
-};
-
-const titleStyle: React.CSSProperties = {
-    fontSize: "28px",
-    fontWeight: 800,
-    color: "#02254A",
-    marginBottom: "15px",
-};
-
-const textStyle: React.CSSProperties = {
-    fontSize: "16px",
-    color: "#4A5568",
-    lineHeight: "1.5",
+	minHeight: 320,
+	borderRadius: 25,
+	background: '#ffffff',
+	boxShadow: '0 0 4px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.08)',
+	transformOrigin: '10% 60%',
+	padding: '20px 15px',
+	display: 'flex',
+	flexDirection: 'column',
+	justifyContent: 'center',
+	zIndex: 10,
+	textAlign: 'center',
 };
