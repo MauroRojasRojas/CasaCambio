@@ -283,7 +283,7 @@ export default function ConverterCard({ onComplete, showButton = true, onButtonC
 			</div>
 			<div className='bg-white px-4 pt-1 pb-2 mb-4'>
 				<div className='flex justify-center'>
-					<Image src='/icons/sbs.png' alt='SBS' width={120} height={40} className='object-contain' />
+					<Image src='/icons/sbs.png' alt='SBS' width={120} height={40} className='object-contain' style={{ height: 'auto' }} />
 				</div>
 			</div>
 		</div>

@@ -22,6 +22,21 @@ export interface TasaCambioHistoricoResponse {
 	data: TasaCambio[];
 }
 
+export interface TasaHistoricaDesdeInicioAno {
+	fecha: string;
+	tasa_usd_pen: number;
+	tasa_pen_usd: number;
+}
+
+export interface TasasDesdeInicioAnoResponse {
+	success: boolean;
+	status: number;
+	message: string;
+	data: TasaHistoricaDesdeInicioAno[];
+	code: string;
+	timestamp: string;
+}
+
 /**
  * Obtener la tasa de cambio actual
  */
@@ -119,6 +134,42 @@ export async function getTasasRango(fechaInicio: string, fechaFin: string): Prom
 		tasa_venta_usd: Number(tasa.tasa_venta_usd),
 		tasa_compra_pen: Number(tasa.tasa_compra_pen),
 		tasa_venta_pen: Number(tasa.tasa_venta_pen),
+	}));
+}
+
+/**
+ * Obtener tasas de cambio desde el inicio del año hasta la fecha actual
+ */
+export async function getTasasDesdeInicioAno(): Promise<TasaHistoricaDesdeInicioAno[]> {
+	// Obtener fecha actual del sistema en formato dd/mm/yyyy
+	const hoy = new Date();
+	const dia = String(hoy.getDate()).padStart(2, '0');
+	const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+	const anio = hoy.getFullYear();
+	const fechaActual = `${dia}/${mes}/${anio}`;
+
+	const response = await fetch(`${API_BASE_URL}/tasas-cambio/desde-inicio-ano/${fechaActual}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
+
+	if (!response.ok) {
+		throw new Error('Error al obtener tasas desde inicio de año');
+	}
+
+	const result: TasasDesdeInicioAnoResponse = await response.json();
+	
+	if (!result.success) {
+		throw new Error('La respuesta no fue exitosa');
+	}
+
+	// Asegurar que los valores numéricos sean números
+	return result.data.map(tasa => ({
+		fecha: tasa.fecha,
+		tasa_usd_pen: Number(tasa.tasa_usd_pen),
+		tasa_pen_usd: Number(tasa.tasa_pen_usd),
 	}));
 }
 
