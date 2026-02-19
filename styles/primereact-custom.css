@@ -1,0 +1,152 @@
+/* Personalización completa de colores PrimeReact - Azul Oscuro */
+:root {
+	/* Paleta de colores primaria basada en #02254A (azul navy) */
+	--primary-50: #F0F8FF !important;  /* Azul muy claro */
+	--primary-100: #E0F0FE !important; /* Azul claro */
+	--primary-200: #B3D9FF !important; /* Azul suave */
+	--primary-300: #7FB8FF !important; /* Azul medio-claro */
+	--primary-400: #4A90E2 !important; /* Azul intermedio */
+	--primary-500: #02254A !important; /* Color primario base */
+	--primary-600: #011B3A !important; /* Azul oscuro */
+	--primary-700: #01122A !important; /* Azul muy oscuro */
+	--primary-800: #01091A !important; /* Azul casi negro */
+	--primary-900: #00050D !important; /* Azul negro profundo */
+
+	/* Variables estándar de PrimeReact */
+	--primary-color: #02254A !important;           /* Color primario principal */
+	--primary-contrast-color: #FFFFFF !important;  /* Color de contraste (blanco para texto sobre primario) */
+
+	/* Colores de superficie */
+	--surface-0: #ffffff;
+	--surface-50: #f9fafb;
+	--surface-100: #f3f4f6;
+	--surface-200: #e5e7eb;
+	--surface-300: #d1d5db;
+	--surface-400: #9ca3af;
+	--surface-500: #6b7280;
+	--surface-600: #4b5563;
+	--surface-700: #374151;
+	--surface-800: #1f2937;
+	--surface-900: #111827;
+
+	/* Colores de texto */
+	--text-color: #1f2937;
+	--text-color-secondary: #6b7280;
+	--primary-color-text: #ffffff;
+}
+
+/* Aplicar colores a componentes PrimeReact */
+.p-button {
+	background: var(--primary-color);
+	border-color: var(--primary-color);
+	color: var(--primary-contrast-color);
+	transition: all 0.2s ease;
+}
+
+.p-button:hover {
+	background: var(--primary-600);
+	border-color: var(--primary-600);
+}
+
+.p-button:focus {
+	box-shadow: 0 0 0 0.2rem rgba(2, 37, 74, 0.25);
+}
+
+.p-button.p-button-outlined {
+	background: transparent;
+	border-color: var(--primary-600);
+	color: var(--primary-600);
+}
+
+.p-button.p-button-outlined:hover {
+	background: rgba(2, 37, 74, 0.1);
+	border-color: var(--primary-600);
+	color: var(--primary-600);
+}
+
+.p-inputtext {
+	border-color: var(--surface-300);
+	color: var(--text-color);
+}
+
+.p-inputtext:focus {
+	border-color: var(--primary-600);
+	box-shadow: 0 0 0 0.2rem rgba(2, 37, 74, 0.15);
+}
+
+.p-inputtext:disabled {
+	background-color: var(--surface-100);
+	color: var(--text-color-secondary);
+}
+
+.p-checkbox .p-checkbox-box {
+	border-color: var(--surface-300);
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+	background: var(--primary-600);
+	border-color: var(--primary-600);
+}
+
+.p-checkbox .p-checkbox-box.p-highlight:hover {
+	background: var(--primary-700);
+	border-color: var(--primary-700);
+}
+
+.p-checkbox .p-checkbox-box.p-focus {
+	box-shadow: 0 0 0 0.2rem rgba(2, 37, 74, 0.25);
+}
+
+.p-dropdown {
+	border-color: var(--surface-300);
+	background-color: var(--surface-0);
+	color: var(--text-color);
+}
+
+.p-dropdown:not(.p-disabled):hover {
+	border-color: var(--primary-600);
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+	border-color: var(--primary-600);
+	box-shadow: 0 0 0 0.2rem rgba(2, 37, 74, 0.15);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+	background-color: rgba(2, 37, 74, 0.2);
+	color: var(--primary-600);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
+	background-color: var(--surface-100);
+}
+
+.p-dialog .p-dialog-header {
+	background: var(--primary-600);
+	color: var(--primary-color-text);
+	border-bottom: none;
+	padding: 1.5rem;
+}
+
+.p-dialog .p-dialog-header .p-dialog-title {
+	color: var(--primary-color-text);
+	font-weight: 600;
+}
+
+.p-dialog .p-dialog-content {
+	background: var(--surface-0);
+	color: var(--text-color);
+	padding: 1.5rem;
+}
+
+.p-dialog .p-dialog-footer {
+	background: var(--surface-0);
+	border-top: 1px solid var(--surface-300);
+	padding: 1.5rem;
+}
+
+/* Estilos adicionales para mejora visual */
+.p-component {
+	--text-color: var(--text-color);
+	--text-color-secondary: var(--text-color-secondary);
+}

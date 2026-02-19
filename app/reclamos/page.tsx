@@ -1,6 +1,6 @@
-import ComplaintsBook from '@/app/components/ComplaintsBook';
-import Navbar from '@/app/components/sections/Navbar';
-import Footer from '@/app/components/Footer';
+import ComplaintsBook from '@/components/ComplaintsBook';
+import Navbar from '@/components/sections/Navbar';
+import Footer from '@/components/Footer';
 
 export default function ReclamosPage() {
 	return (

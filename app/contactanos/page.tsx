@@ -1,6 +1,6 @@
-import ContactUs from '@/app/components/sections/ContactUs';
-import Navbar from '@/app/components/sections/Navbar';
-import Footer from '@/app/components/Footer';
+import ContactUs from '@/components/sections/ContactUs';
+import Navbar from '@/components/sections/Navbar';
+import Footer from '@/components/Footer';
 
 export default function ContactanosPage() {
 	return (

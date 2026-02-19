@@ -1,10 +1,11 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import type { User } from '@/data/users';
+import { login as loginService } from '@/lib/services/authService';
+import { UserModel } from '@/data/user.model';
 
 interface AuthContextType {
-	user: User | null;
+	user: UserModel | null;
 	isLoading: boolean;
 	login: (email: string, password: string) => Promise<boolean>;
 	logout: () => void;
@@ -14,7 +15,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-	const [user, setUser] = useState<User | null>(null);
+	const [user, setUser] = useState<UserModel | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -31,17 +32,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	}, []);
 
 	const login = async (email: string, password: string): Promise<boolean> => {
-		const { staticUsers } = await import('@/data/users');
-
-		const foundUser = staticUsers.find((u) => u.email === email && u.password === password);
-
-		if (foundUser) {
-			setUser(foundUser);
-			localStorage.setItem('user', JSON.stringify(foundUser));
-			return true;
+		try {
+			const response = await loginService({ email, password });
+			if (response.ok) {
+				const data = await response.json();
+				// Crear objeto user compatible
+				const userData = {
+					...data.data.user,
+					fullName: `${data.data.user.nombres} ${data.data.user.apellidos}`.trim()
+				};
+				setUser(userData);
+				localStorage.setItem('user', JSON.stringify(userData));
+				localStorage.setItem('token', data.data.token);
+				localStorage.setItem('refreshToken', data.data.refreshToken);
+				localStorage.setItem('modulos', JSON.stringify(data.data.modulos));
+				return true;
+			} else {
+				return false;
+			}
+		} catch (error) {
+			console.error('Login error:', error);
+			return false;
 		}
-
-		return false;
 	};
 
 	const logout = () => {
