@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Anton } from 'next/font/google';
-import './globals.css';
+import '../styles/globals.css';
+import '../styles/primereact-custom.css';
 import { AuthProvider } from './context/AuthContext';
 import { PrimeReactProvider } from 'primereact/api';
-import 'primereact/resources/themes/lara-light-cyan/theme.css';
+import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
@@ -33,7 +34,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang='es'>
 			<body suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${anton.variable} antialiased overflow-x-hidden`}>
 				<PrimeReactProvider>
-					<AuthProvider>{children}</AuthProvider>
+					<AuthProvider>
+						{children}
+					</AuthProvider>
 				</PrimeReactProvider>
 			</body>
 		</html>
