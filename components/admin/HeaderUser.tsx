@@ -31,7 +31,9 @@ export default function HeaderUser({ isMenuOpen, setIsMenuOpen }: HeaderUserProp
 				<button onClick={() => setIsMenuOpen(!isMenuOpen)} className='md:hidden p-2 text-[#02254A] hover:bg-gray-100 rounded'>
 					☰
 				</button>
-				<img src='/icons/logomejorado1.png' alt='logo' className='h-25 w-auto rounded-full' />
+				<Link href='/'>
+					<img src='/icons/logomejorado1.png' alt='logo' className='h-25 w-auto rounded-full cursor-pointer' />
+				</Link>
 			</div>
 
 			{/* USUARIO */}

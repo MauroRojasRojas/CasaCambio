@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Anton } from 'next/font/google';
 import '../styles/globals.css';
 import '../styles/primereact-custom.css';
 import { AuthProvider } from './context/AuthContext';
+import type { ReactNode } from 'react';
 import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -26,10 +27,10 @@ const anton = Anton({
 
 export const metadata: Metadata = {
 	title: 'Dollariza',
-	description: 'Aplicación para conversión de moneda.',
+	description: 'Aplicación de venta de divisas en tiempo real',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang='es'>
 			<body suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${anton.variable} antialiased overflow-x-hidden`}>

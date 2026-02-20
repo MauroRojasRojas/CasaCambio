@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -71,6 +72,7 @@ export default function ComplaintsBook() {
 
 	const [showConfirmation, setShowConfirmation] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const toast = useRef<Toast>(null);
 
 	const isFormComplete = () => {
 		return (
@@ -103,9 +105,15 @@ export default function ComplaintsBook() {
 		if (!isFormComplete()) return;
 
 		setIsSubmitting(true);
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-		setShowConfirmation(true);
+		toast.current?.show({
+			severity: 'success',
+			summary: '¡Reclamo Recibido!',
+			detail: 'Tu reclamo ha sido registrado exitosamente. Te contactaremos en 5 a 10 días hábiles.',
+			life: 3000,
+		});
+		await new Promise((resolve) => setTimeout(resolve, 3000));
 		setIsSubmitting(false);
+		handleReset();
 	};
 
 	const handleReset = () => {
@@ -136,6 +144,7 @@ export default function ComplaintsBook() {
 
 	return (
 		<main className='min-h-screen bg-[#F5F7FF] py-12 px-4'>
+			<Toast ref={toast} />
 			{/* Modal de confirmación */}
 			{showConfirmation && (
 				<div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4'>

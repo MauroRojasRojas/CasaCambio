@@ -55,7 +55,7 @@ export default function Hero() {
 			</div>
 
 			{/* ===== FRANJA TRANSFERENCIAS ===== */}
-			<div className='w-full relative bg-[#f2f2f2] overflow-hidden'>
+			<div className='w-full h-full relative bg-[#f2f2f2] overflow-hidden'>
 				<div className='absolute inset-0 bg-[linear-gradient(135deg,#f2f2f2_60%,#e9e9e9_60%)]' />
 
 				<div className='relative max-w-[1800px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 py-2 md:py-4 lg:py-6'>

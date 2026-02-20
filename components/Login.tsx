@@ -13,8 +13,8 @@ export default function Login() {
 	const toast = useRef<Toast>(null);
 	const { login } = useAuth();
 	const [showPass, setShowPass] = useState(false);
-	const [email, setEmail] = useState('luis@gmail.com');
-	const [password, setPassword] = useState('password123');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 	const [emailError, setEmailError] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [isTransitioning, setIsTransitioning] = useState(false);
