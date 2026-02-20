@@ -269,7 +269,6 @@ export default function Historial() {
 						style={{ minWidth: '10rem' }}
 						body={(rowData) => Number(rowData.tasaCompra || rowData.tasaVenta || 0).toFixed(4)}
 					/>
-					<Column field='estado' header='Estado' sortable style={{ minWidth: '10rem' }} body={estadoBodyTemplate} />
 					<Column headerStyle={{ width: '3rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
 				</DataTable>
 			</div>
