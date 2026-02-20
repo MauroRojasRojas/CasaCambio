@@ -52,7 +52,7 @@ export default function Navbar() {
 
 					{/* Logo center */}
 					<div className='flex-1 flex items-center justify-start md:justify-center gap-3'>
-						<Image src='/icons/logomejorado.png' alt='Dollariza' width={50} height={50} priority className='h-10 md:h-12 lg:h-[50px] object-contain' style={{ width: 'auto' }} />
+						<Image src='/icons/logomejorado.png'  onClick={() => router.push('./')} alt='Dollariza' width={50} height={50} priority className='cursor-pointer h-10 md:h-12 lg:h-[50px] object-contain' style={{ width: 'auto' }} />
 						{/* <span className="text-2xl font-bold text-[#003566]">Dollariza</span> */}
 					</div>
 

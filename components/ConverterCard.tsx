@@ -25,7 +25,7 @@ export default function ConverterCard({ onComplete, showButton = true, onButtonC
 	const [rate, setRate] = useState(0);
 	const [fromCurrency, setFromCurrency] = useState('PEN');
 	const [toCurrency, setToCurrency] = useState('USD');
-	const [amount, setAmount] = useState(100);
+	const [amount, setAmount] = useState(1);
 	const [converted, setConverted] = useState(0);
 	const [rotating, setRotating] = useState(false);
 
@@ -143,7 +143,7 @@ export default function ConverterCard({ onComplete, showButton = true, onButtonC
 	const handleButtonClick = onButtonClick || defaultOnButtonClick;
 
 	const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const val = Math.max(100, Number(e.target.value));
+		const val = Math.max(1, Number(e.target.value));
 		setAmount(val);
 
 		let converted = 0;
@@ -234,7 +234,7 @@ export default function ConverterCard({ onComplete, showButton = true, onButtonC
 					<label className='text-xs text-slate-500 font-semibold'>Tú envías</label>
 
 					<div className='mt-1 flex items-center rounded-xl border border-slate-300 px-2 py-1 shadow-sm'>
-						<input type='number' min={100} value={amount} onChange={handleAmountChange} className='w-full bg-transparent text-xl font-bold text-[#11334D] outline-none' />
+						<input type='number' min={11} max={999999999} value={amount} onChange={handleAmountChange} className='w-full bg-transparent text-xl font-bold text-[#11334D] outline-none' />
 
 						<span className='ml-4 mr-2 text-lg font-bold text-zinc-900'>{fromCurrency}</span>
 

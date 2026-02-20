@@ -38,10 +38,10 @@ export default function Hero() {
 								</ul>
 							</div>
 
-							{/* ===== IMAGEN WOMENS ===== 
+							
 							<div className='shrink-0 hidden lg:flex -ml-10 items-end'>
 								<img src='/assets/womens.png' alt='Equipo Dollariza' className='h-80 lg:h-[400px] 4k:h-[500px] block' />
-							</div>*/}
+							</div>
 						</div>
 
 						{/* DERECHA - Columna 4 */}

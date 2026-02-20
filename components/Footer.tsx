@@ -78,7 +78,7 @@ export default function Footer() {
 
 				{/* --- línea inferior --- */}
 				<div className='border-t border-[#ffffff33] mt-8 md:mt-12 pt-4 md:pt-6 text-center text-gray-400 text-xs sm:text-sm'>
-					© {new Date().getFullYear()} Dollariza — Todos los derechos reservados.
+					© {new Date().getFullYear()} Dollariza — Todos los derechos reservados - Powered by Arcanight.
 				</div>
 			</footer>
 		</>
