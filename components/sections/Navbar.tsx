@@ -29,14 +29,7 @@ export default function Navbar() {
 
 	return (
 		<div className='fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200'>
-			<div className='max-w-[1800px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 py-3'>
-				{/* Top navbar with Personas and Empresas */}
-				<div className='flex justify-center mb-2 border-b border-slate-200 py-2'>
-					<nav className='flex items-center gap-4 md:gap-8 text-xs sm:text-sm font-medium text-slate-700'>
-						<p className='hover:text-[#0053A4] text-tc-blue-500 font-bold cursor-pointer'>Personas</p>
-						<p className='hover:text-[#0053A4] text-tc-blue-500 font-bold cursor-pointer'>Empresas</p>
-					</nav>
-				</div>
+			<div className='max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 py-3'>
 
 				{/* Main header */}
 				<div className='flex items-center justify-between'>

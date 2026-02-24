@@ -54,11 +54,6 @@ export default function Footer() {
 									Quiénes somos
 								</a>
 							</li>
-							<li>
-								<a href='#' className='hover:text-white transition'>
-									Preguntas frecuentes
-								</a>
-							</li>
 						</ul>
 					</div>
 
@@ -78,7 +73,15 @@ export default function Footer() {
 
 				{/* --- línea inferior --- */}
 				<div className='border-t border-[#ffffff33] mt-8 md:mt-12 pt-4 md:pt-6 text-center text-gray-400 text-xs sm:text-sm'>
-					© {new Date().getFullYear()} Dollariza — Todos los derechos reservados - Powered by Arcanight.
+					© {new Date().getFullYear()} Dollariza — Todos los derechos reservados - Powered by{" "}
+					<a
+						href="https://arcanight.pe"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="underline hover:text-white transition-colors"
+					>
+						Arcanight
+					</a>
 				</div>
 			</footer>
 		</>

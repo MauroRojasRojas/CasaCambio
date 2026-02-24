@@ -196,7 +196,7 @@ export default function LiveExchangeRate() {
 				{new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })} hrs
 			</p>
 
-			<div className='grid grid-cols-1 lg:grid-cols-2 max-w-[1800px] mx-auto gap-6 md:gap-8 lg:gap-10'>
+			<div className='grid grid-cols-1 lg:grid-cols-2 max-w-[1240px] mx-auto gap-6 md:gap-8 lg:gap-10'>
 				{/* Tabla */}
 				<div className='bg-white p-4 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-md'>
 					<div className='flex flex-row justify-between items-center gap-2 mb-4'>

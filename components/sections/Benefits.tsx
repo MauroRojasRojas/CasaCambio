@@ -10,7 +10,7 @@ export default function Benefits() {
 	};
 
 	return (
-		<section className='py-12 md:py-16 lg:py-20 4k:py-24 px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 max-w-[1800px] mx-auto'>
+		<section className='py-12 md:py-16 lg:py-20 4k:py-24 px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 max-w-[1240px] mx-auto'>
 			<div className='grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12'>
 				<div>
 					<h3 className='text-2xl sm:text-3xl md:text-4xl font-bold text-[#02254A] mb-3 md:mb-4'>

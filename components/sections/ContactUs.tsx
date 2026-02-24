@@ -54,7 +54,7 @@ export default function ContactUs() {
 	return (
 		<section className='pt-30 sm:pt-26 md:pt-40 lg:pt-45 pb-15 bg-gray-50'>
 			<Toast ref={toast} />
-			<div className='max-w-[1800px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16'>
+			<div className='max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16'>
 				<div className='text-center mb-12 md:mb-16'>
 					<h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-[#02254A] mb-4'>Contáctanos</h1>
 					<p className='text-lg md:text-xl text-slate-600 max-w-3xl mx-auto'>
