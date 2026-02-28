@@ -82,6 +82,42 @@
 .p-checkbox .p-checkbox-box {
 	border-color: var(--surface-300);
 }
+	/* Ajustes específicos para los paneles de Dropdown en pantallas móviles */
+	@media (max-width: 640px) {
+	  .dropdown-panel-mobile {
+	    left: 0 !important;
+	    right: 0 !important;
+	    min-width: 100% !important;
+	    width: auto !important;
+	    box-sizing: border-box !important;
+	    white-space: normal !important;
+	    word-break: break-word !important;
+	    padding-left: 0.5rem !important;
+	    padding-right: 0.5rem !important;
+	  }
+
+	  .dropdown-panel-mobile .p-dropdown-items {
+	    max-height: 60vh !important;
+	    overflow: auto !important;
+	  }
+	}
+
+/* Mostrar etiquetas completas: permitir wrapping y altura automática */
+@media (max-width: 640px) {
+	.dropdown-panel-mobile .p-dropdown-items .p-dropdown-item {
+		white-space: normal !important;
+		overflow: visible !important;
+		text-overflow: clip !important;
+		height: auto !important;
+		padding-top: 0.5rem !important;
+		padding-bottom: 0.5rem !important;
+		align-items: flex-start !important;
+	}
+
+	.dropdown-panel-mobile .p-dropdown-items .p-dropdown-item .p-ripple {
+		display: none !important;
+	}
+}
 
 .p-checkbox .p-checkbox-box.p-highlight {
 	background: var(--primary-600);
@@ -149,4 +185,28 @@
 .p-component {
 	--text-color: var(--text-color);
 	--text-color-secondary: var(--text-color-secondary);
+}
+
+/* Responsive tweaks for Steps component */
+/* use correct class for the step title and adjust thresholds */
+@media (max-width: 640px) {
+  /* shrink font and allow wrapping so labels don't overlap */
+  .p-steps .p-steps-title {
+    font-size: 0.75rem;
+    white-space: normal; /* allow line breaks */
+  }
+  /* add a little horizontal padding between items */
+  .p-steps .p-steps-item {
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* hide the label text entirely on very small screens */
+  .p-steps .p-steps-title {
+    display: none;
+  }
+  .p-steps .p-steps-item {
+    min-width: auto;
+  }
 }

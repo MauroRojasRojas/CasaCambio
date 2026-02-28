@@ -1,31 +1,5 @@
 @import 'tailwindcss';
 
-/* ===== CONFIGURACIÓN DE TAILWIND ===== */
-@theme {
-	/* Breakpoints */
-	--breakpoint-xs: 320px;
-	--breakpoint-sm: 640px;
-	--breakpoint-md: 768px;
-	--breakpoint-lg: 1024px;
-	--breakpoint-xl: 1280px;
-	--breakpoint-2xl: 1536px;
-	--breakpoint-4k: 2560px;
-
-	/* Colores personalizados */
-	--color-primary: #02254a;
-	--color-secondary: #fab73d;
-	--color-accent: #0053a4;
-
-	/* Espaciado de secciones */
-	--spacing-section: 3rem;
-	--spacing-section-md: 4rem;
-	--spacing-section-lg: 5rem;
-	--spacing-section-4k: 6rem;
-
-	/* Contenedor máximo */
-	--container-max: 1800px;
-}
-
 :root {
 	--background: #ffffff;
 	--foreground: #171717;

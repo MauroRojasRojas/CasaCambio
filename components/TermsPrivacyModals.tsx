@@ -31,7 +31,8 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 				modal
 				header="Términos y Condiciones"
 				footer={termsFooter}
-				style={{ width: '50rem' }}
+				style={{ width: '50vw' }}
+				breakpoints={{ '640px': '90vw', '480px': '100vw' }}
 				onHide={() => setShowTermsModal(false)}
 			>
 				<div className='text-sm text-slate-700 space-y-4'>
@@ -148,7 +149,8 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 				modal
 				header="Política de Privacidad"
 				footer={privacyFooter}
-				style={{ width: '50rem' }}
+				style={{ width: '50vw' }}
+				breakpoints={{ '640px': '90vw', '480px': '100vw' }}
 				onHide={() => setShowPrivacyModal(false)}
 			>
 				<div className='text-sm text-slate-700 space-y-4'>

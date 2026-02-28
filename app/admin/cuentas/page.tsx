@@ -81,11 +81,13 @@ export default function Cuentas() {
 
 	const renderHeader = () => {
 		return (
-			<div className='flex flex-wrap gap-2 justify-content-between align-items-center'>
-				<IconField iconPosition='left'>
-					<InputIcon className='pi pi-search' />
-					<InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder='Buscar...' />
-				</IconField>
+			<div className='flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2'>
+				<div className='w-full sm:w-auto flex-1 min-w-0'>
+					<IconField iconPosition='left' className='w-full'>
+						<InputIcon className='pi pi-search' />
+						<InputText className='w-full' value={globalFilterValue} onChange={onGlobalFilterChange} placeholder='Buscar...' />
+					</IconField>
+				</div>
 			</div>
 		);
 	};
@@ -162,13 +164,13 @@ export default function Cuentas() {
 	const header = renderHeader();
 
 	return (
-		<div className='flex flex-col gap-6'>
-			<div className='flex justify-between items-center'>
-				<h1 className='text-3xl font-bold text-[#02254A]'>Mis cuentas</h1>
-				<Button raised label="Registrar Cuenta" icon="pi pi-plus" onClick={() => { setCuentaToEdit(null); setModalVisible(true); }} />
-			</div>
+		<div className='flex flex-col gap-6 px-4'>
+				<div className='flex flex-col sm:flex-row sm:justify-between sm:items-center gap-y-4'>
+					<h1 className='text-3xl font-bold text-[#02254A]'>Mis cuentas</h1>
+					<Button className='w-full sm:w-auto' raised size='small' label="Registrar Cuenta" icon="pi pi-plus" onClick={() => { setCuentaToEdit(null); setModalVisible(true); }} />
+				</div>
 
-			<div className='bg-white rounded-lg p-6 shadow-sm border border-slate-200'>
+			<div className='bg-white rounded-lg shadow-sm border border-slate-200'>
 				<DataTable
 					value={cuentas}
 					paginator

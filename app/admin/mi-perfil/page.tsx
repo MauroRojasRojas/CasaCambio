@@ -173,7 +173,8 @@ export default function MiPerfilPage() {
 		<Dialog
 			header="Cambiar Contraseña"
 			visible={showPasswordDialog}
-			style={{ width: '90vw', maxWidth: '350px' }}
+			style={{ width: '50vw' }}
+			breakpoints={{ '640px': '90vw', '480px': '100vw' }}
 			onHide={() => {
 				setShowPasswordDialog(false);
 				setPasswordData({
@@ -371,7 +372,7 @@ export default function MiPerfilPage() {
 							<label className="text-sm font-semibold text-gray-600 flex items-center gap-2">
 								<i className="pi pi-envelope"></i> Correo Electrónico
 							</label>
-							<p className="text-gray-800 mt-1">{user?.correo || '-'}</p>
+							<p className="text-gray-800 mt-1 text-[15px]">{user?.correo || '-'}</p>
 						</div>
 						<div>
 							<label className="text-sm font-semibold text-gray-600 flex items-center gap-2">
