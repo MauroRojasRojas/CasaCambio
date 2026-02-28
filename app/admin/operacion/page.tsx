@@ -91,6 +91,32 @@ export default function Operacion() {
 	];
 
 	useEffect(() => {
+  if (step === 1) return;
+
+  const savedSentAmount = localStorage.getItem('converterSentAmount');
+  const savedSentCurrency = localStorage.getItem('converterSentCurrency');
+  const savedReceivedAmount = localStorage.getItem('converterReceivedAmount');
+  const savedReceivedCurrency = localStorage.getItem('converterReceivedCurrency');
+
+  if (savedSentAmount && !isNaN(Number(savedSentAmount))) {
+    setTransferAmount(Number(savedSentAmount));
+  }
+
+  if (savedSentCurrency) {
+    setSentCurrency(savedSentCurrency);
+    setTransferMode(savedSentCurrency === 'USD' ? 'COMPRA' : 'VENTA');
+  }
+
+  if (savedReceivedAmount && !isNaN(Number(savedReceivedAmount))) {
+    setReceivedAmount(Number(savedReceivedAmount));
+  }
+
+  if (savedReceivedCurrency) {
+    setReceivedCurrency(savedReceivedCurrency);
+  }
+}, [step]);
+
+	/* useEffect(() => {
 		const savedSentAmount = localStorage.getItem('converterSentAmount');
 		const savedSentCurrency = localStorage.getItem('converterSentCurrency');
 		const savedReceivedAmount = localStorage.getItem('converterReceivedAmount');
@@ -112,7 +138,7 @@ export default function Operacion() {
 		if (savedReceivedCurrency) {
 			setReceivedCurrency(savedReceivedCurrency);
 		}
-	}, []);
+	}, []); */
 
 	// Sincronizar valores cuando se cambia de step
 	useEffect(() => {

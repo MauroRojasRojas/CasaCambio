@@ -1,3 +1,4 @@
+import { CreateComplaintBody } from '@/data/reclamos.model';
 import type { OperationModel } from '../../data/operation.model';
 import { apiRequest } from '../utils/apiHelper';
 
@@ -21,4 +22,11 @@ export async function obtenerOperaciones(): Promise<Response> {
 
 export async function obtenerOperacionesPorPersona(codigoPersona: string): Promise<Response> {
 	return apiRequest(`/operaciones/persona/${codigoPersona}`);
+}
+
+export async function reclamos(body: CreateComplaintBody): Promise<Response> {
+	return apiRequest('/reclamos', {
+		method: 'POST',
+		body: JSON.stringify(body),
+	});
 }

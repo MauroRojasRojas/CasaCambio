@@ -18,7 +18,7 @@ export default function ScrollAlertsHorizontal() {
 	];
 
 	return (
-		<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-8 md:gap-8 lg:gap-12 4k:gap-16 justify-items-center py-12 md:py-16 lg:py-20 4k:py-24 px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 max-w-[1800px] mx-auto'>
+		<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-8 md:gap-8 lg:gap-12 4k:gap-16 justify-items-center py-12 md:py-16 lg:py-20 4k:py-24 px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 max-w-[1240px] mx-auto'>
 			{items.map((item, i) => (
 				<Card key={i} i={i} title={item.title} text={item.text} />
 			))}
@@ -37,9 +37,9 @@ function Card({ title, text, i }: CardProps) {
 		<motion.div className={`card-container-${i} mb-4 md:-mb-10`} style={cardContainer} initial='offscreen' whileInView='onscreen' viewport={{ amount: 0.5 }}>
 			<div style={{ ...splash, background: 'linear-gradient(306deg, #3A475F, #B63A42)' }} />
 
-			<motion.div style={card} variants={cardVariants} className='card w-64 sm:w-72 md:w-80 lg:w-96'>
-				<h3 className='text-xl sm:text-2xl md:text-[28px] font-extrabold text-[#02254A] mb-3 md:mb-4'>{title}</h3>
-				<p className='text-sm sm:text-base text-[#4A5568] leading-relaxed'>{text}</p>
+			<motion.div style={card} variants={cardVariants} className='card w-56 sm:w-60 md:w-64 lg:w-72'>
+				<h3 className='text-lg sm:text-xl md:text-2xl font-extrabold text-[#02254A] mb-2'>{title}</h3>
+				<p className='text-sm text-[#4A5568] leading-relaxed'>{text}</p>
 			</motion.div>
 		</motion.div>
 	);
@@ -66,7 +66,7 @@ const cardContainer: React.CSSProperties = {
 
 const splash: React.CSSProperties = {
 	position: 'absolute',
-	top: 0,
+	top: -50,
 	left: 0,
 	right: 0,
 	bottom: 0,
@@ -75,15 +75,15 @@ const splash: React.CSSProperties = {
 };
 
 const card: React.CSSProperties = {
-	minHeight: 320,
-	borderRadius: 25,
-	background: '#ffffff',
-	boxShadow: '0 0 4px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.08)',
-	transformOrigin: '10% 60%',
-	padding: '20px 15px',
-	display: 'flex',
-	flexDirection: 'column',
-	justifyContent: 'center',
-	zIndex: 10,
-	textAlign: 'center',
+  minHeight: 220,          // antes 320
+  borderRadius: 20,        // antes 25 (opcional)
+  background: '#ffffff',
+  boxShadow: '0 0 4px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.08)',
+  transformOrigin: '10% 60%',
+  padding: '16px 14px',    // antes 20px 15px
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  zIndex: 10,
+  textAlign: 'center',
 };

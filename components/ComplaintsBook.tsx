@@ -11,6 +11,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
 import { InputNumber } from 'primereact/inputnumber';
+import { reclamos } from '@/lib/services/operacionService';
 
 interface ComplaintForm {
 	email: string;
@@ -102,19 +103,52 @@ export default function ComplaintsBook() {
 	};
 
 	const handleSubmit = async () => {
-		if (!isFormComplete()) return;
+  if (!isFormComplete() || isSubmitting) return;
 
-		setIsSubmitting(true);
-		toast.current?.show({
-			severity: 'success',
-			summary: '¡Reclamo Recibido!',
-			detail: 'Tu reclamo ha sido registrado exitosamente. Te contactaremos en 5 a 10 días hábiles.',
-			life: 3000,
-		});
-		await new Promise((resolve) => setTimeout(resolve, 3000));
-		setIsSubmitting(false);
-		handleReset();
-	};
+  setIsSubmitting(true);
+
+  try {
+    const res = await reclamos({
+      ...form,
+      date: (form.date ?? new Date()).toISOString(), // ✅ serializa Date
+      declaration: true, // ✅ asegura true
+    });
+
+    if (!res.ok) {
+      let msg = 'No se pudo enviar el reclamo. Intenta nuevamente.';
+      try {
+        const data = await res.json();
+        msg = data?.message || data?.error || msg;
+      } catch {}
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: msg,
+        life: 4000,
+      });
+      return;
+    }
+
+    toast.current?.show({
+      severity: 'success',
+      summary: '¡Reclamo Recibido!',
+      detail: 'Tu reclamo ha sido registrado exitosamente. Te contactaremos en 5 a 10 días hábiles.',
+      life: 3000,
+    });
+
+    await new Promise((r) => setTimeout(r, 800)); // opcional, solo para que se vea el toast
+    handleReset();
+  } catch (err: any) {
+    toast.current?.show({
+      severity: 'error',
+      summary: 'Error',
+      detail: err?.message || 'Error de red. Intenta nuevamente.',
+      life: 4000,
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
 	const handleReset = () => {
 		setShowConfirmation(false);
@@ -376,6 +410,7 @@ export default function ComplaintsBook() {
 									onChange={(e) => handleInputChange('detail', e.target.value)}
 									className='w-full'
 									rows={4}
+									maxLength={1000}
 									placeholder='Describe tu reclamo en detalle...'
 								/>
 							</div>
@@ -383,9 +418,11 @@ export default function ComplaintsBook() {
 								<label className='block text-sm font-semibold text-slate-700 mb-2'>Solicitud del cliente *</label>
 								<InputTextarea
 									value={form.request}
+									maxLength={500}
 									onChange={(e) => handleInputChange('request', e.target.value)}
 									className='w-full'
 									rows={4}
+									
 									placeholder='¿Qué solución esperas recibir?'
 								/>
 							</div>
