@@ -2,6 +2,7 @@
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { ExchangeRateData } from '@/data/exchangeRates';
+import { ReactNode } from 'react';
 
 interface ChartComponentProps {
 	data: ExchangeRateData[];
@@ -27,7 +28,7 @@ export default function ChartComponent({ data, period }: ChartComponentProps) {
 	};
 
 	// Formatear label del tooltip
-	const formatTooltipLabel = (value: string) => {
+	/* const formatTooltipLabel = (value: string) => {
 		if (period === 'week') {
 			return value; // "Sem 1", "Sem 2", etc.
 		}
@@ -41,7 +42,34 @@ export default function ChartComponent({ data, period }: ChartComponentProps) {
 			return `Fecha: ${date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}`;
 		}
 		return value;
-	};
+	}; */
+
+	const formatTooltipLabel = (label: ReactNode): string => {
+	if (label == null) return '';
+
+	const value = typeof label === 'string' || typeof label === 'number' ? String(label) : '';
+	if (!value) return '';
+
+	if (period === 'week') {
+		return value; // 'Sem 1', 'Sem 2', etc.
+	}
+	if (period === 'month') {
+		return `Mes: ${value}`;
+	}
+
+	// Para día
+	if (value.includes('-')) {
+		const [year, month, day] = value.split('-').map(Number);
+		const date = new Date(year, month - 1, day);
+		return `Fecha: ${date.toLocaleDateString('es-ES', {
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric',
+		})}`;
+	}
+
+	return value;
+};
 
 	return (
 		<ResponsiveContainer width='100%' height='100%'>
