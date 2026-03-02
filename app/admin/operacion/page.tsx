@@ -15,7 +15,7 @@ import { registrarOperacion } from '@/lib/services/operacionService';
 import type { BankAccountModel } from '@/data/bank-account.model';
 import { OperationModel } from '@/data/operation.model';
 import { RAZON_SOCIAL, RUC } from '@/lib/utils/constants';
-import { BANK_ACCOUNTS } from '@/data/banks';
+/* import { BANK_ACCOUNTS } from '@/data/banks'; */
 
 export default function Operacion() {
 	const compra = 3.3465;
