@@ -91,30 +91,30 @@ export default function Operacion() {
 	];
 
 	useEffect(() => {
-  if (step === 1) return;
+		if (step === 1) return;
 
-  const savedSentAmount = localStorage.getItem('converterSentAmount');
-  const savedSentCurrency = localStorage.getItem('converterSentCurrency');
-  const savedReceivedAmount = localStorage.getItem('converterReceivedAmount');
-  const savedReceivedCurrency = localStorage.getItem('converterReceivedCurrency');
+		const savedSentAmount = localStorage.getItem('converterSentAmount');
+		const savedSentCurrency = localStorage.getItem('converterSentCurrency');
+		const savedReceivedAmount = localStorage.getItem('converterReceivedAmount');
+		const savedReceivedCurrency = localStorage.getItem('converterReceivedCurrency');
 
-  if (savedSentAmount && !isNaN(Number(savedSentAmount))) {
-    setTransferAmount(Number(savedSentAmount));
-  }
+		if (savedSentAmount && !isNaN(Number(savedSentAmount))) {
+			setTransferAmount(Number(savedSentAmount));
+		}
 
-  if (savedSentCurrency) {
-    setSentCurrency(savedSentCurrency);
-    setTransferMode(savedSentCurrency === 'USD' ? 'COMPRA' : 'VENTA');
-  }
+		if (savedSentCurrency) {
+			setSentCurrency(savedSentCurrency);
+			setTransferMode(savedSentCurrency === 'USD' ? 'COMPRA' : 'VENTA');
+		}
 
-  if (savedReceivedAmount && !isNaN(Number(savedReceivedAmount))) {
-    setReceivedAmount(Number(savedReceivedAmount));
-  }
+		if (savedReceivedAmount && !isNaN(Number(savedReceivedAmount))) {
+			setReceivedAmount(Number(savedReceivedAmount));
+		}
 
-  if (savedReceivedCurrency) {
-    setReceivedCurrency(savedReceivedCurrency);
-  }
-}, [step]);
+		if (savedReceivedCurrency) {
+			setReceivedCurrency(savedReceivedCurrency);
+		}
+	}, [step]);
 
 	/* useEffect(() => {
 		const savedSentAmount = localStorage.getItem('converterSentAmount');
@@ -249,7 +249,7 @@ export default function Operacion() {
 			<div className='max-w-6xl mx-auto px-4 py-8 bg-zinc-50 border border-zinc-200 rounded-lg'>
 				{/* STEPS */}
 				<div className='mb-8 bg-white border border-zinc-200 rounded-lg p-4 overflow-x-auto'>
-					<Steps model={items} activeIndex={step - 1} onSelect={(e) => setStep(e.index + 1)} readOnly={true} />
+					<Steps model={items} activeIndex={step - 1} onSelect={(e) => setStep(e.index + 1)} readOnly={true} className='w-full' />
 				</div>
 				{/* CONTENIDO DEL PASO */}
 				{step === 1 && (
@@ -260,9 +260,9 @@ export default function Operacion() {
 					</div>
 				)}{' '}
 				{step === 2 && (
-					<div className='flex justify-center mt-10 px-4'>
+					<div className='flex justify-center mt-10'>
 						<div className='w-full max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-6 space-y-4'>
-							<div className='flex justify-between items-center border-b border-gray-200 pb-4 mb-4'>
+							<div className='flex flex-col sm:flex-row gap-y-4 justify-between items-center border-b border-gray-200 pb-4 mb-4'>
 								<span className='text-lg font-bold'>Seleccionar Cuentas</span>
 								<Button
 									size='small'
@@ -297,6 +297,8 @@ export default function Operacion() {
 										filterDelay={400}
 										className='w-full'
 										showClear
+										appendTo="self"
+										panelClassName='dropdown-panel-mobile'
 									/>
 								</div>
 								<div>
@@ -321,6 +323,8 @@ export default function Operacion() {
 										filterDelay={400}
 										className='w-full'
 										showClear
+										appendTo="self"
+										panelClassName='dropdown-panel-mobile'
 									/>
 								</div>
 							</div>
@@ -328,7 +332,7 @@ export default function Operacion() {
 					</div>
 				)}{' '}
 				{step === 3 && (
-					<div className='flex justify-center mt-10 px-4'>
+					<div className='flex justify-center mt-10'>
 						<div className='w-full max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-6 space-y-4'>
 							<div className='flex justify-center items-center border-b border-gray-200 pb-4 mb-4'>
 								<span className='text-lg font-bold'>Transfiere</span>
@@ -360,7 +364,7 @@ export default function Operacion() {
 											<td className='px-4 py-2 text-start'>USD</td>
 										</tr>
 										<tr>
-											<td className='px-4 py-2 font-semibold text-start'>Número de cuenta CCI</td>
+											<td className='px-4 py-2 font-semibold text-start'>CCI</td>
 											<td className='px-4 py-2 text-start'>
 												<button onClick={() => copyToClipboard('00219300109092111219')} className='text-blue-600 underline hover:text-blue-800 cursor-pointer'>
 													00219300109092111219
@@ -374,7 +378,7 @@ export default function Operacion() {
 					</div>
 				)}
 				{step === 4 && (
-					<div className='flex justify-center mt-10 px-4'>
+					<div className='flex justify-center mt-10'>
 						<div className='w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8 border border-gray-200'>
 							{/* Logo centrado */}
 							<div className='flex justify-center mb-8'>
@@ -382,20 +386,22 @@ export default function Operacion() {
 							</div>
 
 							{/* Encabezado con 2 columnas */}
-							<div className='grid grid-cols-2 gap-4 mb-6'>
+							<div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6'>
 								<div>
 									<h1 className='text-xl font-bold text-gray-800 mb-3'>CONSTANCIA DE PAGO</h1>
 									<p className='font-semibold text-gray-800 text-sm'>DOLLAR HOUSE CAMBIOS SAC</p>
 									<p className='text-sm text-gray-600'>RUC: 20611057165</p>
 								</div>
-								<div className='text-right'>
-									<p className='text-sm text-gray-600 mb-3'>{new Intl.DateTimeFormat('es-PE', {
-										year: 'numeric',
-										month: 'long',
-										day: 'numeric',
-										hour: '2-digit',
-										minute: '2-digit',
-									}).format(new Date(emissionDate))}</p>
+								<div className='text-left sm:text-right'>
+									<p className='text-sm text-gray-600 mb-3'>
+										{new Intl.DateTimeFormat('es-PE', {
+											year: 'numeric',
+											month: 'long',
+											day: 'numeric',
+											hour: '2-digit',
+											minute: '2-digit',
+										}).format(new Date(emissionDate))}
+									</p>
 									<p className='font-semibold text-gray-800 text-sm'>Código: {generatedOperationCode}</p>
 								</div>
 							</div>
@@ -423,9 +429,9 @@ export default function Operacion() {
 										<span className='font-semibold'>
 											{sentCurrency} {Number(transferAmount).toFixed(2)}
 										</span>{' '}
-										desde su cuenta registrada en <span className='font-semibold'>{selectedCuentaOrigen!.banco}</span> ({maskAccountNumber(selectedCuentaOrigen!.numeroCuenta)}) en moneda{' '}
-										<span className='font-semibold'>{selectedCuentaOrigen!.moneda}</span>, hacia su cuenta receptora en <span className='font-semibold'>{selectedCuentaDestino!.banco}</span> (
-										{maskAccountNumber(selectedCuentaDestino!.numeroCuenta)}) en moneda <span className='font-semibold'>{selectedCuentaDestino!.moneda}</span>, por un monto equivalente de{' '}
+										desde su cuenta registrada en <span className='font-semibold'>{selectedCuentaOrigen!.banco}</span> ({maskAccountNumber(selectedCuentaOrigen!.numeroCuenta)}) en moneda <span className='font-semibold'>{selectedCuentaOrigen!.moneda}</span>,
+										hacia su cuenta receptora en <span className='font-semibold'>{selectedCuentaDestino!.banco}</span> ({maskAccountNumber(selectedCuentaDestino!.numeroCuenta)}) en moneda <span className='font-semibold'>{selectedCuentaDestino!.moneda}</span>,
+										por un monto equivalente de{' '}
 										<span className='font-semibold'>
 											{receivedCurrency} {Number(receivedAmount).toFixed(2)}
 										</span>
@@ -440,8 +446,8 @@ export default function Operacion() {
 								<div className='space-y-3'>
 									<p className='font-semibold text-gray-800 text-sm'>Instrucciones de envío</p>
 									<p className='text-sm text-gray-700 leading-relaxed text-justify'>
-										Envíe esta constancia al correo <span className='font-semibold'>info.dollariza@gmail.com</span> dentro de los próximos 20 minutos junto con el comprobante de su transferencia. Incluya todos
-										los detalles de la operación para una verificación rápida y eficiente.
+										Envíe esta constancia al correo <span className='font-semibold'>info.dollariza@gmail.com</span> dentro de los próximos 20 minutos junto con el comprobante de su transferencia. Incluya todos los detalles de la operación para una verificación
+										rápida y eficiente.
 									</p>
 								</div>
 							</div>
@@ -471,7 +477,7 @@ export default function Operacion() {
 					</div>
 				)}
 				{/* BOTONES NAVEGACIÓN */}
-				<div className='mt-8 bg-white border border-zinc-200 rounded-lg p-4 overflow-x-auto flex gap-4'>
+				<div className='mt-8 bg-white border border-zinc-200 rounded-lg p-4 overflow-x-auto flex flex-col sm:flex-row gap-4'>
 					<Button
 						label='Cancelar'
 						severity='danger'
@@ -567,8 +573,8 @@ export default function Operacion() {
 								</div>
 								<h3 className='text-2xl font-bold text-gray-800 text-center'>Constancia de Pago</h3>
 								<p className='text-lg text-gray-700 leading-relaxed'>
-									Se genera esta constancia con código <strong className='text-[#02254A]'>{generatedOperationCode}</strong> que valida siempre y cuando haga el envío correspondiente de su pago al correo{' '}
-									<strong>info.dollariza@gmail.com</strong>, donde usted realiza la compra de{' '}
+									Se genera esta constancia con código <strong className='text-[#02254A]'>{generatedOperationCode}</strong> que valida siempre y cuando haga el envío correspondiente de su pago al correo <strong>info.dollariza@gmail.com</strong>, donde usted
+									realiza la compra de{' '}
 									<strong>
 										{sentCurrency} {Number(transferAmount).toFixed(2)}
 									</strong>{' '}
@@ -576,8 +582,8 @@ export default function Operacion() {
 									<strong>
 										{receivedCurrency} {Number(receivedAmount).toFixed(2)}
 									</strong>
-									. Esta constancia es un documento oficial emitido por Dollar House Cambios SAC, con RUC 20611057165, y debe ser enviada dentro de los próximos 20 minutos para proceder con la validación y
-									procesamiento de su operación de cambio de divisas. Asegúrese de incluir todos los detalles necesarios en el correo para una verificación rápida y eficiente.
+									. Esta constancia es un documento oficial emitido por Dollar House Cambios SAC, con RUC 20611057165, y debe ser enviada dentro de los próximos 20 minutos para proceder con la validación y procesamiento de su operación de cambio de divisas.
+									Asegúrese de incluir todos los detalles necesarios en el correo para una verificación rápida y eficiente.
 								</p>
 							</div>
 
@@ -615,10 +621,10 @@ export default function Operacion() {
 				header='Confirmación de Envío'
 				visible={showConfirmDialog}
 				style={{ width: '50vw' }}
+				breakpoints={{ '640px': '90vw', '480px': '100vw' }}
 				onHide={() => setShowConfirmDialog(false)}
 				footer={
 					<div className='flex gap-2 justify-end'>
-						<Button label='Cancelar' icon='pi pi-times' severity='secondary' outlined onClick={() => setShowConfirmDialog(false)} />
 						<Button
 							label='Confirmar Envío'
 							icon='pi pi-check'

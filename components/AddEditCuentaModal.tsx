@@ -92,8 +92,8 @@ export default function AddEditCuentaModal({ visible, onHide, cuenta, onSave }: 
 	};
 
 	const footerContent = (
-		<div>
-			<Button label="Cancelar" icon="pi pi-times" onClick={onHide} className="p-button-text" severity="danger" outlined  />
+		<div className="flex justify-end gap-2">
+			<Button label="Cancelar" icon="pi pi-times" onClick={onHide} className="p-button-text" severity="danger" outlined />
 			<Button label="Guardar" icon="pi pi-check" loading={loading} onClick={handleSave} autoFocus />
 		</div>
 	);
@@ -104,11 +104,12 @@ export default function AddEditCuentaModal({ visible, onHide, cuenta, onSave }: 
 				header={cuenta ? 'Editar Cuenta' : 'Registrar Cuenta'}
 				visible={visible}
 				style={{ width: '50vw' }}
+				breakpoints={{ '640px': '90vw', '480px': '100vw' }}
 				onHide={onHide}
 				footer={footerContent}
 			>
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					<div className="col-span-2 flex flex-col">
+				<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4">
+					<div className="sm:col-span-1 md:col-span-2 flex flex-col">
 						<label htmlFor="titular" className="mb-2 font-semibold">Titular</label>
 						<InputText
 							id="titular"

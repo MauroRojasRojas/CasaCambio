@@ -231,7 +231,8 @@ export default function AddEntityModal({ visible, onHide, onSave, type, departam
 		<Dialog
 			header={isEditing ? (type === 'shareholder' ? 'Editar Accionista' : 'Editar Representante Legal') : type === 'shareholder' ? 'Agregar Accionista' : 'Agregar Representante Legal'}
 			visible={visible}
-			style={{ width: modalWidth }}
+			style={{ width: '50vw' }}
+			breakpoints={{ '640px': '90vw', '480px': '100vw' }}
 			footer={footer}
 			onHide={onHide}
 		>

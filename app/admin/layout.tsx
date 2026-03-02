@@ -26,7 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Sidenav isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
           {/* CONTENIDO DINÁMICO */}
-          <section className="flex-1 overflow-y-auto py-6 px-8">{children}</section>
+          <section className="flex-1 overflow-y-auto py-6 sm:px-8">{children}</section>
         </div>
       </main>
     </ProtectedRoute>
