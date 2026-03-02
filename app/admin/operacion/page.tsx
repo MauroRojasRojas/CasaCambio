@@ -371,6 +371,21 @@ export default function Operacion() {
                                       <td className="px-4 py-2 font-semibold text-start">Moneda</td>
                                       <td className="px-4 py-2 text-start">{acc.money}</td>
                                     </tr>
+									<tr className='border-b border-blue-300'>
+                                      <td className='px-4 py-2 font-semibold text-start'>N° de cuenta</td>
+                                      <td className='px-4 py-2 text-start'>
+                                        {acc.account ? (
+                                          <button
+                                            onClick={() => copyToClipboard(acc.account)}
+                                            className='text-blue-600 underline hover:text-blue-800 cursor-pointer'
+                                          >
+                                            {acc.account}
+                                          </button>
+                                        ) : (
+                                          <span className='text-gray-400'>Pendiente</span>
+                                        )}
+                                      </td>
+                                    </tr>
                           
                                     <tr>
                                       <td className="px-4 py-2 font-semibold text-start">CCI</td>

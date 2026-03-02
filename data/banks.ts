@@ -3,6 +3,7 @@ export type BankAccount = {
   bank: string;
   type: string;
   money: string;
+  account: string;
   cci: string;
 };
 
@@ -14,6 +15,7 @@ export const BANK_ACCOUNTS: BankAccount[] = (() => {
       bank: String(x?.bank ?? ''),
       type: String(x?.type ?? ''),
       money: String(x?.money ?? ''),
+      account: String(x?.account ?? ''), // ✅ nuevo
       cci: String(x?.cci ?? ''),
     }));
   } catch {

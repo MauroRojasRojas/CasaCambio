@@ -15,7 +15,7 @@ export type BankAccount = {
 
 export const BANK_ACCOUNTS_JSON =
   process.env.NEXT_PUBLIC_BANK_ACCOUNTS_JSON ||
-  '[{"bank":"BBVA","type":"Cuenta Corriente","money":"SOLES","cci":"01137800010008127676"},{"bank":"BBVA","type":"Cuenta Corriente","money":"DOLARES","cci":"01137800010008129273"},{"bank":"BCP","type":"Cuenta Corriente","money":"SOLES","cci":""},{"bank":"BCP","type":"Cuenta Corriente","money":"DOLARES","cci":""}]';
+  '[{"bank":"BBVA","type":"Cuenta Corriente","money":"SOLES","account":"001103780100081276","cci":"01137800010008127676"},{"bank":"BBVA","type":"Cuenta Corriente","money":"DOLARES","account":"001103780100081292","cci":"01137800010008129273"},{"bank":"BCP","type":"Cuenta Corriente","money":"SOLES","account":"1917354077004","cci":"00219100735407700454"},{"bank":"BCP","type":"Cuenta Corriente","money":"DOLARES","account":"1917354068123","cci":"00219100735406812353"}]';
 
   
 export const DOC_TYPES = ['DNI', 'CE', 'PAS', 'RUC'] as const;
