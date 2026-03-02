@@ -15,7 +15,7 @@ import { registrarOperacion } from '@/lib/services/operacionService';
 import type { BankAccountModel } from '@/data/bank-account.model';
 import { OperationModel } from '@/data/operation.model';
 import { RAZON_SOCIAL, RUC } from '@/lib/utils/constants';
-/* import { BANK_ACCOUNTS } from '@/data/banks'; */
+import { BANK_ACCOUNTS } from '@/data/banks';
 
 export default function Operacion() {
 	const compra = 3.3465;
@@ -350,7 +350,7 @@ export default function Operacion() {
 								<h3 className='font-bold text-lg'>{RAZON_SOCIAL}</h3>
 								<p>RUC: {RUC}</p>
 							</div>
-							{/* <div className='overflow-x-auto p-4 grid gap-3'>
+							<div className='overflow-x-auto p-4 grid gap-3'>
 								{BANK_ACCOUNTS.map((acc, idx) => (
                                 <table
                                   key={`${acc.bank}-${acc.money}-${idx}`}
@@ -404,7 +404,7 @@ export default function Operacion() {
                                   </tbody>
                                 </table>
     ))}
-							</div> */}
+							</div>
 						</div>
 					</div>
 				)}

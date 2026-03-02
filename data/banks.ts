@@ -1,4 +1,4 @@
-/* import { BANK_ACCOUNTS_JSON } from './../lib/utils/constants';
+import { BANK_ACCOUNTS_JSON } from './../lib/utils/constants';
 export type BankAccount = {
   bank: string;
   type: string;
@@ -15,10 +15,10 @@ export const BANK_ACCOUNTS: BankAccount[] = (() => {
       bank: String(x?.bank ?? ''),
       type: String(x?.type ?? ''),
       money: String(x?.money ?? ''),
-      account: String(x?.account ?? ''), // ✅ nuevo
+      account: String(x?.account ?? ''),
       cci: String(x?.cci ?? ''),
     }));
   } catch {
     return [];
   }
-})(); */
+})();
