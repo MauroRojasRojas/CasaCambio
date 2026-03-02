@@ -14,7 +14,8 @@ import { obtenerCuentasPorPersona } from '@/lib/services/cuentaBancariaService';
 import { registrarOperacion } from '@/lib/services/operacionService';
 import type { BankAccountModel } from '@/data/bank-account.model';
 import { OperationModel } from '@/data/operation.model';
-import { BANK_CCI_FOUR, BANK_CCI_ONE, BANK_CCI_THREE, BANK_CCI_TWO, BANK_ID_FOUR, BANK_ID_ONE, BANK_ID_THREE, BANK_ID_TWO, MONEY_BANK_FOUR, MONEY_BANK_ONE, MONEY_BANK_THREE, MONEY_BANK_TWO, RAZON_SOCIAL, RUC, TYPE_ACC_BANK_FOUR, TYPE_ACC_BANK_ONE, TYPE_ACC_BANK_THREE, TYPE_ACC_BANK_TWO } from '@/lib/utils/constants';
+import { RAZON_SOCIAL, RUC } from '@/lib/utils/constants';
+import { BANK_ACCOUNTS } from '@/data/banks';
 
 export default function Operacion() {
 	const compra = 3.3465;
@@ -243,33 +244,6 @@ export default function Operacion() {
 		return masked;
 	};
 
-	const bankAccounts = [
-      {
-        bank: BANK_ID_ONE,
-        type: TYPE_ACC_BANK_ONE,
-        money: MONEY_BANK_ONE,
-        cci: BANK_CCI_ONE,
-      },
-      {
-        bank: BANK_ID_TWO,
-        type: TYPE_ACC_BANK_TWO,
-        money: MONEY_BANK_TWO,
-        cci: BANK_CCI_TWO,
-      },
-      {
-        bank: BANK_ID_THREE,
-        type: TYPE_ACC_BANK_THREE,
-        money: MONEY_BANK_THREE,
-        cci: BANK_CCI_THREE,
-      },
-      {
-        bank: BANK_ID_FOUR,
-        type: TYPE_ACC_BANK_FOUR,
-        money: MONEY_BANK_FOUR,
-        cci: BANK_CCI_FOUR,
-      },
-    ].filter((x) => x.bank && x.type && x.money);
-
 	return (
 		<>
 			<Toast ref={toast} />
@@ -377,7 +351,7 @@ export default function Operacion() {
 								<p>RUC: {RUC}</p>
 							</div>
 							<div className='overflow-x-auto p-4 grid gap-3'>
-								{bankAccounts.map((acc, idx) => (
+								{BANK_ACCOUNTS.map((acc, idx) => (
                                 <table
                                   key={`${acc.bank}-${acc.money}-${idx}`}
                                   className="w-full border-separate border-2 border-blue-300 rounded-lg shadow-md bg-white"

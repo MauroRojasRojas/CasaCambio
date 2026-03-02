@@ -5,26 +5,19 @@ export const RAZON_SOCIAL = process.env.NEXT_PUBLIC_RAZON_SOCIAL || 'M&M DIVISAS
 export const RUC = process.env.NEXT_PUBLIC_RUC || '20614994364';
 export const ADDRESS_RUC =  process.env.NEXT_PUBLIC_ADDRESS_RUC || 'Av. Producción Nacional N° 185 – Urb. La Villa, Chorrillos, Lima – Perú.';
 
-export const BANK_ID_ONE = process.env.NEXT_PUBLIC_BANK_ID_ONE || 'BBVA';
-export const TYPE_ACC_BANK_ONE = process.env.NEXT_PUBLIC_TYPE_ACC_BANK_ONE || 'Cuenta Corriente';
-export const MONEY_BANK_ONE = process.env.NEXT_PUBLIC_MONEY_BANK_ONE || 'SOLES';
-export const BANK_CCI_ONE = process.env.NEXT_PUBLIC_BANK_CCI_ONE || '01137800010008127676';
 
-export const BANK_ID_TWO = process.env.NEXT_PUBLIC_BANK_ID_TWO || 'BBVA';
-export const TYPE_ACC_BANK_TWO = process.env.NEXT_PUBLIC_TYPE_ACC_BANK_TWO || 'Cuenta Corriente';
-export const MONEY_BANK_TWO = process.env.NEXT_PUBLIC_MONEY_BANK_TWO || 'DOLARES';
-export const BANK_CCI_TWO = process.env.NEXT_PUBLIC_BANK_CCI_TWO || '01137800010008129273';
+export type BankAccount = {
+  bank: string;
+  type: string;
+  money: string;
+  cci: string;
+};
 
-export const BANK_ID_THREE = process.env.NEXT_PUBLIC_BANK_ID_THREE || 'BCP';
-export const TYPE_ACC_BANK_THREE = process.env.NEXT_PUBLIC_TYPE_ACC_BANK_THREE || 'Cuenta Corriente';
-export const MONEY_BANK_THREE = process.env.NEXT_PUBLIC_MONEY_BANK_THREE || 'SOLES';
-export const BANK_CCI_THREE = process.env.NEXT_PUBLIC_BANK_CCI_THREE || '';
+export const BANK_ACCOUNTS_JSON =
+  process.env.NEXT_PUBLIC_BANK_ACCOUNTS_JSON ||
+  '[{"bank":"BBVA","type":"Cuenta Corriente","money":"SOLES","cci":"01137800010008127676"},{"bank":"BBVA","type":"Cuenta Corriente","money":"DOLARES","cci":"01137800010008129273"},{"bank":"BCP","type":"Cuenta Corriente","money":"SOLES","cci":""},{"bank":"BCP","type":"Cuenta Corriente","money":"DOLARES","cci":""}]';
 
-export const BANK_ID_FOUR = process.env.NEXT_PUBLIC_BANK_ID_FOUR || 'BCP';
-export const TYPE_ACC_BANK_FOUR = process.env.NEXT_PUBLIC_TYPE_ACC_BANK_FOUR || 'Cuenta Corriente';
-export const MONEY_BANK_FOUR = process.env.NEXT_PUBLIC_MONEY_BANK_FOUR || 'DOLARES';
-export const BANK_CCI_FOUR = process.env.NEXT_PUBLIC_BANK_CCI_FOUR || '';
-
+  
 export const DOC_TYPES = ['DNI', 'CE', 'PAS', 'RUC'] as const;
 
 export const GENDERS = ['M', 'F', 'X'] as const;
@@ -50,3 +43,4 @@ export const UBIGEO_PERU = [
 	},
 	// Add more departments
 ] as const;
+
