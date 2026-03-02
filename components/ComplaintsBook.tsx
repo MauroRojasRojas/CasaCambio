@@ -12,6 +12,7 @@ import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
 import { InputNumber } from 'primereact/inputnumber';
 import { reclamos } from '@/lib/services/operacionService';
+import { ADDRESS_RUC, RAZON_SOCIAL, RUC } from '@/lib/utils/constants';
 
 interface ComplaintForm {
 	email: string;
@@ -190,7 +191,7 @@ export default function ComplaintsBook() {
 							plazo de 5 a 10 días hábiles a través del correo electrónico proporcionado.
 							<br />
 							<br />
-							<span className='font-semibold'>Agradecemos tu confianza en Casa de Cambio M&M DIVISAS SRL</span>
+							<span className='font-semibold'>Agradecemos tu confianza en Casa de Cambio {RAZON_SOCIAL}</span>
 						</p>
 						<button onClick={handleReset} className='w-full bg-[#FFE27A] text-[#02254A] py-3 rounded-xl font-semibold hover:bg-[#ffd94a] transition'>
 							Aceptar
@@ -206,17 +207,17 @@ export default function ComplaintsBook() {
 					<h1 className='text-3xl font-bold text-[#02254A] text-center'>Libro de Reclamos</h1>
 					<div className='text-sm text-slate-600 space-y-1 text-center'>
 						<p>
-							<span className='font-semibold'>Razón Social:</span> M&M DIVISAS SRL
+							<span className='font-semibold'>Razón Social:</span> {RAZON_SOCIAL}
 						</p>
 						<p>
-							<span className='font-semibold'>RUC:</span> 20614994364
+							<span className='font-semibold'>RUC:</span> {RUC}
 						</p>
 						<p>
-							<span className='font-semibold'>Domicilio Legal:</span> Av. Producción Nacional N° 185 – Urb. La Villa, Chorrillos, Lima – Perú.
+							<span className='font-semibold'>Domicilio Legal:</span> {ADDRESS_RUC}
 						</p>
 					</div>
 					<p className='text-sm text-slate-700 mt-4 text-center italic'>
-						En cumplimiento del Código de Protección y Defensa del Consumidor, M&M DIVISAS SRL pone a disposición de sus clientes el presente Libro de Reclamaciones.
+						En cumplimiento del Código de Protección y Defensa del Consumidor, {RAZON_SOCIAL} pone a disposición de sus clientes el presente Libro de Reclamaciones.
 					</p>
 				</div>
 

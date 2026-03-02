@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { getTasaActual, getTasasDesdeInicioAno, TasaCambio, TasaHistoricaDesdeInicioAno, calcularMinutosDesdeActualizacion } from '@/lib/services/tasaCambioService';
+import { useRouter } from 'next/navigation';
 
 const ChartComponent = dynamic(() => import('./ChartComponent'), { ssr: false });
 
@@ -10,6 +11,8 @@ const ChartComponent = dynamic(() => import('./ChartComponent'), { ssr: false })
 const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 export default function LiveExchangeRate() {
+	const router = useRouter();
+
 	const [period, setPeriod] = useState<'day' | 'week' | 'month'>('day');
 	const [tasas, setTasas] = useState<TasaCambio | null>(null);
 	const [tasasHistoricas, setTasasHistoricas] = useState<TasaHistoricaDesdeInicioAno[]>([]);
@@ -185,6 +188,10 @@ export default function LiveExchangeRate() {
 		}
 	};
 
+	const goRegister = () => {
+		router.push('/registro');
+	};
+
 	return (
 		<section className='py-12 md:py-16 lg:py-20 4k:py-24 px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16'>
 			<h2 className='text-center text-2xl sm:text-3xl md:text-4xl 4k:text-5xl font-bold text-[#02254A] mb-2'>
@@ -201,7 +208,7 @@ export default function LiveExchangeRate() {
 				<div className='bg-white p-4 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-md'>
 					<div className='flex flex-row justify-between items-center gap-2 mb-4'>
 						<h3 className='text-base sm:text-lg font-semibold text-slate-700'>Cambio online</h3>
-						<button className='bg-yellow-400 text-[#02254A] font-semibold px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-xl shadow text-xs sm:text-sm whitespace-nowrap'>
+						<button onClick={goRegister} className='bg-yellow-400 text-[#02254A] font-semibold px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-xl shadow text-xs sm:text-sm whitespace-nowrap cursor-pointer'>
 							Regístrate
 						</button>
 					</div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'primereact/button';
 import jsPDF from 'jspdf';
 import type { BankAccountModel } from '../data/bank-account.model';
+import { RAZON_SOCIAL, RUC } from '@/lib/utils/constants';
 
 interface ConstanciaPDFProps {
 	userName: string;
@@ -92,7 +93,7 @@ const ConstanciaPDF: React.FC<ConstanciaPDFProps> = ({
 		doc.setFontSize(10);
 		doc.setFont('Helvetica', 'normal');
 		doc.setTextColor(100, 100, 100);
-		doc.text('DOLLAR HOUSE CAMBIOS SAC', leftX, yPosition);
+		doc.text(RAZON_SOCIAL, leftX, yPosition);
 
 		// Columna Derecha - Fecha de emisión (alineada con DOLLAR HOUSE)
 		doc.setFontSize(9);
@@ -106,7 +107,7 @@ const ConstanciaPDF: React.FC<ConstanciaPDFProps> = ({
 		doc.setFontSize(9);
 		doc.setFont('Helvetica', 'normal');
 		doc.setTextColor(100, 100, 100);
-		doc.text('RUC: 20611057165', leftX, yPosition);
+		doc.text(`RUC: ${RUC}`, leftX, yPosition);
 
 		// Columna Derecha - Código (alineado con RUC)
 		doc.setFontSize(9);

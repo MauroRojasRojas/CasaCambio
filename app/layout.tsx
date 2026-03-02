@@ -8,6 +8,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import WhatsAppFloatButton from '@/components/WhatsAppFloatButton';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -85,6 +86,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       >
         <PrimeReactProvider>
           <AuthProvider>{children}</AuthProvider>
+          <WhatsAppFloatButton />
         </PrimeReactProvider>
       </body>
     </html>

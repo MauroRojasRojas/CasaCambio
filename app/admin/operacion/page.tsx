@@ -14,6 +14,7 @@ import { obtenerCuentasPorPersona } from '@/lib/services/cuentaBancariaService';
 import { registrarOperacion } from '@/lib/services/operacionService';
 import type { BankAccountModel } from '@/data/bank-account.model';
 import { OperationModel } from '@/data/operation.model';
+import { BANK_CCI_FOUR, BANK_CCI_ONE, BANK_CCI_THREE, BANK_CCI_TWO, BANK_ID_FOUR, BANK_ID_ONE, BANK_ID_THREE, BANK_ID_TWO, MONEY_BANK_FOUR, MONEY_BANK_ONE, MONEY_BANK_THREE, MONEY_BANK_TWO, RAZON_SOCIAL, RUC, TYPE_ACC_BANK_FOUR, TYPE_ACC_BANK_ONE, TYPE_ACC_BANK_THREE, TYPE_ACC_BANK_TWO } from '@/lib/utils/constants';
 
 export default function Operacion() {
 	const compra = 3.3465;
@@ -242,6 +243,33 @@ export default function Operacion() {
 		return masked;
 	};
 
+	const bankAccounts = [
+      {
+        bank: BANK_ID_ONE,
+        type: TYPE_ACC_BANK_ONE,
+        money: MONEY_BANK_ONE,
+        cci: BANK_CCI_ONE,
+      },
+      {
+        bank: BANK_ID_TWO,
+        type: TYPE_ACC_BANK_TWO,
+        money: MONEY_BANK_TWO,
+        cci: BANK_CCI_TWO,
+      },
+      {
+        bank: BANK_ID_THREE,
+        type: TYPE_ACC_BANK_THREE,
+        money: MONEY_BANK_THREE,
+        cci: BANK_CCI_THREE,
+      },
+      {
+        bank: BANK_ID_FOUR,
+        type: TYPE_ACC_BANK_FOUR,
+        money: MONEY_BANK_FOUR,
+        cci: BANK_CCI_FOUR,
+      },
+    ].filter((x) => x.bank && x.type && x.money);
+
 	return (
 		<>
 			<Toast ref={toast} />
@@ -345,34 +373,49 @@ export default function Operacion() {
 								desde la plataforma de tu banco a la cuenta indicada en las líneas de abajo.
 							</p>
 							<div className='text-center'>
-								<h3 className='font-bold text-lg'>DOLLAR HOUSE CAMBIOS SAC</h3>
-								<p>RUC: 20611057165</p>
+								<h3 className='font-bold text-lg'>{RAZON_SOCIAL}</h3>
+								<p>RUC: {RUC}</p>
 							</div>
-							<div className='overflow-x-auto p-4'>
-								<table className='w-full border-separate border-2 border-blue-300 rounded-lg shadow-md bg-white'>
-									<tbody>
-										<tr className='border-b border-blue-300 bg-blue-50'>
-											<td className='px-4 py-2 font-semibold text-start'>Banco</td>
-											<td className='px-4 py-2 text-start'>BCP</td>
-										</tr>
-										<tr className='border-b border-blue-300'>
-											<td className='px-4 py-2 font-semibold text-start'>Tipo de cuenta</td>
-											<td className='px-4 py-2 text-start'>Cuenta Corriente</td>
-										</tr>
-										<tr className='border-b border-blue-300 bg-blue-50'>
-											<td className='px-4 py-2 font-semibold text-start'>Moneda</td>
-											<td className='px-4 py-2 text-start'>USD</td>
-										</tr>
-										<tr>
-											<td className='px-4 py-2 font-semibold text-start'>CCI</td>
-											<td className='px-4 py-2 text-start'>
-												<button onClick={() => copyToClipboard('00219300109092111219')} className='text-blue-600 underline hover:text-blue-800 cursor-pointer'>
-													00219300109092111219
-												</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+							<div className='overflow-x-auto p-4 grid gap-3'>
+								{bankAccounts.map((acc, idx) => (
+                                <table
+                                  key={`${acc.bank}-${acc.money}-${idx}`}
+                                  className="w-full border-separate border-2 border-blue-300 rounded-lg shadow-md bg-white"
+                                >
+                                  <tbody>
+                                    <tr className="border-b border-blue-300 bg-blue-50">
+                                      <td className="px-4 py-2 font-semibold text-start">Banco</td>
+                                      <td className="px-4 py-2 text-start">{acc.bank}</td>
+                                    </tr>
+                          
+                                    <tr className="border-b border-blue-300">
+                                      <td className="px-4 py-2 font-semibold text-start">Tipo de cuenta</td>
+                                      <td className="px-4 py-2 text-start">{acc.type}</td>
+                                    </tr>
+                          
+                                    <tr className="border-b border-blue-300 bg-blue-50">
+                                      <td className="px-4 py-2 font-semibold text-start">Moneda</td>
+                                      <td className="px-4 py-2 text-start">{acc.money}</td>
+                                    </tr>
+                          
+                                    <tr>
+                                      <td className="px-4 py-2 font-semibold text-start">CCI</td>
+                                      <td className="px-4 py-2 text-start">
+                                        {acc.cci ? (
+                                          <button
+                                            onClick={() => copyToClipboard(acc.cci)}
+                                            className="text-blue-600 underline hover:text-blue-800 cursor-pointer"
+                                          >
+                                            {acc.cci}
+                                          </button>
+                                        ) : (
+                                          <span className="text-gray-400">Pendiente</span>
+                                        )}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+    ))}
 							</div>
 						</div>
 					</div>
@@ -389,8 +432,8 @@ export default function Operacion() {
 							<div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6'>
 								<div>
 									<h1 className='text-xl font-bold text-gray-800 mb-3'>CONSTANCIA DE PAGO</h1>
-									<p className='font-semibold text-gray-800 text-sm'>DOLLAR HOUSE CAMBIOS SAC</p>
-									<p className='text-sm text-gray-600'>RUC: 20611057165</p>
+									<p className='font-semibold text-gray-800 text-sm'>{RAZON_SOCIAL}</p>
+									<p className='text-sm text-gray-600'>RUC: {RUC}</p>
 								</div>
 								<div className='text-left sm:text-right'>
 									<p className='text-sm text-gray-600 mb-3'>
@@ -582,7 +625,7 @@ export default function Operacion() {
 									<strong>
 										{receivedCurrency} {Number(receivedAmount).toFixed(2)}
 									</strong>
-									. Esta constancia es un documento oficial emitido por Dollar House Cambios SAC, con RUC 20611057165, y debe ser enviada dentro de los próximos 20 minutos para proceder con la validación y procesamiento de su operación de cambio de divisas.
+									. Esta constancia es un documento oficial emitido por {RAZON_SOCIAL}, con RUC {RUC}, y debe ser enviada dentro de los próximos 20 minutos para proceder con la validación y procesamiento de su operación de cambio de divisas.
 									Asegúrese de incluir todos los detalles necesarios en el correo para una verificación rápida y eficiente.
 								</p>
 							</div>
