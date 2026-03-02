@@ -386,7 +386,6 @@ export default function Operacion() {
                                         )}
                                       </td>
                                     </tr>
-                          
                                     <tr>
                                       <td className="px-4 py-2 font-semibold text-start">CCI</td>
                                       <td className="px-4 py-2 text-start">
