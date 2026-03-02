@@ -1,4 +1,4 @@
-import { BANK_ACCOUNTS_JSON } from './../lib/utils/constants';
+/* import { BANK_ACCOUNTS_JSON } from './../lib/utils/constants';
 export type BankAccount = {
   bank: string;
   type: string;
@@ -21,4 +21,4 @@ export const BANK_ACCOUNTS: BankAccount[] = (() => {
   } catch {
     return [];
   }
-})();
+})(); */
