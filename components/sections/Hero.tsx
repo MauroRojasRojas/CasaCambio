@@ -5,13 +5,13 @@ import Image from 'next/image';
 
 export default function Hero() {
 	return (
-		<section className='w-full min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center bg-[#02254A]'>
+		<section className='w-full lg:h-screen flex flex-col justify-between items-center bg-[#02254A]'>
 			{/* Parte superior del corte */}
-			<div className='w-full mx-auto pt-26 sm:pt-20 md:pt-30 lg:pt-1 px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 pb-0 shadow-md relative z-10'>
+			<div className='w-full mx-auto pt-26 px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 pb-0 shadow-md relative z-10'>
 				<div className='max-w-[1240px] mx-auto'>
 					<div className='grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-10'>
 						{/* IZQUIERDA - Columna 8 */}
-						<div className='lg:col-span-8 flex flex-col lg:flex-row items-center lg:items-end gap-4 lg:gap-0 pt-4 md:pt-6 lg:pt-8'>
+						<div className='lg:col-span-8 order-first lg:order-0 flex flex-col lg:flex-row items-center lg:items-end gap-4 lg:gap-0 pt-4 md:pt-6 lg:pt-8'>
 							{/* ===== TEXTO ===== */}
 							<div className='shrink-0 text-center lg:text-left lg:pb-8 pb-4'>
 								<h1 className='text-white text-xl sm:text-2xl md:text-2xl lg:text-3xl 4k:text-5xl font-bold tracking-wide drop-shadow-[6px_6px_0_rgba(0,0,0,0.35)] leading-tight mb-6 md:mb-10'>
@@ -45,7 +45,7 @@ export default function Hero() {
 						</div>
 
 						{/* DERECHA - Columna 4 */}
-						<div className='lg:col-span-4 flex items-center justify-center'>
+						<div className='lg:col-span-4 order-last lg:order-0 flex items-center justify-center'>
 							<div className='p-4'>
 								<ConverterCard />
 							</div>
@@ -55,10 +55,10 @@ export default function Hero() {
 			</div>
 
 			{/* ===== FRANJA TRANSFERENCIAS ===== */}
-			<div className='w-full h-full relative bg-[#f2f2f2] overflow-hidden'>
-				<div className='absolute inset-0 bg-[linear-gradient(135deg,#f2f2f2_60%,#e9e9e9_60%)]' />
+			<div className='w-full relative bg-[#f2f2f2] overflow-hidden'>
+				<div className='absolute inset-0 z-0 pointer-events-none bg-[linear-gradient(135deg,#f2f2f2_60%,#e9e9e9_60%)]' />
 
-				<div className='relative max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 py-2 md:py-4 lg:py-6'>
+				<div className='relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 py-2 md:py-4 lg:py-6'>
 					<div className='grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6'>
 						{/* LABEL */}
 						<div className='flex justify-center md:justify-start items-center'>
