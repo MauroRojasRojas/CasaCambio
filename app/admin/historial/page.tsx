@@ -255,7 +255,7 @@ export default function Historial() {
 					pt={{ thead: { style: { backgroundColor: '#02254A', color: 'white' } } }}
 				>
 					<Column selectionMode='multiple' headerStyle={{ width: '3rem' }}></Column>
-					<Column field='id' header='ID' sortable style={{ minWidth: '5rem' }} />
+					{/* <Column field='id' header='ID' sortable style={{ minWidth: '5rem' }} /> */}
 					<Column field='codigoOperacion' header='Código' sortable style={{ minWidth: '10rem' }} />
 					<Column field='fechaEmision' header='Fecha' sortable dataType='date' style={{ minWidth: '10rem' }} body={fechaBodyTemplate} />
 					<Column field='tipoOperacion' header='Tipo de Operación' sortable style={{ minWidth: '12rem' }} />

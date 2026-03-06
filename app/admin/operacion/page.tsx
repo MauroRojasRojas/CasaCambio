@@ -244,6 +244,21 @@ export default function Operacion() {
 		return masked;
 	};
 
+	const mapSentCurrencyToBankMoney = (c: string) => {
+		switch (c) {
+			case 'PEN':
+				return 'SOLES';
+			case 'USD':
+				return 'DOLARES';
+			default:
+				return c.toUpperCase();
+		}
+	};
+
+	const sentCurrencyFromStorage = (typeof window !== 'undefined' ? localStorage.getItem('converterSentCurrency') || '' : '') as string;
+	const effectiveSentCurrency = sentCurrency || sentCurrencyFromStorage || 'PEN';
+	const bankMoneyFilter = mapSentCurrencyToBankMoney(effectiveSentCurrency);
+
 	return (
 		<>
 			<Toast ref={toast} />
@@ -264,7 +279,7 @@ export default function Operacion() {
 				{step === 2 && (
 					<div className='flex justify-center mt-10'>
 						<div className='w-full max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-6 space-y-4'>
-							<div className='flex flex-col sm:flex-row gap-y-4 justify-between items-center border-b border-gray-200 pb-4 mb-4'>
+							<div className='flex flex-col sm:flex-row gap-y-4 justify-between items-center border-b border-zinc-200 pb-4 mb-4'>
 								<span className='text-lg font-bold'>Seleccionar Cuentas</span>
 								<Button
 									size='small'
@@ -289,18 +304,20 @@ export default function Operacion() {
 										options={
 											Array.isArray(cuentas)
 												? cuentas.map((cuenta) => ({
-														label: `${cuenta.banco} - ${cuenta.numeroCuenta} (${cuenta.moneda})`,
-														value: cuenta.id,
+														name: `${cuenta.banco} - ${cuenta.numeroCuenta} (${cuenta.moneda})`,
+														id: cuenta.id,
 													}))
 												: []
 										}
+										optionLabel='name'
+										optionValue='id'
 										placeholder='Selecciona una cuenta'
-										filter
-										filterDelay={400}
 										className='w-full'
 										showClear
-										appendTo="self"
+										appendTo='self'
 										panelClassName='dropdown-panel-mobile'
+										checkmark
+										highlightOnSelect={false}
 									/>
 								</div>
 								<div>
@@ -315,18 +332,20 @@ export default function Operacion() {
 										options={
 											Array.isArray(cuentas)
 												? cuentas.map((cuenta) => ({
-														label: `${cuenta.banco} - ${cuenta.numeroCuenta} (${cuenta.moneda})`,
-														value: cuenta.id,
+														name: `${cuenta.banco} - ${cuenta.numeroCuenta} (${cuenta.moneda})`,
+														id: cuenta.id,
 													}))
 												: []
 										}
+										optionLabel='name'
+										optionValue='id'
 										placeholder='Selecciona una cuenta'
-										filter
-										filterDelay={400}
 										className='w-full'
 										showClear
-										appendTo="self"
+										appendTo='self'
 										panelClassName='dropdown-panel-mobile'
+										checkmark
+										highlightOnSelect={false}
 									/>
 								</div>
 							</div>
@@ -336,7 +355,7 @@ export default function Operacion() {
 				{step === 3 && (
 					<div className='flex justify-center mt-10'>
 						<div className='w-full max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-6 space-y-4'>
-							<div className='flex justify-center items-center border-b border-gray-200 pb-4 mb-4'>
+							<div className='flex justify-center items-center border-b border-zinc-200 pb-4 mb-4'>
 								<span className='text-lg font-bold'>Transfiere</span>
 							</div>
 							<p className='text-center'>
@@ -347,70 +366,51 @@ export default function Operacion() {
 								desde la plataforma de tu banco a la cuenta indicada en las líneas de abajo.
 							</p>
 							<div className='text-center'>
-								<h3 className='font-bold text-lg'>{RAZON_SOCIAL}</h3>
-								<p>RUC: {RUC}</p>
+								<h3 className='font-bold'>{RAZON_SOCIAL}</h3>
+								<p className='text-sm'>RUC: {RUC}</p>
 							</div>
-							<div className='overflow-x-auto p-4 grid gap-3'>
-								{BANK_ACCOUNTS.map((acc, idx) => (
-                                <table
-                                  key={`${acc.bank}-${acc.money}-${idx}`}
-                                  className="w-full border-separate border-2 border-blue-300 rounded-lg shadow-md bg-white"
-                                >
-                                  <tbody>
-                                    <tr className="border-b border-blue-300 bg-blue-50">
-                                      <td className="px-4 py-2 font-semibold text-start">Banco</td>
-                                      <td className="px-4 py-2 text-start">{acc.bank}</td>
-                                    </tr>
-                          
-                                    <tr className="border-b border-blue-300">
-                                      <td className="px-4 py-2 font-semibold text-start">Tipo de cuenta</td>
-                                      <td className="px-4 py-2 text-start">{acc.type}</td>
-                                    </tr>
-                          
-                                    <tr className="border-b border-blue-300 bg-blue-50">
-                                      <td className="px-4 py-2 font-semibold text-start">Moneda</td>
-                                      <td className="px-4 py-2 text-start">{acc.money}</td>
-                                    </tr>
-									<tr className='border-b border-blue-300'>
-                                      <td className='px-4 py-2 font-semibold text-start'>N° de cuenta</td>
-                                      <td className='px-4 py-2 text-start'>
-                                        {acc.account ? (
-                                          <button
-                                            onClick={() => copyToClipboard(acc.account)}
-                                            className='text-blue-600 underline hover:text-blue-800 cursor-pointer'
-                                          >
-                                            {acc.account}
-                                          </button>
-                                        ) : (
-                                          <span className='text-gray-400'>Pendiente</span>
-                                        )}
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td className="px-4 py-2 font-semibold text-start">CCI</td>
-                                      <td className="px-4 py-2 text-start">
-                                        {acc.cci ? (
-                                          <button
-                                            onClick={() => copyToClipboard(acc.cci)}
-                                            className="text-blue-600 underline hover:text-blue-800 cursor-pointer"
-                                          >
-                                            {acc.cci}
-                                          </button>
-                                        ) : (
-                                          <span className="text-gray-400">Pendiente</span>
-                                        )}
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-    ))}
+							<div className='py-4'>
+								<div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4'>
+									{BANK_ACCOUNTS.filter((acc) => acc.money === bankMoneyFilter).map((acc, idx) => (
+										<div
+											key={`${acc.bank}-${acc.money}-${idx}`}
+											className='p-3 rounded-lg border border-zinc-200 shadow-sm hover:shadow-md'
+											style={{ background: 'linear-gradient(135deg, #ffffff 0%, #eff6ff 180%)' }}
+										>
+											<div className='flex flex-col sm:flex-row sm:items-center justify-between gap-2'>
+												<div className='min-w-0'>
+													<div className='font-semibold text-sm truncate text-blue-900'>{acc.bank}</div>
+													<div className='text-xs sm:text-sm text-zinc-500 truncate'>
+														{acc.type} · {acc.money === 'SOLES' ? 'Soles' : acc.money === 'DOLARES' ? 'Dólares' : acc.money}
+													</div>
+												</div>
+												<div className='mt-2 sm:mt-0 text-sm font-mono text-zinc-700 wrap-break-word'>{acc.account ?? <span className='text-zinc-400'>Pendiente</span>}</div>
+											</div>
+											<div className='mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2'>
+												<div className='text-xs sm:text-sm text-zinc-500 wrap-break-word'>CCI: {acc.cci ? <span className='text-zinc-700'>{acc.cci}</span> : <span className='text-zinc-400'>Pendiente</span>}</div>
+												<div className='flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto'>
+													{acc.account && (
+														<button onClick={() => copyToClipboard(acc.account)} className='text-blue-600 text-xs hover:underline w-full sm:w-auto text-left'>
+															Copiar cuenta
+														</button>
+													)}
+													{acc.cci && (
+														<button onClick={() => copyToClipboard(acc.cci)} className='text-blue-600 text-xs hover:underline w-full sm:w-auto text-left'>
+															Copiar CCI
+														</button>
+													)}
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
 							</div>
 						</div>
 					</div>
 				)}
 				{step === 4 && (
 					<div className='flex justify-center mt-10'>
-						<div className='w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8 border border-gray-200'>
+						<div className='w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8 border border-zinc-200'>
 							{/* Logo centrado */}
 							<div className='flex justify-center mb-8'>
 								<img src='/icons/logomejorado.png' alt='Dollariza Logo' className='h-20 w-auto' />
@@ -419,12 +419,12 @@ export default function Operacion() {
 							{/* Encabezado con 2 columnas */}
 							<div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6'>
 								<div>
-									<h1 className='text-xl font-bold text-gray-800 mb-3'>CONSTANCIA DE PAGO</h1>
-									<p className='font-semibold text-gray-800 text-sm'>{RAZON_SOCIAL}</p>
-									<p className='text-sm text-gray-600'>RUC: {RUC}</p>
+									<h1 className='text-xl font-bold text-zinc-800 mb-3'>CONSTANCIA DE PAGO</h1>
+									<p className='font-semibold text-zinc-800 text-sm'>{RAZON_SOCIAL}</p>
+									<p className='text-sm text-zinc-600'>RUC: {RUC}</p>
 								</div>
 								<div className='text-left sm:text-right'>
-									<p className='text-sm text-gray-600 mb-3'>
+									<p className='text-sm text-zinc-600 mb-3'>
 										{new Intl.DateTimeFormat('es-PE', {
 											year: 'numeric',
 											month: 'long',
@@ -433,29 +433,29 @@ export default function Operacion() {
 											minute: '2-digit',
 										}).format(new Date(emissionDate))}
 									</p>
-									<p className='font-semibold text-gray-800 text-sm'>Código: {generatedOperationCode}</p>
+									<p className='font-semibold text-zinc-800 text-sm'>Código: {generatedOperationCode}</p>
 								</div>
 							</div>
 
 							{/* Línea divisora */}
-							<div className='border-b border-gray-300 mb-6'></div>
+							<div className='border-b border-zinc-300 mb-6'></div>
 
 							{/* Información del cliente */}
-							<p className='text-sm text-gray-700 mb-6'>
+							<p className='text-sm text-zinc-700 mb-6'>
 								Cliente: <span className='font-semibold'>{userName}</span>
 							</p>
 
 							{/* Contenido principal */}
 							<div className='space-y-6 mb-8'>
 								{/* Párrafo introductorio */}
-								<p className='text-sm text-gray-700 leading-relaxed text-justify'>
+								<p className='text-sm text-zinc-700 leading-relaxed text-justify'>
 									Se genera esta constancia con código <span className='font-semibold'>{generatedOperationCode}</span> que valida siempre y cuando haga el envío correspondiente de su pago al correo{' '}
 									<span className='font-semibold'>info.dollariza@gmail.com</span>.
 								</p>
 
 								{/* Párrafo de la operación */}
 								{selectedCuentaOrigen && selectedCuentaDestino && (
-									<p className='text-sm text-gray-700 leading-relaxed text-justify'>
+									<p className='text-sm text-zinc-700 leading-relaxed text-justify'>
 										La operación tiene como resultado el envío de{' '}
 										<span className='font-semibold'>
 											{sentCurrency} {Number(transferAmount).toFixed(2)}
@@ -471,12 +471,12 @@ export default function Operacion() {
 								)}
 
 								{/* Línea divisora antes de instrucciones */}
-								<div className='border-b border-gray-300'></div>
+								<div className='border-b border-zinc-300'></div>
 
 								{/* Instrucciones */}
 								<div className='space-y-3'>
-									<p className='font-semibold text-gray-800 text-sm'>Instrucciones de envío</p>
-									<p className='text-sm text-gray-700 leading-relaxed text-justify'>
+									<p className='font-semibold text-zinc-800 text-sm'>Instrucciones de envío</p>
+									<p className='text-sm text-zinc-700 leading-relaxed text-justify'>
 										Envíe esta constancia al correo <span className='font-semibold'>info.dollariza@gmail.com</span> dentro de los próximos 20 minutos junto con el comprobante de su transferencia. Incluya todos los detalles de la operación para una verificación
 										rápida y eficiente.
 									</p>
@@ -499,8 +499,8 @@ export default function Operacion() {
 							</div>
 
 							{/* Pie de página */}
-							<div className='border-t border-gray-300 pt-4'>
-								<p className='text-xs text-gray-500 leading-relaxed text-justify'>
+							<div className='border-t border-zinc-300 pt-4'>
+								<p className='text-xs text-zinc-500 leading-relaxed text-justify'>
 									Esta constancia es válida únicamente si se valida de manera correcta el comprobante enviado por correo electrónico. De lo contrario, quedará anulada y no procederá la transacción.
 								</p>
 							</div>
@@ -594,16 +594,16 @@ export default function Operacion() {
 							</div>
 						</div>
 
-						<h2 className='text-3xl font-bold text-gray-800 mb-2'>Constancia Generada</h2>
-						<p className='text-sm text-gray-500 mb-8'>Tu constancia ha sido creada correctamente</p>
+						<h2 className='text-3xl font-bold text-zinc-800 mb-2'>Constancia Generada</h2>
+						<p className='text-sm text-zinc-500 mb-8'>Tu constancia ha sido creada correctamente</p>
 
 						<div className='space-y-6 mb-8'>
 							<div className='text-justify space-y-4'>
 								<div className='flex justify-center mb-6'>
 									<img src='/icons/logomejorado.png' alt='Logo' className='h-16' />
 								</div>
-								<h3 className='text-2xl font-bold text-gray-800 text-center'>Constancia de Pago</h3>
-								<p className='text-lg text-gray-700 leading-relaxed'>
+								<h3 className='text-2xl font-bold text-zinc-800 text-center'>Constancia de Pago</h3>
+								<p className='text-lg text-zinc-700 leading-relaxed'>
 									Se genera esta constancia con código <strong className='text-[#02254A]'>{generatedOperationCode}</strong> que valida siempre y cuando haga el envío correspondiente de su pago al correo <strong>info.dollariza@gmail.com</strong>, donde usted
 									realiza la compra de{' '}
 									<strong>
@@ -613,18 +613,18 @@ export default function Operacion() {
 									<strong>
 										{receivedCurrency} {Number(receivedAmount).toFixed(2)}
 									</strong>
-									. Esta constancia es un documento oficial emitido por {RAZON_SOCIAL}, con RUC {RUC}, y debe ser enviada dentro de los próximos 20 minutos para proceder con la validación y procesamiento de su operación de cambio de divisas.
-									Asegúrese de incluir todos los detalles necesarios en el correo para una verificación rápida y eficiente.
+									. Esta constancia es un documento oficial emitido por {RAZON_SOCIAL}, con RUC {RUC}, y debe ser enviada dentro de los próximos 20 minutos para proceder con la validación y procesamiento de su operación de cambio de divisas. Asegúrese de
+									incluir todos los detalles necesarios en el correo para una verificación rápida y eficiente.
 								</p>
 							</div>
 
-							<div className='bg-gray-50 p-6 rounded-lg border border-gray-200'>
+							<div className='bg-zinc-50 p-6 rounded-lg border border-zinc-200'>
 								<div className='flex items-center gap-3 mb-4'>
-									<p className='text-sm font-semibold text-gray-800'>
+									<p className='text-sm font-semibold text-zinc-800'>
 										Envía esta constancia al correo <strong>info.dollariza@gmail.com</strong> dentro de los próximos 20 minutos.
 									</p>
 								</div>
-								<div className='text-sm text-gray-500 italic border-t pt-4'>
+								<div className='text-sm text-zinc-500 italic border-t pt-4'>
 									Esta constancia es válida únicamente si se valida de manera correcta el comprobante enviado por correo electrónico. De lo contrario, quedará anulada y no procederá la transacción.
 								</div>
 							</div>
@@ -674,10 +674,10 @@ export default function Operacion() {
 						</div>
 					</div>
 					<h3 className='text-xl font-bold'>¿Has enviado la constancia?</h3>
-					<p className='text-gray-600'>
+					<p className='text-zinc-600'>
 						Asegúrate de haber enviado la constancia de pago al correo <strong>info.dollariza@gmail.com</strong> dentro de los próximos 20 minutos para completar la operación.
 					</p>
-					<p className='text-sm text-gray-500'>Recuerda que la constancia es válida solo si se valida correctamente el comprobante enviado por correo.</p>
+					<p className='text-sm text-zinc-500'>Recuerda que la constancia es válida solo si se valida correctamente el comprobante enviado por correo.</p>
 				</div>
 			</Dialog>
 

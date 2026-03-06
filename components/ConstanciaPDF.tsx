@@ -59,7 +59,7 @@ const ConstanciaPDF: React.FC<ConstanciaPDFProps> = ({
 
 		// Logo PNG - Esperar a que cargue
 		try {
-			const response = await fetch('/icons/logomejorado.png');
+			const response = await fetch('/icons/logo-opt.jpg');
 			const blob = await response.blob();
 			const dataUrl = await new Promise<string>((resolve) => {
 				const reader = new FileReader();
@@ -67,14 +67,16 @@ const ConstanciaPDF: React.FC<ConstanciaPDFProps> = ({
 				reader.readAsDataURL(blob);
 			});
 
-			const imgHeight = 15;
-			const imgWidth = 24;
+			const imgHeight = 50;
+			const imgWidth = 50;
 			const xPos = (pageWidth - imgWidth) / 2;
 			doc.addImage(dataUrl, 'PNG', xPos, yPosition, imgWidth, imgHeight);
-			yPosition += 30;
+			// Aumentar espacio debajo del logo para evitar solapamientos
+			yPosition += 50;
 		} catch (error) {
 			console.log('Logo no disponible');
-			yPosition += 8;
+			// Si no hay logo, aún dejar un poco más de espacio
+			yPosition += 12;
 		}
 
 		// PRIMERA SECCIÓN: 2 Columnas
@@ -182,7 +184,11 @@ const ConstanciaPDF: React.FC<ConstanciaPDFProps> = ({
 		const footerLines = doc.splitTextToSize(footerText, contentWidth);
 		doc.text(footerLines, marginLeft, yPosition);
 
-		doc.save('constancia.pdf');
+		const d = new Date(emissionDate || new Date());
+		const pad = (n: number) => n.toString().padStart(2, '0');
+		const fileDate = `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}`;
+		const filename = `CONSTANCIA-${safeOperationCode}-${fileDate}.pdf`;
+		doc.save(filename);
 	};
 
 	return (

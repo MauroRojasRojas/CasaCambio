@@ -32,7 +32,12 @@ export default function AddEditCuentaModal({ visible, onHide, cuenta, onSave }: 
 	const tiposCuenta = [
 		{ label: 'Ahorros', value: 'Ahorros' },
 		{ label: 'Corriente', value: 'Corriente' },
-		{ label: 'Plazo Fijo', value: 'Plazo Fijo' },
+	];
+
+	const bancos = [
+		'Banco de Crédito del Perú (BCP)',
+		'BBVA Perú',
+		'Banco Pichincha',
 	];
 
 	const monedas = [
@@ -77,7 +82,15 @@ export default function AddEditCuentaModal({ visible, onHide, cuenta, onSave }: 
 			}
 			if (response.ok) {
 				const savedCuenta = await response.json();
-				onSave(savedCuenta);
+				// Ensure the savedCuenta has a unique id to avoid React key warnings in lists
+				if (savedCuenta && (savedCuenta as any).id === undefined) {
+					(savedCuenta as any).id = `tmp-${Date.now()}`;
+				}
+				// Ensure fechaRegistro exists for table rendering
+				if (savedCuenta && (savedCuenta as any).fechaRegistro === undefined) {
+					(savedCuenta as any).fechaRegistro = new Date().toISOString();
+				}
+				onSave(savedCuenta as BankAccountModel);
 				toast.current?.show({ severity: 'success', summary: 'Éxito', detail: cuenta ? 'Cuenta editada correctamente' : 'Cuenta registrada correctamente' });
 				onHide();
 			} else {
@@ -120,11 +133,17 @@ export default function AddEditCuentaModal({ visible, onHide, cuenta, onSave }: 
 					</div>
 					<div className="flex flex-col">
 						<label htmlFor="banco" className="mb-2 font-semibold">Banco</label>
-						<InputText
+						<Dropdown
 							id="banco"
 							value={formData.banco || ''}
-							onChange={(e) => setFormData({ ...formData, banco: e.target.value })}
-							placeholder="Ingrese el banco"
+							options={bancos}
+							editable
+							onChange={(e) => setFormData({ ...formData, banco: e.value })}
+							placeholder="Ingrese o seleccione el banco"
+							className="w-full"
+							style={{ minWidth: 0 }}
+							panelStyle={{ maxWidth: '100vw', wordBreak: 'break-word' }}
+							appendTo={typeof window !== 'undefined' ? document.body : undefined}
 						/>
 					</div>
 					<div className="flex flex-col">

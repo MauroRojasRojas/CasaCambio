@@ -25,32 +25,32 @@ export default function Cuentas() {
 		global: { value: null as string | null, matchMode: FilterMatchMode.CONTAINS },
 	});
 	const [globalFilterValue, setGlobalFilterValue] = useState('');
-	const [tiposCuenta] = useState(['Ahorros', 'Corriente', 'Plazo Fijo']);
+	const [tiposCuenta] = useState(['Ahorros', 'Corriente']);
 	const [monedas] = useState(['PEN', 'USD', 'EUR']);
 	const [estados] = useState(['Activa', 'Inactiva']);
 
-	useEffect(() => {
-		if (cuentas.length === 0) {
-			const loadCuentas = async () => {
-				try {
-					const user = JSON.parse(localStorage.getItem('user') || '{}');
-					const codigoPersona = user.perfilCompleto;
-					if (codigoPersona) {
-						const response = await obtenerCuentasPorPersona(codigoPersona);
-						if (response.ok) {
-							const data = await response.json();
-						setCuentas(Array.isArray(data.message) ? data.message : []);
-						} else {
-							console.error('Error al obtener cuentas');
-						}
-					}
-				} catch (error) {
-					console.error('Error al cargar cuentas:', error);
+
+	const loadCuentas = async () => {
+		try {
+			const user = JSON.parse(localStorage.getItem('user') || '{}');
+			const codigoPersona = user.perfilCompleto;
+			if (codigoPersona) {
+				const response = await obtenerCuentasPorPersona(codigoPersona);
+				if (response.ok) {
+					const data = await response.json();
+					setCuentas(Array.isArray(data.message) ? data.message : []);
+				} else {
+					console.error('Error al obtener cuentas');
 				}
-			};
-			loadCuentas();
+			}
+		} catch (error) {
+			console.error('Error al cargar cuentas:', error);
 		}
-	}, [cuentas.length]);
+	};
+
+	useEffect(() => {
+		loadCuentas();
+	}, []);
 
 	const getSeverity = (estado: string) => {
 		switch (estado) {
@@ -189,7 +189,7 @@ export default function Cuentas() {
 					pt={{ thead: { style: { backgroundColor: '#02254A', color: 'white' } } }}
 				>
 					<Column selectionMode='multiple' headerStyle={{ width: '3rem' }}></Column>
-					<Column field='id' header='ID' sortable style={{ minWidth: '5rem' }} />
+					{/* <Column field='id' header='ID' sortable style={{ minWidth: '5rem' }} /> */}
 					<Column field='banco' header='Banco' sortable style={{ minWidth: '10rem' }} />
 					<Column field='numeroCuenta' header='Número de Cuenta' sortable style={{ minWidth: '12rem' }} />
 					<Column field='tipoCuenta' header='Tipo de Cuenta' sortable style={{ minWidth: '10rem' }} />
@@ -204,14 +204,9 @@ export default function Cuentas() {
 				visible={modalVisible}
 				onHide={() => setModalVisible(false)}
 				cuenta={cuentaToEdit}
-				onSave={(savedCuenta) => {
-					if (cuentaToEdit) {
-						// Editar
-						setCuentas(cuentas.map(c => c.id === savedCuenta.id ? savedCuenta : c));
-					} else {
-						// Agregar
-						setCuentas([...cuentas, savedCuenta]);
-					}
+				onSave={async () => {
+					// After registering/editing a cuenta, reload the list from server
+					await loadCuentas();
 				}}
 			/>
 		</div>
