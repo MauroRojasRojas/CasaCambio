@@ -449,6 +449,7 @@ export default function IdentityStep({
 						<label>Distrito</label>
 					</FloatLabel>
 				</div>
+				
 
 				{/* Dirección - Para todos */}
 				<div>
@@ -457,6 +458,19 @@ export default function IdentityStep({
 						<label htmlFor='address_input'>Dirección</label>
 					</FloatLabel>
 				</div>
+				{docType === 'RUC' && (
+                  <div className="md:col-span-2">
+                    <div className="rounded-xl border border-blue-200 bg-blue-50 px-3 py-3 sm:px-4 sm:py-3 flex items-start gap-2 sm:gap-3">
+                      <i className="pi pi-info-circle text-[#02254A] text-base sm:text-lg mt-[2px] shrink-0" />
+                      <p className="text-sm text-[#02254A] leading-relaxed">
+                        <span className="font-semibold">Obligatorio:</span>{' '}
+                        <span className="break-words">
+                          Enviar Ficha RUC a <span className="font-semibold">info.dollariza@gmail.com</span>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                )}
 			</div>
 
 			{/* SECCIONES PARA EMPRESA */}
