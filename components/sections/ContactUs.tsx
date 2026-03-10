@@ -5,6 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
+import { contactanos } from '@/lib/services/operacionService';
 
 interface ContactForm {
 	name: string;
@@ -30,26 +31,58 @@ export default function ContactUs() {
 		}));
 	};
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
-		if (!form.name || !form.email || !form.subject || !form.message) return;
-
-		setIsSubmitting(true);
-		toast.current?.show({
-			severity: 'success',
-			summary: '¡Mensaje Enviado!',
-			detail: 'Tu mensaje ha sido recibido. Te contactaremos pronto.',
-			life: 3000,
-		});
-		await new Promise((resolve) => setTimeout(resolve, 3000));
-		setIsSubmitting(false);
-		setForm({
-			name: '',
-			email: '',
-			subject: '',
-			message: '',
-		});
-	};
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+    
+      if (!form.name.trim() || !form.email.trim() || !form.subject.trim() || !form.message.trim()) return;
+      if (isSubmitting) return;
+    
+      setIsSubmitting(true);
+    
+      try {
+        const res = await contactanos({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          subject: form.subject.trim(),
+          message: form.message.trim(),
+        });
+    
+        if (!res.ok) {
+          let msg = 'No se pudo enviar tu mensaje. Intenta nuevamente.';
+          try {
+            const data = await res.json();
+            msg = data?.message || data?.error || msg;
+          } catch {}
+    
+          toast.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: msg,
+            life: 4000,
+          });
+          return;
+        }
+    
+        toast.current?.show({
+          severity: 'success',
+          summary: '¡Mensaje Enviado!',
+          detail: 'Tu mensaje ha sido recibido. Te contactaremos pronto.',
+          life: 3000,
+        });
+    
+        await new Promise((r) => setTimeout(r, 800));
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } catch (err: any) {
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: err?.message || 'Error de red. Intenta nuevamente.',
+          life: 4000,
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
 
 	return (
 		<section className='pt-30 sm:pt-26 md:pt-40 lg:pt-45 pb-15 bg-gray-50'>
@@ -122,6 +155,8 @@ export default function ContactUs() {
 							<div>
 								<label className='block text-sm font-medium text-slate-700 mb-1'>Nombre</label>
 								<InputText
+									required
+									maxLength={200}
 									className='w-full'
 									placeholder='Tu nombre completo'
 									value={form.name}
@@ -131,7 +166,9 @@ export default function ContactUs() {
 							<div>
 								<label className='block text-sm font-medium text-slate-700 mb-1'>Correo Electrónico</label>
 								<InputText
+									required
 									type='email'
+									maxLength={200}
 									className='w-full'
 									placeholder='tu@email.com'
 									value={form.email}
@@ -141,7 +178,9 @@ export default function ContactUs() {
 							<div>
 								<label className='block text-sm font-medium text-slate-700 mb-1'>Asunto</label>
 								<InputText
+									required
 									className='w-full'
+									maxLength={120}
 									placeholder='Asunto de tu mensaje'
 									value={form.subject}
 									onChange={(e) => handleInputChange('subject', e.target.value)}
@@ -150,8 +189,10 @@ export default function ContactUs() {
 							<div>
 								<label className='block text-sm font-medium text-slate-700 mb-1'>Mensaje</label>
 								<InputTextarea
+									required
 									rows={4}
 									className='w-full'
+									maxLength={2000}
 									placeholder='Escribe tu mensaje aquí...'
 									value={form.message}
 									onChange={(e) => handleInputChange('message', e.target.value)}
