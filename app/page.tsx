@@ -18,11 +18,11 @@ export default function Home() {
 
 			<Workflow />
 
-			<LiveExchangeRate />
+			<Benefits />
 
 			<ScrollAlertsHorizontal />
 
-			<Benefits />
+			<LiveExchangeRate />
 
 			<Testimonials />
 

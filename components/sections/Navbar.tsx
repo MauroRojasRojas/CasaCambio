@@ -35,6 +35,9 @@ export default function Navbar() {
 				<div className='flex items-center justify-between'>
 					{/* Left nav */}
 					<nav className='hidden md:flex items-center gap-4 lg:gap-6 text-sm lg:text-base font-medium text-slate-700'>
+						<button className='hover:text-[#0053A4] font-semibold cursor-pointer' onClick={() => router.push('/')}>
+							Inicio
+						</button>
 						<button className='hover:text-[#0053A4] font-semibold cursor-pointer' onClick={() => router.push('/quienes-somos')}>
 							¿Quiénes somos?
 						</button>
@@ -45,7 +48,7 @@ export default function Navbar() {
 
 					{/* Logo center */}
 					<div className='flex-1 flex items-center justify-start md:justify-center gap-3 m-2'>
-						<Image src='/icons/logov.png' onClick={() => router.push('./')} alt='Dollariza' width={180} height={180} priority className='cursor-pointer h-10 md:h-12 lg:h-[130px] object-contain' style={{ width: 'auto' }} />
+						<Image src='/icons/logov.png' onClick={() => router.push('./')} alt='Dollariza' width={150} height={150} priority className='cursor-pointer h-10 md:h-12 lg:h-[100px] object-contain' style={{ width: 'auto' }} />
 					</div>
 
 					{/* Right buttons */}
@@ -155,6 +158,9 @@ export default function Navbar() {
 					<div className='md:hidden mt-4 pb-4 border-t border-slate-200'>
 						<nav className='flex flex-col gap-4'>
 							{/* Main nav items */}
+							<button className='mt-4 text-left hover:text-[#0053A4] font-semibold cursor-pointer' onClick={() => router.push('/')}>
+								Inicio
+							</button>
 							<button className='mt-4 text-left hover:text-[#0053A4] font-semibold cursor-pointer' onClick={() => router.push('/quienes-somos')}>
 								¿Quiénes somos?
 							</button>
