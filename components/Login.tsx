@@ -168,7 +168,7 @@ export default function Login() {
 						<div className='w-full flex items-center justify-center p-8'>
 							<div className='w-[330px] xl:w-[360px] h-[460px] xl:h-[500px] overflow-hidden rounded-[26px] bg-[#f8f8f8]'>
 								<Image
-									src='/assets/iniciarsesion.png'
+									src='/assets/iniciarsesion.jpg'
 									alt='Login banner'
 									width={600}
 									height={600}

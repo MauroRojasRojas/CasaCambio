@@ -358,7 +358,7 @@ export default function Page() {
 		<div className='w-full flex items-center justify-center p-6'>
 			<div className='w-[340px] xl:w-[380px] 2xl:w-[400px] h-[470px] xl:h-[520px] overflow-hidden rounded-[28px] bg-[#f8f8f8]'>
 				<Image
-					src='/assets/registrate.png'
+					src='/assets/registrate.jpg'
 					alt='Registro banner'
 					width={1414}
 					height={2000}
