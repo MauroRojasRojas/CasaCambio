@@ -5,51 +5,51 @@ import Image from 'next/image';
 
 export default function Hero() {
 	return (
-		<section className='w-full lg:h-screen flex flex-col justify-between items-center bg-[#02254A]'>
-			{/* Parte superior del corte */}
-			<div className='w-full mx-auto pt-26 px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 pb-0 shadow-md relative z-10'>
-				<div className='max-w-[1240px] mx-auto'>
-					<div className='grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-10'>
-						{/* IZQUIERDA - Columna 8 */}
-						<div className='lg:col-span-8 order-first lg:order-0 flex flex-col lg:flex-row items-center lg:items-end gap-4 lg:gap-0 pt-4 md:pt-6 lg:pt-8'>
-							{/* ===== TEXTO ===== */}
-							<div className='shrink-0 text-center lg:text-left lg:pb-8 pb-4'>
-								<h1 className='text-white text-xl sm:text-2xl md:text-2xl lg:text-3xl 4k:text-5xl font-bold tracking-wide drop-shadow-[6px_6px_0_rgba(0,0,0,0.35)] leading-tight mb-6 md:mb-10'>
-									OPERACIONES DE <br /> CAMBIO
-									<span className='text-[#FAB73D]'> 100% ONLINE</span> <br />
-									CON EL MEJOR TIPO DE <br /> CAMBIO DEL MERCADO
-								</h1>
+		<section className='w-full flex flex-col justify-between items-center bg-[#02254A]'>
+			{/* Parte superior */}
+			<div className='w-full mx-auto pt-36 px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 4k:px-16 pb-0 shadow-md relative z-10 overflow-hidden'>
+				<div className='max-w-[1440px] mx-auto'>
+					{/* 3 BLOQUES: TEXTO | IMAGEN | CARD */}
+					<div className='flex flex-col lg:flex-row lg:items-end justify-between gap-6 pt-4 md:pt-6 lg:pt-8'>
 
-								<ul className='space-y-3 sm:space-y-4 md:space-y-5 mt-6 md:mt-8'>
-									<li className='flex items-center gap-3 md:gap-4 justify-center lg:justify-start'>
-										<img src='/icons/protect.png' className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12' alt='Seguridad' />
-										<span className='text-[#FAB73D] text-base sm:text-lg md:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Seguridad</span>
-									</li>
+						{/* BLOQUE 1: TEXTO */}
+						<div className='text-center lg:text-left lg:pb-8 pb-4 shrink-0 self-center lg:self-end'>
+							<h1 className='text-white text-xl sm:text-2xl lg:text-3xl xl:text-4xl 4k:text-5xl font-bold tracking-wide leading-tight mb-4 lg:mb-6 xl:mb-10'>
+								OPERACIONES DE <br /> CAMBIO
+								<span className='text-[#FAB73D]'> 100% ONLINE</span> <br />
+								AL MEJOR TIPO DE <br /> CAMBIO DEL MERCADO
+							</h1>
 
-									<li className='flex items-center gap-3 md:gap-4 justify-center lg:justify-start'>
-										<img src='/icons/speedy.png' className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12' alt='Rapidez' />
-										<span className='text-[#FAB73D] text-base sm:text-lg md:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Rapidez</span>
-									</li>
-
-									<li className='flex items-center gap-3 md:gap-4 justify-center lg:justify-start'>
-										<img src='/icons/handshake.png' className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12' alt='Transparencia' />
-										<span className='text-[#FAB73D] text-base sm:text-lg md:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Transparencia</span>
-									</li>
-								</ul>
-							</div>
-
-							
-							{/* <div className='shrink-0 hidden lg:flex -ml-10 items-end'>
-								<img src='/assets/womens.png' alt='Equipo Dollariza' className='h-80 lg:h-[400px] 4k:h-[500px] block' />
-							</div> */}
+							<ul className='space-y-3 xl:space-y-5 mt-4 lg:mt-5 xl:mt-8'>
+								<li className='flex items-center gap-3 justify-center lg:justify-start'>
+									<img src='/icons/protect.png' className='w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12' alt='Seguridad' />
+									<span className='text-[#FAB73D] text-base lg:text-lg xl:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Seguridad</span>
+								</li>
+								<li className='flex items-center gap-3 justify-center lg:justify-start'>
+									<img src='/icons/speedy.png' className='w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12' alt='Rapidez' />
+									<span className='text-[#FAB73D] text-base lg:text-lg xl:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Rapidez</span>
+								</li>
+								<li className='flex items-center gap-3 justify-center lg:justify-start'>
+									<img src='/icons/handshake.png' className='w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12' alt='Transparencia' />
+									<span className='text-[#FAB73D] text-base lg:text-lg xl:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Transparencia</span>
+								</li>
+							</ul>
 						</div>
 
-						{/* DERECHA - Columna 4 */}
-						<div className='lg:col-span-4 order-last lg:order-0 flex items-center justify-center'>
-							<div className='p-4'>
-								<ConverterCard />
-							</div>
+						{/* BLOQUE 2: IMAGEN — flex-1, siempre pegada al fondo */}
+						<div className='hidden lg:flex flex-1 items-end justify-center min-w-0 self-end'>
+							<img
+								src='/assets/womens.png'
+								alt='Equipo Dollariza'
+								className='h-64 xl:h-96 4k:h-[500px] w-auto object-bottom block'
+							/>
 						</div>
+
+						{/* BLOQUE 3: CARD */}
+						<div className='w-full lg:w-auto lg:min-w-[300px] lg:max-w-[370px] xl:max-w-[400px] shrink-0 self-center lg:self-auto pb-4 lg:pb-6'>
+							<ConverterCard />
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -58,28 +58,35 @@ export default function Hero() {
 			<div className='w-full relative bg-[#f2f2f2] overflow-hidden'>
 				<div className='absolute inset-0 z-0 pointer-events-none bg-[linear-gradient(135deg,#f2f2f2_60%,#e9e9e9_60%)]' />
 
-				<div className='relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 py-2 md:py-4 lg:py-6'>
-					<div className='grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6'>
-						{/* LABEL */}
-						<div className='flex justify-center md:justify-start items-center'>
-							<span className='inline-block bg-white text-[#02254A] font-bold px-4 sm:px-6 py-2 rounded-lg text-xs sm:text-sm shadow-sm text-center'>TRANSFERENCIAS INMEDIATAS E INTERBANCARIAS</span>
-						</div>
+				<div className='relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 py-6 md:py-8'>
 
-						{/* TIEMPO */}
-						<div className='flex justify-center'>
-							<div className='flex items-center gap-2 sm:gap-3 text-[#02254A] text-xs sm:text-sm font-medium'>
-								<span className='text-base sm:text-lg'>🕒</span>
-								<span>DE 15 A 55 MINUTOS</span>
+					<div className='flex flex-col md:flex-row items-center justify-between gap-4 lg:gap-6'>
+
+						{/* BLOQUE IZQUIERDO */}
+						<div className='flex flex-col items-center md:items-start gap-3'>
+							<div className='flex items-center gap-3'>
+								<span className='text-yellow-500 text-lg'>⚡</span>
+								<span className='bg-white text-[#02254A] font-bold px-4 xl:px-6 py-2 rounded-lg text-xs xl:text-sm shadow-sm whitespace-nowrap'>
+									TRANSFERENCIAS INMEDIATAS E INTERBANCARIAS
+								</span>
+							</div>
+							<div className='flex justify-center w-full'>
+								<div className='flex items-center gap-2 bg-white px-4 py-1 rounded-md shadow-sm text-[#02254A] text-sm font-medium'>
+									<span>🕒</span>
+									<span>DE 15 a 40 MINUTOS</span>
+								</div>
 							</div>
 						</div>
 
-						{/* LOGOS */}
-						<div className='flex justify-center md:justify-end gap-4 sm:gap-6 lg:gap-8'>
-							<Image src='/assets/bcp.png' width={72} height={72} className='object-contain w-12 h-12 sm:w-16 sm:h-16 lg:w-[72px] lg:h-[72px]' alt='BCP' />
-							<Image src='/assets/bbva.png' width={72} height={72} className='object-contain w-12 h-12 sm:w-16 sm:h-16 lg:w-[72px] lg:h-[72px]' alt='BBVA' />
-							<Image src='/assets/pichincha.svg' width={72} height={72} className='object-contain rounded-2xl w-12 h-12 sm:w-16 sm:h-16 lg:w-[72px] lg:h-[72px]' alt='Pichincha' />
+						{/* LOGOS BANCOS */}
+						<div className='flex items-center gap-5 lg:gap-6 xl:gap-10 bg-white px-5 lg:px-6 xl:px-8 py-4 rounded-xl shadow-sm'>
+							<Image src='/assets/bcp.png' width={120} height={60} className='object-contain h-9 lg:h-10 xl:h-12 w-auto' alt='BCP' />
+							<Image src='/assets/bbva.png' width={120} height={60} className='object-contain h-9 lg:h-10 xl:h-12 w-auto' alt='BBVA' />
+							<Image src='/assets/pichincha.svg' width={120} height={60} className='object-contain h-9 lg:h-10 xl:h-12 w-auto' alt='Pichincha' />
 						</div>
+
 					</div>
+
 				</div>
 			</div>
 		</section>

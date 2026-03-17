@@ -40,10 +40,6 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 
 					<section>
 						<h3 className='text-lg font-bold text-[#02254A] mb-2'>1. Información General</h3>
-						<p>
-							M&M DIVISAS SRL, identificada con RUC 20614994364 y con domicilio en Av. Producción Nacional N°185, Urb. La Villa – Chorrillos, ofrece servicios de
-							compra y venta de moneda extranjera.
-						</p>
 						<p className='mt-2'>
 							La empresa se encuentra supervisada por la Superintendencia de Banca, Seguros y AFP (SBS), de acuerdo con la normativa vigente aplicable a empresas del
 							sistema de servicios de cambio de moneda.
@@ -136,8 +132,6 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 							<strong>Correo:</strong> info.dollariza@gmail.com
 							<br />
 							<strong>Teléfono / WhatsApp:</strong> 956757180
-							<br />
-							<strong>Dirección:</strong> Av. Producción Nacional N°185, Urb. La Villa – Chorrillos, Lima, Perú
 						</p>
 					</section>
 				</div>
@@ -243,9 +237,7 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 						<p className='mt-2'>
 							<strong>Correo:</strong> info.dollariza@gmail.com
 							<br />
-							<strong>Teléfono / WhatsApp:</strong> 956757180
-							<br />
-							<strong>Dirección:</strong> Av. Producción Nacional N°185, Urb. La Villa – Chorrillos, Lima, Perú
+							<strong>Teléfono / WhatsApp:</strong> 956767180
 						</p>
 					</section>
 				</div>

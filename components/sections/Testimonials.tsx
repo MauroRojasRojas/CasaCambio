@@ -151,7 +151,7 @@ export default function Testimonials() {
 	};
 
 	return (
-		<section className='py-12 md:py-16 lg:py-20 4k:py-24 bg-yellow-200 overflow-hidden'>
+		<section className='py-12 md:py-16 lg:py-20 4k:py-24 bg-[#FFCE01] overflow-hidden'>
 			<h2 className='text-center text-2xl sm:text-3xl md:text-4xl 4k:text-5xl font-bold text-[#02254A] mb-8 md:mb-12 px-4'>
 				Nuestros <span className='text-[#02254A]/90'>clientes</span>
 			</h2>

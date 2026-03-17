@@ -38,12 +38,17 @@ export default function AddEditCuentaModal({ visible, onHide, cuenta, onSave }: 
 		'Banco de Crédito del Perú (BCP)',
 		'BBVA Perú',
 		'Banco Pichincha',
+		'Interbank',
+		'Scotiabank Perú',
+		'Banbif',
+		'Banco GNB Perú',
+		'Banco Santander Perú',
+		'Citibank del Perú',
 	];
 
 	const monedas = [
 		{ label: 'PEN', value: 'PEN' },
 		{ label: 'USD', value: 'USD' },
-		{ label: 'EUR', value: 'EUR' },
 	];
 
 	const estados = [

@@ -19,23 +19,14 @@ export default function Sidenav({ isMenuOpen, setIsMenuOpen }: SidenavProps) {
         `}
 		>
 			<div>
-				{/* CAJITA BRAND — ESTILO AHORRO */}
-				<div className='bg-[#ffdf6d] w-full p-4 border-b border-slate-200'>
-					{/* FILA: ICONO + DOLLARIZA */}
-					<div className='flex items-center gap-3'>
-						{/* ICONO REDONDO DEGRADADO */}
-						<div className='relative w-[50px] h-[50px]'>
-							<div className='absolute inset-0 rounded-full bg-[linear-gradient(145deg,#c1122f,#02254A)] opacity-95'></div>
-							<img src='/icons/change.png' alt='logo' className='absolute inset-0 m-auto w-[44] h-[44]' />
-						</div>
-
-						{/* TEXTO PRINCIPAL */}
-						<h1 className='text-2xl font-extrabold tracking-tight text-[#02254A] leading-tight'>Dollariza</h1>
-					</div>
-
-					{/* SUBTÍTULO */}
-					<p className='text-[14px] text-slate-800 mt-4 leading-tight'>Plataforma segura de cambio online</p>
-				</div>
+				{/* LOGO SUPERIOR */}
+<div className='relative w-full h-[140px] border-b border-slate-200 bg-white overflow-visible'>
+	<img
+		src='/icons/logogo.png'
+		alt='Dollariza'
+		className='absolute left-1/2 top-2/5 h-40 w-auto -translate-x-1/2 -translate-y-1/2 object-contain'
+	/>
+</div>
 
 				{/* MENU */}
 				<nav className='px-4 mt-2 text-[15px] font-semibold flex flex-col gap-2'>

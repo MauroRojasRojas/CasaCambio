@@ -321,7 +321,7 @@ export default function ConverterCard({ onComplete, showButton = true, onButtonC
 	return (
 		<div className='w-full rounded-3xl overflow-hidden shadow-xl bg-white'>
 			{/* HEADER */}
-			<div className='bg-linear-to-b from-[#B63A42] to-[#3A475F] p-3 text-center'>
+			<div className='bg-[#EEB604] p-3 text-center'>
 				<h2 className='text-white text-xl font-bold'>Realiza tu conversión</h2>
 			</div>
 
@@ -394,7 +394,7 @@ export default function ConverterCard({ onComplete, showButton = true, onButtonC
             absolute left-[calc(50%-20px)] top-[95px]
             w-[55px] h-[55px] rounded-full shadow-lg flex items-center justify-center
             cursor-pointer
-            bg-[linear-gradient(145deg,#c1122f,#02254A)]
+            bg-[#161D4A]
             transition-transform duration-500
           '
 				>
@@ -449,7 +449,7 @@ export default function ConverterCard({ onComplete, showButton = true, onButtonC
 				{showButton && (
 					<button
 						onClick={handleButtonClick}
-						className='w-full bg-linear-to-b from-[#B63A42] to-[#3A475F] text-[#ffffff] py-2 rounded-xl text-base font-semibold shadow cursor-pointer'
+						className='w-full bg-[#EEB604] text-[#ffffff] py-2 rounded-xl text-base font-semibold shadow cursor-pointer'
 					>
 						Iniciar operación
 					</button>

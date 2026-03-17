@@ -304,9 +304,9 @@ export default function Operacion() {
 										options={
 											Array.isArray(cuentas)
 												? cuentas.map((cuenta) => ({
-														name: `${cuenta.banco} - ${cuenta.numeroCuenta} (${cuenta.moneda})`,
-														id: cuenta.id,
-													}))
+													name: `${cuenta.banco} - ${cuenta.numeroCuenta} (${cuenta.moneda})`,
+													id: cuenta.id,
+												}))
 												: []
 										}
 										optionLabel='name'
@@ -332,9 +332,9 @@ export default function Operacion() {
 										options={
 											Array.isArray(cuentas)
 												? cuentas.map((cuenta) => ({
-														name: `${cuenta.banco} - ${cuenta.numeroCuenta} (${cuenta.moneda})`,
-														id: cuenta.id,
-													}))
+													name: `${cuenta.banco} - ${cuenta.numeroCuenta} (${cuenta.moneda})`,
+													id: cuenta.id,
+												}))
 												: []
 										}
 										optionLabel='name'
@@ -669,8 +669,12 @@ export default function Operacion() {
 			>
 				<div className='text-center space-y-4'>
 					<div className='flex justify-center mb-4'>
-						<div className='w-16 h-16 bg-linear-to-br from-[#B63A42] to-[#02254A] rounded-full flex items-center justify-center'>
-							<span className='text-2xl'>📧</span>
+						<div className='flex justify-center mb-4'>
+							<img
+								src='/icons/logogo.png'
+								alt='Dollariza'
+								className='h-24 w-auto object-contain'
+							/>
 						</div>
 					</div>
 					<h3 className='text-xl font-bold'>¿Has enviado la constancia?</h3>

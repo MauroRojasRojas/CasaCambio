@@ -6,12 +6,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
 	const SITE = 'https://dollariza.pe';
 	const lastModified = new Date();
 
-	const routes = ['/', '/quienes-somos', '/contactanos', '/reclamos'];
-
-	return routes.map((path) => ({
-		url: `${SITE}${path}`,
-		lastModified,
-		changeFrequency: 'weekly',
-		priority: path === '/' ? 1 : 0.8,
-	}));
+	return [
+		{
+			url: SITE,
+			lastModified,
+			changeFrequency: 'daily', // home cambia con el tipo de cambio
+			priority: 1,
+		},
+		{
+			url: `${SITE}/quienes-somos`,
+			lastModified,
+			changeFrequency: 'monthly',
+			priority: 0.7,
+		},
+		{
+			url: `${SITE}/contactanos`,
+			lastModified,
+			changeFrequency: 'monthly',
+			priority: 0.6,
+		},
+		{
+			url: `${SITE}/reclamos`,
+			lastModified,
+			changeFrequency: 'monthly',
+			priority: 0.4,
+		},
+	];
 }

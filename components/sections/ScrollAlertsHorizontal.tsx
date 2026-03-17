@@ -35,7 +35,7 @@ interface CardProps {
 function Card({ title, text, i }: CardProps) {
 	return (
 		<motion.div className={`card-container-${i} mb-4 md:-mb-10`} style={cardContainer} initial='offscreen' whileInView='onscreen' viewport={{ amount: 0.5 }}>
-			<div style={{ ...splash, background: 'linear-gradient(306deg, #3A475F, #B63A42)' }} />
+			<div style={{ ...splash, background: '#092B47' }} />
 
 			<motion.div style={card} variants={cardVariants} className='card w-56 sm:w-60 md:w-64 lg:w-72'>
 				<h3 className='text-lg sm:text-xl md:text-2xl font-extrabold text-[#02254A] mb-2'>{title}</h3>

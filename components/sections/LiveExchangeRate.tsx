@@ -271,24 +271,14 @@ export default function LiveExchangeRate() {
 							</thead>
 							<tbody>
 								<tr className='border-b'>
-									<td className='px-2 sm:px-4 py-2 font-semibold'>Dollariza</td>
-									<td className='px-2 sm:px-4 py-2 text-center'>{tasas ? tasas.tasa_compra_usd.toFixed(3) : '...'}</td>
-									<td className='px-2 sm:px-4 py-2 text-center'>{tasas ? tasas.tasa_venta_usd.toFixed(3) : '...'}</td>
-								</tr>
-								<tr className='border-b'>
-									<td className='px-2 sm:px-4 py-2 font-semibold'>Ka</td>
+									<td className='px-2 sm:px-4 py-2 font-semibold'>SUNAT</td>
 									<td className='px-2 sm:px-4 py-2 text-center'>{tasas ? (tasas.tasa_compra_usd - 0.005).toFixed(3) : '...'}</td>
 									<td className='px-2 sm:px-4 py-2 text-center'>{tasas ? (tasas.tasa_venta_usd + 0.002).toFixed(3) : '...'}</td>
 								</tr>
 								<tr className='border-b'>
-									<td className='px-2 sm:px-4 py-2 font-semibold'>Re</td>
+									<td className='px-2 sm:px-4 py-2 font-semibold'>SBS</td>
 									<td className='px-2 sm:px-4 py-2 text-center'>{tasas ? (tasas.tasa_compra_usd - 0.002).toFixed(3) : '...'}</td>
 									<td className='px-2 sm:px-4 py-2 text-center'>{tasas ? (tasas.tasa_venta_usd + 0.003).toFixed(3) : '...'}</td>
-								</tr>
-								<tr>
-									<td className='px-2 sm:px-4 py-2 font-semibold'>Tk</td>
-									<td className='px-2 sm:px-4 py-2 text-center'>{tasas ? tasas.tasa_compra_usd.toFixed(3) : '...'}</td>
-									<td className='px-2 sm:px-4 py-2 text-center'>{tasas ? tasas.tasa_venta_usd.toFixed(3) : '...'}</td>
 								</tr>
 							</tbody>
 						</table>

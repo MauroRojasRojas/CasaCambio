@@ -102,13 +102,6 @@ export default function ContactUs() {
 							<h2 className='text-2xl md:text-3xl font-bold text-[#02254A] mb-6'>Información de Contacto</h2>
 							<div className='space-y-4'>
 								<div className='flex items-start gap-4'>
-									<i className='pi pi-map-marker text-2xl'></i>
-									<div>
-										<h3 className='font-semibold text-[#02254A]'>Dirección</h3>
-										<p className='text-slate-700'>Av. Producción Nacional N°185, Urb. La Villa – Chorrillos, Lima, Perú</p>
-									</div>
-								</div>
-								<div className='flex items-start gap-4'>
 									<i className='pi pi-phone text-2xl'></i>
 									<div>
 										<h3 className='font-semibold text-[#02254A]'>Teléfono / WhatsApp</h3>

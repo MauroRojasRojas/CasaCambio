@@ -58,7 +58,7 @@ export default function Login() {
 
 	return (
 		<>
-			<main className={`min-h-screen w-full bg-[#C7C0BD] flex items-center justify-center transition-opacity duration-600 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+			<main className={`min-h-screen w-full bg-[#FFD230] flex items-center justify-center transition-opacity duration-600 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
 				{/* Overlay de carga */}
 				{isLoading && (
 					<div className='fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-40'>
@@ -165,7 +165,17 @@ export default function Login() {
 					{/*   COLUMNA DERECHA IMAGEN  */}
 					{/* ========================= */}
 					<div className='hidden lg:flex items-center justify-center bg-white'>
-						<Image src='/assets/loggin.svg' alt='Login banner' width={600} height={600} className='object-contain p-3 rounded-xl' />
+						<div className='w-full flex items-center justify-center p-8'>
+							<div className='w-[330px] xl:w-[360px] h-[460px] xl:h-[500px] overflow-hidden rounded-[26px] bg-[#f8f8f8]'>
+								<Image
+									src='/assets/iniciarsesion.png'
+									alt='Login banner'
+									width={600}
+									height={600}
+									className='w-full h-full object-cover object-center'
+								/>
+							</div>
+						</div>
 					</div>
 				</div>
 			</main>

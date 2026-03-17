@@ -186,7 +186,7 @@ export default function Page() {
 
 	return (
 		<>
-			<main className='min-h-screen w-full bg-[#C7C0BD] flex items-center justify-center'>
+			<main className='min-h-screen w-full bg-[#193160] flex items-center justify-center'>
 				<TermsPrivacyModals showTermsModal={showTermsModal} setShowTermsModal={setShowTermsModal} showPrivacyModal={showPrivacyModal} setShowPrivacyModal={setShowPrivacyModal} />
 
 				<div className='bg-white w-[90%] max-w-6xl max-h-[90vh] rounded-3xl shadow-xl overflow-y-auto grid grid-cols-1 lg:grid-cols-2'>
@@ -354,10 +354,21 @@ export default function Page() {
 
 					{/* IMAGEN SOLO PASO 1 Y 2 */}
 					{(step === 1 || step === 2) && (
-						<div className='hidden lg:flex items-center justify-center bg-white'>
-							<Image src='/assets/reggggg.svg' alt='Registro banner' width={600} height={600} className='object-contain p-3 rounded-xl' loading='eager' />
-						</div>
-					)}
+	<div className='hidden lg:flex items-center justify-center bg-white'>
+		<div className='w-full flex items-center justify-center p-6'>
+			<div className='w-[340px] xl:w-[380px] 2xl:w-[400px] h-[470px] xl:h-[520px] overflow-hidden rounded-[28px] bg-[#f8f8f8]'>
+				<Image
+					src='/assets/registrate.png'
+					alt='Registro banner'
+					width={1414}
+					height={2000}
+					className='w-full h-full object-cover object-center'
+					loading='eager'
+				/>
+			</div>
+		</div>
+	</div>
+)}
 				</div>
 			</main>
 			<Toast ref={toast} />

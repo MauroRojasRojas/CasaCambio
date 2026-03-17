@@ -29,7 +29,7 @@ export default function Navbar() {
 
 	return (
 		<div className='fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200'>
-			<div className='max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 py-3'>
+			<div className='max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 4k:px-16 py-0'>
 
 				{/* Main header */}
 				<div className='flex items-center justify-between'>
@@ -45,8 +45,7 @@ export default function Navbar() {
 
 					{/* Logo center */}
 					<div className='flex-1 flex items-center justify-start md:justify-center gap-3'>
-						<Image src='/icons/logomejorado.png' onClick={() => router.push('./')} alt='Dollariza' width={50} height={50} priority className='cursor-pointer h-10 md:h-12 lg:h-[50px] object-contain' style={{ width: 'auto' }} />
-						{/* <span className="text-2xl font-bold text-[#003566]">Dollariza</span> */}
+						<Image src='/icons/logogo.png' onClick={() => router.push('./')} alt='Dollariza' width={200} height={200} priority className='cursor-pointer h-10 md:h-12 lg:h-[110px] object-contain' style={{ width: 'auto' }} />
 					</div>
 
 					{/* Right buttons */}
