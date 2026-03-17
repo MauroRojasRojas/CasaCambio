@@ -36,7 +36,7 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 				onHide={() => setShowTermsModal(false)}
 			>
 				<div className='text-sm text-slate-700 space-y-4'>
-					<p className='text-xs text-slate-500 italic'>M&M DIVISAS SRL - RUC 20614994364</p>
+					<p className='text-xs text-slate-500 italic'>M&M DIVISAS - RUC 20614994364</p>
 
 					<section>
 						<h3 className='text-lg font-bold text-[#02254A] mb-2'>1. Información General</h3>
@@ -65,7 +65,7 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 					<section>
 						<h3 className='text-lg font-bold text-[#02254A] mb-2'>4. Verificación y Cumplimiento Normativo</h3>
 						<p>
-							En cumplimiento de la normativa de la SBS y de la Ley de Prevención de Lavado de Activos y Financiamiento del Terrorismo, M&M DIVISAS SRL podrá
+							En cumplimiento de la normativa de la SBS y de la Ley de Prevención de Lavado de Activos y Financiamiento del Terrorismo, M&M DIVISAS podrá
 							solicitar documentos, validaciones y/o información adicional para concretar una operación.
 						</p>
 						<p className='mt-2'>
@@ -79,14 +79,14 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 						<ul className='list-disc list-inside mt-2 space-y-1'>
 							<li>Proporcionar información veraz y actualizada.</li>
 							<li>Realizar operaciones únicamente con fondos de origen lícito.</li>
-							<li>Acatar la normativa vigente y los requisitos operativos solicitados por M&M DIVISAS SRL.</li>
+							<li>Acatar la normativa vigente y los requisitos operativos solicitados por M&M DIVISAS.</li>
 						</ul>
 					</section>
 
 					<section>
 						<h3 className='text-lg font-bold text-[#02254A] mb-2'>6. Tarifas</h3>
 						<p>
-							M&M DIVISAS SRL no cobra comisión por el uso de sus servicios. Sin embargo, los bancos pueden aplicar sus propias comisiones o el Impuesto a las
+							M&M DIVISAS no cobra comisión por el uso de sus servicios. Sin embargo, los bancos pueden aplicar sus propias comisiones o el Impuesto a las
 							Transacciones Financieras (ITF).
 						</p>
 						<p className='mt-2'>
@@ -97,7 +97,7 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 					<section>
 						<h3 className='text-lg font-bold text-[#02254A] mb-2'>7. Confirmación de Operaciones</h3>
 						<p>
-							Toda operación será confirmada al USUARIO por correo electrónico. M&M DIVISAS SRL solo procederá con la ejecución de la compra o venta de divisas una
+							Toda operación será confirmada al USUARIO por correo electrónico. M&M DIVISAS solo procederá con la ejecución de la compra o venta de divisas una
 							vez verificado el ingreso del dinero a nuestras cuentas. Si el depósito no se acredita y valida, la operación podrá quedar sin efecto.
 						</p>
 					</section>
@@ -112,7 +112,7 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 					<section>
 						<h3 className='text-lg font-bold text-[#02254A] mb-2'>9. Limitación de Responsabilidad</h3>
 						<p>
-							M&M DIVISAS SRL no se hace responsable por demoras o interrupciones en el servicio causadas por factores externos como fallos en el sistema bancario,
+							M&M DIVISAS no se hace responsable por demoras o interrupciones en el servicio causadas por factores externos como fallos en el sistema bancario,
 							problemas de conectividad o situaciones de fuerza mayor.
 						</p>
 					</section>
@@ -120,7 +120,7 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 					<section>
 						<h3 className='text-lg font-bold text-[#02254A] mb-2'>10. Modificaciones</h3>
 						<p>
-							M&M DIVISAS SRL se reserva el derecho de modificar estos Términos y Condiciones en cualquier momento. Las modificaciones serán publicadas en la plataforma
+							M&M DIVISAS se reserva el derecho de modificar estos Términos y Condiciones en cualquier momento. Las modificaciones serán publicadas en la plataforma
 							y entrarán en vigor inmediatamente.
 						</p>
 					</section>
@@ -148,12 +148,12 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 				onHide={() => setShowPrivacyModal(false)}
 			>
 				<div className='text-sm text-slate-700 space-y-4'>
-					<p className='text-xs text-slate-500 italic'>M&M DIVISAS SRL - RUC 20614994364</p>
+					<p className='text-xs text-slate-500 italic'>M&M DIVISAS - RUC 20614994364</p>
 
 					<section>
 						<h3 className='text-lg font-bold text-[#02254A] mb-2'>1. Información General</h3>
 						<p>
-							M&M DIVISAS SRL respeta tu privacidad y se compromete a proteger la información personal que nos proporcionas. Esta Política de Privacidad explica cómo
+							M&M DIVISAS respeta tu privacidad y se compromete a proteger la información personal que nos proporcionas. Esta Política de Privacidad explica cómo
 							recopilamos, utilizamos y protegemos tu información.
 						</p>
 					</section>
@@ -226,7 +226,7 @@ export default function TermsPrivacyModals({ showTermsModal, setShowTermsModal, 
 					<section>
 						<h3 className='text-lg font-bold text-[#02254A] mb-2'>9. Cambios en la Política</h3>
 						<p>
-							M&M DIVISAS SRL podrá actualizar esta Política de Privacidad cuando lo considere necesario. Las modificaciones serán publicadas en la plataforma y, de
+							M&M DIVISAS podrá actualizar esta Política de Privacidad cuando lo considere necesario. Las modificaciones serán publicadas en la plataforma y, de
 							ser significativas, se notificarán por correo electrónico.
 						</p>
 					</section>

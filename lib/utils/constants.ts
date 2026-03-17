@@ -1,7 +1,7 @@
 // lib/utils/constants.ts
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001/api';
-export const RAZON_SOCIAL = process.env.NEXT_PUBLIC_RAZON_SOCIAL || 'M&M DIVISAS SRL';
+export const RAZON_SOCIAL = process.env.NEXT_PUBLIC_RAZON_SOCIAL || 'M&M DIVISAS';
 export const RUC = process.env.NEXT_PUBLIC_RUC || '20614994364';
 export const ADDRESS_RUC =  process.env.NEXT_PUBLIC_ADDRESS_RUC || 'Av. Producción Nacional N° 185 – Urb. La Villa, Chorrillos, Lima – Perú.';
 

@@ -212,9 +212,6 @@ export default function ComplaintsBook() {
 						<p>
 							<span className='font-semibold'>RUC:</span> {RUC}
 						</p>
-						<p>
-							<span className='font-semibold'>Domicilio Legal:</span> {ADDRESS_RUC}
-						</p>
 					</div>
 					<p className='text-sm text-slate-700 mt-4 text-center italic'>
 						En cumplimiento del Código de Protección y Defensa del Consumidor, {RAZON_SOCIAL} pone a disposición de sus clientes el presente Libro de Reclamaciones.
