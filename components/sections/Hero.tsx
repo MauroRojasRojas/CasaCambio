@@ -13,7 +13,7 @@ export default function Hero() {
 					<div className='flex flex-col lg:flex-row lg:items-end justify-between gap-6 pt-4 md:pt-6 lg:pt-8'>
 
 						{/* BLOQUE 1: TEXTO */}
-						<div className='text-center lg:text-left lg:pb-8 pb-4 shrink-0 self-center lg:self-end'>
+						<div className='text-center lg:text-left pb-4 lg:pb-0 shrink lg:self-start md:pr-2 lg:pr-0 lg:mt-10 xl:mt-0 lg:mr-8 xl:mr-0'>
 							<h1 className='text-white text-xl sm:text-2xl lg:text-3xl xl:text-4xl 4k:text-5xl font-bold tracking-wide leading-tight mb-4 lg:mb-6 xl:mb-10'>
 								OPERACIONES DE <br /> CAMBIO
 								<span className='text-[#FAB73D]'> 100% ONLINE</span> <br />
@@ -41,12 +41,12 @@ export default function Hero() {
 							<img
 								src='/assets/womens.png'
 								alt='Equipo Dollariza'
-								className='h-64 xl:h-96 4k:h-[500px] w-auto object-bottom block'
+								className='h-[400px] md:h-[340px] md:min-w-[300px] min-w-64 xl:h-96 4k:h-[500px]  lg:min-w-[400px] object-bottom block'
 							/>
 						</div>
 
 						{/* BLOQUE 3: CARD */}
-						<div className='w-full lg:w-auto lg:min-w-[300px] lg:max-w-[370px] xl:max-w-[400px] shrink-0 self-center lg:self-auto pb-4 lg:pb-6'>
+						<div className='w-full lg:w-auto lg:min-w-[300px] lg:max-w-[320px] xl:max-w-[400px] shrink-0 self-center lg:self-auto pb-4 lg:pb-6'>
 							<ConverterCard />
 						</div>
 
@@ -60,7 +60,7 @@ export default function Hero() {
 
 				<div className='relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 py-6 md:py-8'>
 
-					<div className='flex flex-col md:flex-row items-center justify-between gap-4 lg:gap-6'>
+					<div className='flex flex-col md:flex-row items-center justify-between gap-2'>
 
 						{/* BLOQUE IZQUIERDO */}
 						<div className='flex flex-col items-center md:items-start gap-3'>

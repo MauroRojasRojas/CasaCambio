@@ -44,8 +44,8 @@ export default function Navbar() {
 					</nav>
 
 					{/* Logo center */}
-					<div className='flex-1 flex items-center justify-start md:justify-center gap-3'>
-						<Image src='/icons/logogogo.png' onClick={() => router.push('./')} alt='Dollariza' width={220} height={220} priority className='cursor-pointer h-10 md:h-12 lg:h-[130px] object-contain' style={{ width: 'auto' }} />
+					<div className='flex-1 flex items-center justify-start md:justify-center gap-3 m-2'>
+						<Image src='/icons/logov.png' onClick={() => router.push('./')} alt='Dollariza' width={180} height={180} priority className='cursor-pointer h-10 md:h-12 lg:h-[130px] object-contain' style={{ width: 'auto' }} />
 					</div>
 
 					{/* Right buttons */}
