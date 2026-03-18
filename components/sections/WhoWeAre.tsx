@@ -7,12 +7,12 @@ export default function WhoWeAre() {
 		<section className='bg-white pt-24 md:pt-28 lg:pt-32 pb-10'>
 			<div className='max-w-[1240px] mx-auto px-6 md:px-10 lg:px-12'>
 				{/* Título principal */}
-				<div className='text-center mb-8 md:mb-10'>
-					<h1 className='text-[38px] md:text-[46px] font-extrabold text-[#0A2E5C] leading-none tracking-tight drop-shadow-[0_2px_2px_rgba(0,0,0,0.08)]'>
+				<div className='text-center mb-8 md:mb-10 mt-4'>
+					<h1 className='text-[38px] font-bold text-[#0A2E5C] leading-none tracking-tight drop-shadow-[0_2px_2px_rgba(0,0,0,0.08)]'>
 						¿Quiénes Somos?
 					</h1>
 
-					<p className='mt-5 max-w-[820px] mx-auto text-[16px] md:text-[18px] leading-[1.15] text-[#243B63]'>
+					<p className='mt-5 max-w-[820px] mx-auto text-[15px] leading-[1.15] text-[#243B63]'>
 						M&amp;M Divisas es una empresa dedicada a ofrecer servicios de cambio de moneda 100% online.
 						<br />
 						Nuestro compromiso es brindar a nuestros clientes los tipos de cambio más competitivos y una
@@ -26,11 +26,11 @@ export default function WhoWeAre() {
 					{/* Columna izquierda */}
 					<div className='text-[#1F355B]'>
 						<div className='mb-7'>
-							<h2 className='text-[28px] md:text-[32px] font-extrabold text-[#18345F] mb-4'>
+							<h2 className='text-[28px] font-bold text-[#18345F] mb-4'>
 								Ventaja Competitiva
 							</h2>
 
-							<ul className='list-disc pl-6 text-[16px] md:text-[17px] leading-[1.15] space-y-1'>
+							<ul className='list-disc pl-6 text-[15px] leading-[1.15] space-y-1'>
 								<li>Te ofrecemos el mejor tipo de cambio del mercado</li>
 								<li>Apuntamos a ser el aliado confiable en el cambio de divisas</li>
 								<li>Realizamos transferencias seguras y rápidas</li>
@@ -40,26 +40,26 @@ export default function WhoWeAre() {
 						</div>
 
 						<div className='mb-7'>
-							<h2 className='text-[28px] md:text-[32px] font-extrabold text-[#18345F] mb-3'>
+							<h2 className='text-[28px]  font-bold text-[#18345F] mb-3'>
 								Supervisión
 							</h2>
 
-							<p className='text-[16px] md:text-[17px] leading-[1.12] max-w-[720px]'>
+							<p className='text-[15px]  leading-[1.12] max-w-[720px]'>
 								Estamos autorizados a operar por la Superintendencia de Banca y Seguros (SBS).
 							</p>
 
-							<p className='mt-3 text-[16px] md:text-[17px] leading-[1.12] max-w-[760px]'>
+							<p className='mt-3 text-[15px] leading-[1.12] max-w-[760px]'>
 								Cumplimos estrictamente la normativa vigente aplicable a empresas que brindan servicios de
 								cambio de moneda.
 							</p>
 						</div>
 
 						<div>
-							<h2 className='text-[28px] md:text-[32px] font-extrabold text-[#18345F] mb-3'>
+							<h2 className='text-[28px] font-bold text-[#18345F] mb-3'>
 								Horario de Atención
 							</h2>
 
-							<div className='text-[16px] md:text-[17px] leading-[1.12]'>
+							<div className='text-[15px] leading-[1.12]'>
 								<p>Lunes a viernes: 8:30 a.m. a 6:00 p.m.</p>
 								<p className='mt-1'>Sábados: 9:00 a.m. a 1:00 p.m.</p>
 								<p className='mt-1'>Teléfono: 956 767 180</p>

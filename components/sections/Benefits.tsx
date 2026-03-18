@@ -45,13 +45,13 @@ export default function Benefits() {
 	return (
 		<section
 			className='w-full bg-cover bg-center bg-no-repeat'
-			style={{ backgroundImage: "url('/assets/parte3.png')" }}
+			style={{ backgroundImage: "url('/assets/parte2.jpg')" }}
 		>
-			<div className='w-full bg-white/35'>
+			<div className='w-full'>
 				<div className='max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-14 md:py-16 lg:py-20'>
 					<div className='flex flex-col items-center text-center'>
 						<h2
-							className='text-[#032C67] text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight drop-shadow-[0_3px_3px_rgba(0,0,0,0.12)]'
+							className='text-[#032C67] mb-10 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight drop-shadow-[0_3px_3px_rgba(0,0,0,0.12)]'
 						>
 							¿Por qué Elegirnos?
 						</h2>

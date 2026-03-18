@@ -17,7 +17,7 @@ export default function Hero() {
 							<h1 className='text-white text-xl sm:text-2xl lg:text-3xl xl:text-4xl 4k:text-5xl font-bold tracking-wide leading-tight mb-4 lg:mb-6 xl:mb-10'>
 								OPERACIONES DE <br /> CAMBIO
 								<span className='text-[#FAB73D]'> 100% ONLINE</span> <br />
-								AL MEJOR TIPO DE <br /> CAMBIO DEL MERCADO
+								AL MEJOR TIPO DE <br /> CAMBIO DEL <br /> MERCADO
 							</h1>
 
 							<ul className='space-y-3 xl:space-y-5 mt-4 lg:mt-5 xl:mt-8'>
@@ -41,7 +41,7 @@ export default function Hero() {
 							<img
 								src='/assets/womens.png'
 								alt='Equipo Dollariza'
-								className='h-[400px] md:h-[340px] md:min-w-[300px] min-w-64 xl:h-96 4k:h-[500px]  lg:min-w-[400px] object-bottom block'
+								className='h-[500px] md:min-w-[300px] min-w-64 lg:min-w-[530px] object-bottom block'
 							/>
 						</div>
 

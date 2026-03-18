@@ -43,7 +43,7 @@ export default function Workflow() {
 
 	return (
 		<section
-			className='relative w-full bg-cover bg-center bg-no-repeat py-14 md:py-16 lg:py-20'
+			className='relative w-full bg-cover bg-center bg-no-repeat mb-15 py-14 md:py-16 lg:py-20'
 			style={{ backgroundImage: "url('/assets/parte2.jpg')" }}
 		>
 			<div className='absolute inset-0 bg-white/10' />
