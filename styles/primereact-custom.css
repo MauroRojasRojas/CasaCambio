@@ -210,3 +210,142 @@
     min-width: auto;
   }
 }
+
+/*OTHERS*/
+.complaints-dropdown.p-dropdown {
+	width: 100%;
+	height: 45px;
+	border: 1px solid #cbd5e1;
+	border-radius: 16px;
+	background: #ffffff;
+	box-shadow: none;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+
+.complaints-dropdown .p-dropdown-label {
+	display: flex;
+	align-items: center;
+	height: 56px;
+	width: 100%;
+	padding: 0 72px 0 16px;
+	font-size: 14px;
+	font-weight: 400;
+	color: #0f2f57;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.complaints-dropdown .p-dropdown-label.p-placeholder {
+	color: var(--color-slate-500);
+}
+
+.complaints-dropdown .p-dropdown-trigger {
+	width: 44px;
+	min-width: 44px;
+	color: #64748b;
+	background: transparent;
+	border: none;
+}
+
+.complaints-dropdown .p-dropdown-clear-icon {
+	right: 44px;
+	color: #64748b;
+	font-size: 16px;
+}
+
+.complaints-dropdown:not(.p-disabled).p-focus {
+	border-color: #cbd5e1;
+	box-shadow: none;
+}
+
+.complaints-dropdown:hover {
+	border-color: #cbd5e1;
+}
+
+.complaints-dropdown.p-disabled {
+	background: #F5F8FB;
+	opacity: 1;
+}
+
+.complaints-dropdown.p-disabled .p-dropdown-label {
+	color: #94a3b8;
+}
+
+.complaints-dropdown-panel.p-dropdown-panel {
+	border-radius: 16px;
+	border: 1px solid #e2e8f0;
+	box-shadow: 0 10px 30px rgba(2, 37, 74, 0.08);
+	overflow: hidden;
+	margin-top: 6px;
+}
+
+.complaints-dropdown-panel .p-dropdown-header {
+	padding: 12px;
+	background: #ffffff;
+	border-bottom: 1px solid #e2e8f0;
+}
+
+.complaints-dropdown-panel .p-dropdown-filter-container {
+	position: relative;
+}
+
+.complaints-dropdown-panel .p-dropdown-filter-container .p-inputtext {
+	width: 100%;
+	height: 44px;
+	border: 1px solid #cbd5e1;
+	border-radius: 12px;
+	padding: 0 40px 0 14px;
+	font-size: 14px;
+	font-weight: 400;
+	color: #0f2f57;
+	box-shadow: none;
+	outline: none;
+}
+
+.complaints-dropdown-panel .p-dropdown-filter-container .p-inputtext::placeholder {
+	color: #94a3b8;
+}
+
+.complaints-dropdown-panel .p-dropdown-filter-container .p-inputtext:focus {
+	border-color: #cbd5e1;
+	box-shadow: none;
+	outline: none;
+}
+
+.complaints-dropdown-panel .p-dropdown-filter-icon {
+	color: #64748b;
+	right: 14px;
+}
+
+.complaints-dropdown-panel .p-dropdown-items {
+	padding: 8px 0;
+}
+
+.complaints-dropdown-panel .p-dropdown-item {
+	padding: 14px 16px;
+	font-size: 14px;
+	font-weight: 400;
+	color: #475569;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.complaints-dropdown-panel .p-dropdown-item:hover {
+	background: #f8fafc;
+	color: #0f2f57;
+}
+
+.complaints-dropdown-panel .p-dropdown-item.p-highlight {
+	background: #eff6ff;
+	color: #0f2f57;
+}
+
+.complaints-dropdown-panel .p-dropdown-empty-message {
+	padding: 14px 16px;
+	font-size: 14px;
+	color: #64748b;
+}

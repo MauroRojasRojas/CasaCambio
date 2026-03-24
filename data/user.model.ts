@@ -10,4 +10,7 @@ export interface UserModel {
 	creadoEn: string;
 	fullName: string;
 	password?: string;
+	provincia?: string;
+	departamento?: string;
+	distrito?: string;
 }

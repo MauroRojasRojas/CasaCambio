@@ -1,25 +1,35 @@
-export type DocumentType = 'DNI' | 'CE' | 'PAS';
+export type DocumentType = 'DNI' | 'CE' | 'PAS' | 'RUC';
 export type ComplaintType = 'reclamo' | 'queja';
 
 export interface CreateComplaintBody {
   email: string;
-  date: string; // ISO: new Date().toISOString()
+  alternateEmail: string;
+  date: string;
+
   firstName: string;
   fatherSurname: string;
   motherSurname: string;
+
   documentType: DocumentType;
   documentNumber: string;
+
   address: string;
   district: string;
   province: string;
   department: string;
+
   phone: string;
+  additionalPhone: string;
+
   service: string;
   operationNumber: string;
-  amountSoles: number | null;
-  amountDollars: number | null;
+
+  amountSoles: string;
+  amountDollars: string;
+
   complaintType: ComplaintType;
   detail: string;
   request: string;
-  declaration: true; // en backend lo validas como true
+
+  declaration: boolean;
 }
