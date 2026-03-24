@@ -35,6 +35,10 @@ export default function Login() {
 		return regex.test(email);
 	};
 
+	const handleBackHome = () => {
+		router.push('/');
+	};
+
 	const handleLogin = async () => {
 		setIsLoading(true);
 
@@ -76,7 +80,19 @@ export default function Login() {
 					{/*   COLUMNA IZQUIERDA       */}
 					{/* ========================= */}
 					<div className='px-10 py-14 flex flex-col justify-start'>
-						<h1 className='text-4xl font-extrabold text-[#02254A]'>Iniciar sesión</h1>
+						<div className='flex items-center gap-3'>
+							<button
+								type='button'
+								onClick={handleBackHome}
+								disabled={isLoading}
+								className='flex items-center justify-center cursor-pointer w-10 h-10 rounded-full border border-[#02254A] text-[#02254A] hover:bg-[#02254A] hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed'
+								aria-label='Volver al inicio'
+							>
+								<i className='pi pi-arrow-left text-sm'></i>
+							</button>
+
+							<h1 className='text-4xl font-extrabold text-[#02254A]'>Iniciar sesión</h1>
+						</div>
 
 						<p className='mt-2 text-sm text-slate-600'>
 							¿Aún no tienes cuenta?
@@ -85,7 +101,6 @@ export default function Login() {
 								Regístrate →
 							</a>
 						</p>
-
 						{/* FORMULARIO */}
 						<div className='mt-8 space-y-5'>
 							{/* CORREO */}

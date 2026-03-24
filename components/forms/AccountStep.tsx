@@ -52,32 +52,64 @@ export default function AccountStep({
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    const validatePassword = (value: string) => {
+        if (!value) return 'La contraseña es obligatoria';
+        if (/\s/.test(value)) return 'La contraseña no puede contener espacios';
+        if (value.length < 8) return 'La contraseña debe tener al menos 8 caracteres';
+        if (!/[A-Z]/.test(value)) return 'La contraseña debe tener al menos una mayúscula';
+        if (!/[a-z]/.test(value)) return 'La contraseña debe tener al menos una minúscula';
+        if (!/[^A-Za-z0-9\s]/.test(value)) return 'La contraseña debe tener al menos un carácter especial';
+        return '';
+    };
+
+    const validatePasswords = (newPassword: string, newConfirmPassword: string) => {
+        const passwordValidationError = validatePassword(newPassword);
+
+        if (passwordValidationError) {
+            setPasswordError(passwordValidationError);
+            return;
+        }
+
+        if (newConfirmPassword && newPassword !== newConfirmPassword) {
+            setPasswordError('Las contraseñas no coinciden');
+            return;
+        }
+
+        setPasswordError('');
+    };
+
     return (
         <div className='px-6 sm:px-10 py-8 flex flex-col justify-start'>
             {/* HEADER */}
             <div className='flex flex-col sm:flex-row items-start gap-4 mb-6'>
                 <Button
-                    id="back-btn"
-                    icon="pi pi-arrow-left"
+                    id='back-btn'
+                    icon='pi pi-arrow-left'
                     rounded
                     outlined
-                    className="p-2 sm:p-3"
+                    className='p-2 sm:p-3'
                     onClick={onBack}
                 />
                 <div className='flex flex-col text-start sm:text-left'>
                     <span className='text-2xl font-extrabold text-[#02254A]'>Empecemos tu registro</span>
                     <p className='text-sm text-slate-600 mt-4'>¿Ya tienes una cuenta?</p>
-			        <a onClick={() => router.push('/login')} className='text-[#0053A4] text-sm font-semibold hover:underline cursor-pointer'> Iniciar sesión →</a>
+                    <a
+                        onClick={() => router.push('/login')}
+                        className='text-[#0053A4] text-sm font-semibold hover:underline cursor-pointer'
+                    >
+                        {' '}
+                        Iniciar sesión →
+                    </a>
                 </div>
             </div>
-            <Tooltip target="#back-btn" content="Atrás" />
+            <Tooltip target='#back-btn' content='Atrás' />
 
             <form className='grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6 mt-2'>
                 {/* CORREO */}
                 <div className='col-span-2'>
-                    <FloatLabel className="w-full">
+                    <FloatLabel className='w-full'>
                         <InputText
-                            id="email_input"
+                            id='email_input'
                             type='email'
                             value={email}
                             onChange={(e) => {
@@ -90,9 +122,9 @@ export default function AccountStep({
                             }}
                             autoComplete='email'
                             invalid={!!emailError}
-                            className="w-full"
+                            className='w-full'
                         />
-                        <label htmlFor="email_input">Correo</label>
+                        <label htmlFor='email_input'>Correo</label>
                     </FloatLabel>
                     {emailError && <p className='text-red-600 text-xs mt-2'>{emailError}</p>}
                 </div>
@@ -101,28 +133,24 @@ export default function AccountStep({
                 <div className='col-span-2'>
                     <div className='flex flex-col gap-x-6 gap-y-8'>
                         <div className='relative'>
-                            <FloatLabel className="w-full">
+                            <FloatLabel className='w-full'>
                                 <InputText
-                                    id="password_input"
+                                    id='password_input'
                                     type={showPassword ? 'text' : 'password'}
                                     value={password}
                                     onChange={(e) => {
-                                        setPassword(e.target.value);
-                                        let error = '';
-                                        if (e.target.value.length < 8) {
-                                            error = 'La contraseña debe tener al menos 8 caracteres';
-                                        } else if (confirmPassword && e.target.value !== confirmPassword) {
-                                            error = 'Las contraseñas no coinciden';
-                                        }
-                                        setPasswordError(error);
+                                        const newPassword = e.target.value;
+                                        setPassword(newPassword);
+                                        validatePasswords(newPassword, confirmPassword);
                                     }}
-                                    className="w-full"
+                                    className='w-full'
+                                    invalid={!!passwordError}
                                 />
-                                <label htmlFor="password_input">Contraseña</label>
+                                <label htmlFor='password_input'>Contraseña</label>
                             </FloatLabel>
                             <button
-                                type="button"
-                                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-500 hover:text-slate-700 transition-colors"
+                                type='button'
+                                className='absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-500 hover:text-slate-700 transition-colors'
                                 onClick={(e) => {
                                     e.preventDefault();
                                     setShowPassword(!showPassword);
@@ -133,28 +161,24 @@ export default function AccountStep({
                         </div>
 
                         <div className='relative'>
-                            <FloatLabel className="w-full">
+                            <FloatLabel className='w-full'>
                                 <InputText
-                                    id="confirm_password_input"
+                                    id='confirm_password_input'
                                     type={showConfirmPassword ? 'text' : 'password'}
                                     value={confirmPassword}
                                     onChange={(e) => {
-                                        setConfirmPassword(e.target.value);
-                                        let error = '';
-                                        if (password.length < 8) {
-                                            error = 'La contraseña debe tener al menos 8 caracteres';
-                                        } else if (e.target.value !== password) {
-                                            error = 'Las contraseñas no coinciden';
-                                        }
-                                        setPasswordError(error);
+                                        const newConfirmPassword = e.target.value;
+                                        setConfirmPassword(newConfirmPassword);
+                                        validatePasswords(password, newConfirmPassword);
                                     }}
-                                    className="w-full"
+                                    className='w-full'
+                                    invalid={!!passwordError}
                                 />
-                                <label htmlFor="confirm_password_input">Confirmar contraseña</label>
+                                <label htmlFor='confirm_password_input'>Confirmar contraseña</label>
                             </FloatLabel>
                             <button
-                                type="button"
-                                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-slate-500 hover:text-slate-700 transition-colors"
+                                type='button'
+                                className='absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-slate-500 hover:text-slate-700 transition-colors'
                                 onClick={(e) => {
                                     e.preventDefault();
                                     setShowConfirmPassword(!showConfirmPassword);
@@ -164,6 +188,23 @@ export default function AccountStep({
                             </button>
                         </div>
                     </div>
+
+                    {/* REGLAS VISUALES */}
+                    <div className='mt-3 space-y-1 text-xs'>
+                        <p className={`${password.length >= 8 && !/\s/.test(password) ? 'text-green-600' : 'text-slate-500'}`}>
+                            • Mínimo 8 caracteres
+                        </p>
+                        <p className={`${/[A-Z]/.test(password) ? 'text-green-600' : 'text-slate-500'}`}>
+                            • Al menos una mayúscula
+                        </p>
+                        <p className={`${/[a-z]/.test(password) ? 'text-green-600' : 'text-slate-500'}`}>
+                            • Al menos una minúscula
+                        </p>
+                        <p className={`${/[^A-Za-z0-9\s]/.test(password) ? 'text-green-600' : 'text-slate-500'}`}>
+                            • Un carácter especial
+                        </p>
+                    </div>
+
                     {passwordError && <p className='text-red-600 text-xs mt-2'>{passwordError}</p>}
                 </div>
 
@@ -176,15 +217,21 @@ export default function AccountStep({
                                 setTermsAccepted(e.checked || false);
                                 setTermsError(e.checked ? '' : 'Debes aceptar los términos para continuar');
                             }}
-                            className="shrink-0"
+                            className='shrink-0'
                         />
                         <label className='flex-1 cursor-pointer text-justify pr-5'>
                             Acepto los{' '}
-                            <a onClick={() => setShowTermsModal(true)} className='text-blue-700 underline cursor-pointer'>
+                            <a
+                                onClick={() => setShowTermsModal(true)}
+                                className='text-blue-700 underline cursor-pointer'
+                            >
                                 Términos y Condiciones
                             </a>{' '}
                             y la{' '}
-                            <a onClick={() => setShowPrivacyModal(true)} className='text-blue-700 underline cursor-pointer'>
+                            <a
+                                onClick={() => setShowPrivacyModal(true)}
+                                className='text-blue-700 underline cursor-pointer'
+                            >
                                 Política de Privacidad
                             </a>
                             .
@@ -196,9 +243,17 @@ export default function AccountStep({
 
             {/* BOTÓN */}
             <Button
-                disabled={!email || !password || !confirmPassword || !termsAccepted || emailError !== '' || passwordError !== '' || termsError !== ''}
+                disabled={
+                    !email ||
+                    !password ||
+                    !confirmPassword ||
+                    !termsAccepted ||
+                    emailError !== '' ||
+                    passwordError !== '' ||
+                    termsError !== ''
+                }
                 onClick={onNext}
-                label="Continuar"
+                label='Continuar'
                 raised
                 className='w-full mt-6'
             />

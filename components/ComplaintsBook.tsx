@@ -573,15 +573,15 @@ const handleSubmit = async (e: React.FormEvent) => {
 						<div className='mb-6 rounded-[18px] border border-[#E7BE43] bg-[#F6F1DE] px-5 py-4'>
 							<div className='flex flex-col gap-3 md:flex-row md:items-center md:justify-between'>
 								<p className='text-[#B45309] text-sm md:text-base font-medium'>
-									Para enviar el reclamo debe iniciar sesión.
+									Para enviar el reclamo debes registrarte.
 								</p>
 
 								<button
 									type='button'
-									onClick={() => router.push('/login')}
-									className='rounded-2xl bg-[#022B5B] px-6 py-3 font-semibold text-white'
+									onClick={() => router.push('/registro')}
+									className='rounded-2xl bg-[#022B5B] px-6 py-3 font-semibold text-white cursor-pointer'
 								>
-									Iniciar sesión
+									Regístrate
 								</button>
 							</div>
 						</div>

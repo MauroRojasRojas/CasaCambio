@@ -130,25 +130,66 @@ export default function IdentityStep({
 	const [editingIndex, setEditingIndex] = useState(-1);
 	const [entityToEdit, setEntityToEdit] = useState<any>(null);
 	const toast = useRef<Toast>(null!);
+	const [phoneError, setPhoneError] = useState('');
+	const [nombresError, setNombresError] = useState('');
+	const [apellidosError, setApellidosError] = useState('');
+
+	const validatePhone = (value: string) => {
+		if (!value.trim()) return 'El teléfono es obligatorio.';
+		if (!/^\d+$/.test(value)) return 'El teléfono solo debe contener números.';
+		if (!value.startsWith('9')) return 'El teléfono debe iniciar con 9.';
+		if (value.length !== 9) return 'El teléfono debe tener 9 dígitos.';
+		return '';
+	};
+
+	const validateNameField = (value: string, label: string) => {
+		if (!value.trim()) return `${label} es obligatorio.`;
+		if (/\d/.test(value)) return `${label} no debe contener números.`;
+		return '';
+	};
 
 	// Validación de campos según el tipo de perfil
 	const isFormValid = () => {
-		// Campos comunes requeridos
 		if (!docType || !dni) return false;
 
-		// Para persona natural (DNI, CE o PAS)
+		const telefonoValido = validatePhone(phone) === '';
+		const nombresValidos = validateNameField(nombres, 'Nombres') === '';
+		const apellidosValidos = validateNameField(apellidos, 'Apellidos') === '';
+
 		if (profile === 'persona') {
-			return !!(docType && dni && nombres && apellidos && fechaNacimiento && gender && country && selectedDepartamentoId && selectedProvinciaId && selectedDistritoId && address && phone && !errorFechaNacimiento);
+			return !!(
+				docType &&
+				dni &&
+				nombres &&
+				apellidos &&
+				fechaNacimiento &&
+				gender &&
+				country &&
+				selectedDepartamentoId &&
+				selectedProvinciaId &&
+				selectedDistritoId &&
+				address &&
+				telefonoValido &&
+				nombresValidos &&
+				apellidosValidos &&
+				!errorFechaNacimiento
+			);
 		}
 
-		// Para empresa (RUC)
 		if (profile === 'empresa') {
-			const baseFieldsValid = !!(docType && dni && fullName && country && selectedDepartamentoId && selectedProvinciaId && selectedDistritoId && address && phone);
+			const baseFieldsValid = !!(
+				docType &&
+				dni &&
+				fullName &&
+				country &&
+				selectedDepartamentoId &&
+				selectedProvinciaId &&
+				selectedDistritoId &&
+				address &&
+				telefonoValido
+			);
 
-			// Validar accionistas
 			const accionistasValid = noTengoAccionistas || accionistas.length > 0;
-
-			// Validar representantes legales (debe tener al menos 1)
 			const representantesValid = representantesLegales.length > 0;
 
 			return baseFieldsValid && accionistasValid && representantesValid;
@@ -314,16 +355,38 @@ export default function IdentityStep({
 						{/* Nombres */}
 						<div>
 							<FloatLabel>
-								<InputText id='nombres_input' value={nombres} onChange={(e) => setNombres(e.target.value)} className='w-full' />
+								<InputText
+									id='nombres_input'
+									value={nombres}
+									onChange={(e) => {
+										const val = e.target.value;
+										setNombres(val);
+										setNombresError(validateNameField(val, 'Nombres'));
+									}}
+									onBlur={() => setNombresError(validateNameField(nombres, 'Nombres'))}
+									className='w-full'
+								/>
 								<label htmlFor='nombres_input'>Nombres</label>
 							</FloatLabel>
+							{nombresError && <p className='mt-1 text-xs text-red-600'>{nombresError}</p>}
 						</div>
 						{/* Apellidos */}
 						<div>
 							<FloatLabel>
-								<InputText id='apellidos_input' value={apellidos} onChange={(e) => setApellidos(e.target.value)} className='w-full' />
+								<InputText
+									id='apellidos_input'
+									value={apellidos}
+									onChange={(e) => {
+										const val = e.target.value;
+										setApellidos(val);
+										setApellidosError(validateNameField(val, 'Apellidos'));
+									}}
+									onBlur={() => setApellidosError(validateNameField(apellidos, 'Apellidos'))}
+									className='w-full'
+								/>
 								<label htmlFor='apellidos_input'>Apellidos</label>
 							</FloatLabel>
+							{apellidosError && <p className='mt-1 text-xs text-red-600'>{apellidosError}</p>}
 						</div>
 						{/* Fecha de nacimiento */}
 						<div>
@@ -358,28 +421,44 @@ export default function IdentityStep({
 				)}
 
 				{/* Teléfono */}
-				<div>
-					<div className='p-inputgroup mt-1'>
-						<span className='p-inputgroup-addon'>
-							<div className='flex items-center gap-2 px-2'>
-								<img src='https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/pe.svg' className='w-6 h-4 object-cover rounded-sm' />
-								<span className='font-semibold text-sm'>+51</span>
-							</div>
-						</span>
-						<FloatLabel>
-							<InputText
-								id='phone_input'
-								value={phone}
-								onChange={(e) => {
-									const val = e.target.value;
-									if (/^\d*$/.test(val)) setPhone(val);
-								}}
-								className='w-full'
-							/>
-							<label htmlFor='phone_input'>Teléfono</label>
-						</FloatLabel>
-					</div>
-				</div>
+				<div className='flex flex-col'>
+	<div className='p-inputgroup mt-1'>
+		<span className='p-inputgroup-addon'>
+			<div className='flex items-center gap-2 px-2'>
+				<img
+					src='https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/pe.svg'
+					className='w-6 h-4 object-cover rounded-sm'
+					alt='Bandera de Perú'
+				/>
+				<span className='font-semibold text-sm'>+51</span>
+			</div>
+		</span>
+
+		<FloatLabel className='flex-1'>
+			<InputText
+				id='phone_input'
+				value={phone}
+				onChange={(e) => {
+					const val = e.target.value;
+					if (/^\d*$/.test(val) && val.length <= 9) {
+						setPhone(val);
+						setPhoneError(validatePhone(val));
+					}
+				}}
+				onBlur={() => setPhoneError(validatePhone(phone))}
+				maxLength={9}
+				className='w-full'
+			/>
+			<label htmlFor='phone_input'>Teléfono</label>
+		</FloatLabel>
+	</div>
+
+	{phoneError && (
+		<p className='mt-1 text-xs text-red-600'>
+			{phoneError}
+		</p>
+	)}
+</div>
 
 				{/* País */}
 				<div>
@@ -449,7 +528,7 @@ export default function IdentityStep({
 						<label>Distrito</label>
 					</FloatLabel>
 				</div>
-				
+
 
 				{/* Dirección - Para todos */}
 				<div>
@@ -459,18 +538,18 @@ export default function IdentityStep({
 					</FloatLabel>
 				</div>
 				{docType === 'RUC' && (
-                  <div className="md:col-span-2">
-                    <div className="rounded-xl border border-blue-200 bg-blue-50 px-3 py-3 sm:px-4 sm:py-3 flex items-start gap-2 sm:gap-3">
-                      <i className="pi pi-info-circle text-[#02254A] text-base sm:text-lg mt-[2px] shrink-0" />
-                      <p className="text-sm text-[#02254A] leading-relaxed">
-                        <span className="font-semibold">Obligatorio:</span>{' '}
-                        <span className="break-words">
-                          Enviar Ficha RUC a <span className="font-semibold">info.dollariza@gmail.com</span>
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                )}
+					<div className="md:col-span-2">
+						<div className="rounded-xl border border-blue-200 bg-blue-50 px-3 py-3 sm:px-4 sm:py-3 flex items-start gap-2 sm:gap-3">
+							<i className="pi pi-info-circle text-[#02254A] text-base sm:text-lg mt-[2px] shrink-0" />
+							<p className="text-sm text-[#02254A] leading-relaxed">
+								<span className="font-semibold">Obligatorio:</span>{' '}
+								<span className="break-words">
+									Enviar Ficha RUC a <span className="font-semibold">info.dollariza@gmail.com</span>
+								</span>
+							</p>
+						</div>
+					</div>
+				)}
 			</div>
 
 			{/* SECCIONES PARA EMPRESA */}
