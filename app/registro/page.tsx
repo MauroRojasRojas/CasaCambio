@@ -63,6 +63,8 @@ export default function Page() {
 	const [loadingProvincias, setLoadingProvincias] = useState(false);
 	const [loadingDistritos, setLoadingDistritos] = useState(false);
 
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
 	// Fetch departamentos on mount
 	useEffect(() => {
 		const fetchDepartamentos = async () => {
@@ -229,128 +231,185 @@ export default function Page() {
 					{/*      PASO 3 — IDENTIDAD       */}
 					{/* ============================ */}
 					{step === 3 && (
-						<IdentityStep
-							profile={profile}
-							docType={docType}
-							setDocType={setDocType}
-							dni={dni}
-							setDni={setDni}
-							fullName={fullName}
-							setFullName={setFullName}
-							nombres={nombres}
-							setNombres={setNombres}
-							apellidos={apellidos}
-							setApellidos={setApellidos}
-							fechaNacimiento={fechaNacimiento}
-							setFechaNacimiento={setFechaNacimiento}
-							errorFechaNacimiento={errorFechaNacimiento}
-							gender={gender}
-							setGender={setGender}
-							country={country}
-							setCountry={setCountry}
-							phone={phone}
-							setPhone={setPhone}
-							selectedDepartamentoId={selectedDepartamentoId}
-							setSelectedDepartamentoId={setSelectedDepartamentoId}
-							selectedProvinciaId={selectedProvinciaId}
-							setSelectedProvinciaId={setSelectedProvinciaId}
-							selectedDistritoId={selectedDistritoId}
-							setSelectedDistritoId={setSelectedDistritoId}
-							departamentos={departamentos}
-							provincias={provincias}
-							distritos={distritos}
-							loadingDepartamentos={loadingDepartamentos}
-							loadingProvincias={loadingProvincias}
-							loadingDistritos={loadingDistritos}
-							address={address}
-							setAddress={setAddress}
-							accionistas={accionistas}
-							setAccionistas={setAccionistas}
-							noTengoAccionistas={noTengoAccionistas}
-							setNoTengoAccionistas={setNoTengoAccionistas}
-							representantesLegales={representantesLegales}
-							setRepresentantesLegales={setRepresentantesLegales}
-							agregarAccionista={agregarAccionista}
-							removerAccionista={removerAccionista}
-							actualizarAccionista={actualizarAccionista}
-							agregarRepresentante={agregarRepresentante}
-							removerRepresentante={removerRepresentante}
-							actualizarRepresentante={actualizarRepresentante}
-							onBack={() => setStep(2)}
-							onFinish={async () => {
-								// Validaciones básicas
-								let valid = true;
-								if (profile === 'empresa') {
-									//valid = representantesLegales.some((rep) => rep.nombre && rep.cargo && rep.numeroDocumento && rep.correo && rep.telefono);
-								}
-								if (valid && !errorFechaNacimiento) {
-									try {
-										if (profile === 'persona') {
-											const data: NaturalPersonModel = {
-												tipoDocumento: docType,
-												numeroDocumento: dni,
-												nombres: nombres.trim(),
-												apellidos: apellidos.trim(),
-												fechaNacimiento: fechaNacimiento ? fechaNacimiento.toISOString().split('T')[0] : '',
-												genero: gender === 'M' ? 'Masculino' : gender === 'F' ? 'Femenino' : gender === 'X' ? 'Otro' : gender,
-												correo: email,
-												contrasena: password,
-												confirmarContrasena: confirmPassword,
-												terminosAceptados: termsAccepted,
-												paisSeleccionado: COUNTRIES.find((c) => c.code.toUpperCase() === country)?.name || '',
-												telefono: phone,
-												departamentoSeleccionado: selectedDepartamentoId,
-												provinciaSeleccionada: selectedProvinciaId,
-												distritoSeleccionado: selectedDistritoId,
-												estadoExtranjero: '',
-												direccion: address,
-											};
-											const response = await registrarPersonaNatural(data);
-											if (response.ok) {
-												toast.current?.show({ severity: 'success', summary: 'Éxito', detail: 'Registro exitoso. Procediendo a iniciar sesión...' });
-												setTimeout(() => router.push('/login'), 2000);
-											} else {
-												const errorData = await response.json();
-												toast.current?.show({ severity: 'error', summary: 'Error', detail: errorData.error || errorData.message || 'Error desconocido' });
-											}
-										} else if (profile === 'empresa') {
-											const data: LegalEntityModel = {
-												tipoDocumento: 'RUC',
-												numeroDocumento: dni,
-												razonSocial: fullName,
-												accionistas: noTengoAccionistas ? [] : accionistas,
-												representantesLegales: representantesLegales,
-												correo: email,
-												contrasena: password,
-												confirmarContrasena: confirmPassword,
-												terminosAceptados: termsAccepted,
-												paisSeleccionado: COUNTRIES.find((c) => c.code.toUpperCase() === country)?.name || '',
-												telefono: phone,
-												departamentoSeleccionado: selectedDepartamentoId,
-												provinciaSeleccionada: selectedProvinciaId,
-												distritoSeleccionado: selectedDistritoId,
-												estadoExtranjero: '',
-												direccion: address,
-											};
-											const response = await registrarPersonaJuridica(data);
-											if (response.ok) {
-												toast.current?.show({ severity: 'success', summary: 'Éxito', detail: 'Registro exitoso. Procediendo a iniciar sesión...' });
-												setTimeout(() => router.push('/login'), 2000);
-											} else {
-												const errorData = await response.json();
-												toast.current?.show({ severity: 'error', summary: 'Error', detail: errorData.error || errorData.message || 'Error desconocido' });
-											}
-										}
-									} catch (error) {
-										console.error(error);
-										toast.current?.show({ severity: 'error', summary: 'Error', detail: 'Error de red o desconocido' });
-									}
-								} else {
-									alert('Completa todos los campos requeridos');
-								}
-							}}
-						/>
-					)}
+	<IdentityStep
+		profile={profile}
+		docType={docType}
+		setDocType={setDocType}
+		dni={dni}
+		setDni={setDni}
+		fullName={fullName}
+		setFullName={setFullName}
+		nombres={nombres}
+		setNombres={setNombres}
+		apellidos={apellidos}
+		setApellidos={setApellidos}
+		fechaNacimiento={fechaNacimiento}
+		setFechaNacimiento={setFechaNacimiento}
+		errorFechaNacimiento={errorFechaNacimiento}
+		gender={gender}
+		setGender={setGender}
+		country={country}
+		setCountry={setCountry}
+		phone={phone}
+		setPhone={setPhone}
+		selectedDepartamentoId={selectedDepartamentoId}
+		setSelectedDepartamentoId={setSelectedDepartamentoId}
+		selectedProvinciaId={selectedProvinciaId}
+		setSelectedProvinciaId={setSelectedProvinciaId}
+		selectedDistritoId={selectedDistritoId}
+		setSelectedDistritoId={setSelectedDistritoId}
+		departamentos={departamentos}
+		provincias={provincias}
+		distritos={distritos}
+		loadingDepartamentos={loadingDepartamentos}
+		loadingProvincias={loadingProvincias}
+		loadingDistritos={loadingDistritos}
+		address={address}
+		setAddress={setAddress}
+		accionistas={accionistas}
+		setAccionistas={setAccionistas}
+		noTengoAccionistas={noTengoAccionistas}
+		setNoTengoAccionistas={setNoTengoAccionistas}
+		representantesLegales={representantesLegales}
+		setRepresentantesLegales={setRepresentantesLegales}
+		agregarAccionista={agregarAccionista}
+		removerAccionista={removerAccionista}
+		actualizarAccionista={actualizarAccionista}
+		agregarRepresentante={agregarRepresentante}
+		removerRepresentante={removerRepresentante}
+		actualizarRepresentante={actualizarRepresentante}
+		onBack={() => setStep(2)}
+		isSubmitting={isSubmitting}
+		onFinish={async () => {
+			if (isSubmitting) return;
+
+			let valid = true;
+
+			if (profile === 'empresa') {
+				// validaciones extra si deseas
+			}
+
+			if (!valid || errorFechaNacimiento) {
+				alert('Completa todos los campos requeridos');
+				return;
+			}
+
+			setIsSubmitting(true);
+
+			try {
+				if (profile === 'persona') {
+					const data: NaturalPersonModel = {
+						tipoDocumento: docType,
+						numeroDocumento: dni,
+						nombres: nombres.trim(),
+						apellidos: apellidos.trim(),
+						fechaNacimiento: fechaNacimiento ? fechaNacimiento.toISOString().split('T')[0] : '',
+						genero:
+							gender === 'M'
+								? 'Masculino'
+								: gender === 'F'
+									? 'Femenino'
+									: gender === 'X'
+										? 'Otro'
+										: gender,
+						correo: email,
+						contrasena: password,
+						confirmarContrasena: confirmPassword,
+						terminosAceptados: termsAccepted,
+						paisSeleccionado: COUNTRIES.find((c) => c.code.toUpperCase() === country)?.name || '',
+						telefono: phone,
+						departamentoSeleccionado: selectedDepartamentoId,
+						provinciaSeleccionada: selectedProvinciaId,
+						distritoSeleccionado: selectedDistritoId,
+						estadoExtranjero: '',
+						direccion: address,
+					};
+
+					const response = await registrarPersonaNatural(data);
+
+					if (response.ok) {
+						toast.current?.show({
+							severity: 'success',
+							summary: 'Éxito',
+							detail: 'Registro exitoso. Redirigiendo al login...',
+						});
+
+						setTimeout(() => {
+							router.push('/login');
+						}, 2000);
+
+						return;
+					}
+
+					const errorData = await response.json();
+					toast.current?.show({
+						severity: 'error',
+						summary: 'Error',
+						detail: errorData.error || errorData.message || 'Error desconocido',
+					});
+
+					setIsSubmitting(false);
+				} else if (profile === 'empresa') {
+					const data: LegalEntityModel = {
+						tipoDocumento: 'RUC',
+						numeroDocumento: dni,
+						razonSocial: fullName,
+						accionistas: noTengoAccionistas ? [] : accionistas,
+						representantesLegales: representantesLegales,
+						correo: email,
+						contrasena: password,
+						confirmarContrasena: confirmPassword,
+						terminosAceptados: termsAccepted,
+						paisSeleccionado: COUNTRIES.find((c) => c.code.toUpperCase() === country)?.name || '',
+						telefono: phone,
+						departamentoSeleccionado: selectedDepartamentoId,
+						provinciaSeleccionada: selectedProvinciaId,
+						distritoSeleccionado: selectedDistritoId,
+						estadoExtranjero: '',
+						direccion: address,
+					};
+
+					const response = await registrarPersonaJuridica(data);
+
+					if (response.ok) {
+						toast.current?.show({
+							severity: 'success',
+							summary: 'Éxito',
+							detail: 'Registro exitoso. Redirigiendo al login...',
+						});
+
+						setTimeout(() => {
+							router.push('/login');
+						}, 2000);
+
+						return;
+					}
+
+					const errorData = await response.json();
+					toast.current?.show({
+						severity: 'error',
+						summary: 'Error',
+						detail: errorData.error || errorData.message || 'Error desconocido',
+					});
+
+					setIsSubmitting(false);
+				} else {
+					setIsSubmitting(false);
+				}
+			} catch (error) {
+				console.error(error);
+
+				toast.current?.show({
+					severity: 'error',
+					summary: 'Error',
+					detail: 'Error de red o desconocido',
+				});
+
+				setIsSubmitting(false);
+			}
+		}}
+	/>
+)}
 
 					{/* IMAGEN SOLO PASO 1 Y 2 */}
 					{(step === 1 || step === 2) && (

@@ -48,7 +48,8 @@ export default function Login() {
 				toast.current?.show({ severity: 'success', summary: 'Éxito', detail: 'Inicio de sesión exitoso. Redirigiendo...' });
 				setIsTransitioning(true);
 				await new Promise((resolve) => setTimeout(resolve, 600));
-				router.push('/admin/operacion');
+				//router.push('/admin/operacion');
+				router.replace('/');
 			} else {
 				toast.current?.show({ severity: 'error', summary: 'Error', detail: 'Correo o contraseña incorrectos' });
 			}
