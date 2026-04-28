@@ -259,6 +259,11 @@ export default function Operacion() {
 	const effectiveSentCurrency = sentCurrency || sentCurrencyFromStorage || 'PEN';
 	const bankMoneyFilter = mapSentCurrencyToBankMoney(effectiveSentCurrency);
 
+	const isContinueDisabled =
+	step === 1 ||
+	(step === 2 && (!selectedOrigen || !selectedDestino)) ||
+	(step === 3 && (!transferAmount || transferAmount <= 0));
+
 	return (
 		<>
 			<Toast ref={toast} />
@@ -521,12 +526,9 @@ export default function Operacion() {
 					/>
 					<Button
 						label='Continuar'
-						disabled={step === 2 && (!selectedOrigen || !selectedDestino)}
-	onClick={async () => {
-		if (step === 2 && (!selectedOrigen || !selectedDestino)) {
-			toast.current?.show({ severity: 'error', summary: 'Error', detail: 'Debe seleccionar ambas cuentas para continuar.', life: 3000 });
-			return;
-		}
+						disabled={isContinueDisabled}
+						onClick={async () => {
+							
 							if (step === 3) {
 								// Generar código si no existe
 								let code = generatedOperationCode;
