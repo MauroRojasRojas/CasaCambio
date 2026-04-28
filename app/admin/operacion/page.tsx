@@ -521,11 +521,12 @@ export default function Operacion() {
 					/>
 					<Button
 						label='Continuar'
-						onClick={async () => {
-							if (step === 2 && (!selectedOrigen || !selectedDestino)) {
-								toast.current?.show({ severity: 'error', summary: 'Error', detail: 'Debe seleccionar ambas cuentas para continuar.', life: 3000 });
-								return;
-							}
+						disabled={step === 2 && (!selectedOrigen || !selectedDestino)}
+	onClick={async () => {
+		if (step === 2 && (!selectedOrigen || !selectedDestino)) {
+			toast.current?.show({ severity: 'error', summary: 'Error', detail: 'Debe seleccionar ambas cuentas para continuar.', life: 3000 });
+			return;
+		}
 							if (step === 3) {
 								// Generar código si no existe
 								let code = generatedOperationCode;
