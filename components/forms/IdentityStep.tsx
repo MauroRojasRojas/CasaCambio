@@ -484,6 +484,8 @@ const handleFinishClick = () => {
 										}));
 									}
 								}}
+								readOnly={docType === 'RUC'} 
+
 								onBlur={() => {
 									if (submitted) {
 										setErrors((prev) => ({
@@ -502,29 +504,13 @@ const handleFinishClick = () => {
 					<>
 						<div>
 							<FloatLabel>
-								<InputText
-									id='nombres_input'
-									value={nombres}
-									onChange={(e) => {
-										const val = e.target.value;
-										setNombres(val);
-										if (submitted) {
-											setErrors((prev) => ({
-												...prev,
-												nombres: validateNameField(val, 'Nombres'),
-											}));
-										}
-									}}
-									onBlur={() => {
-										if (submitted) {
-											setErrors((prev) => ({
-												...prev,
-												nombres: validateNameField(nombres, 'Nombres'),
-											}));
-										}
-									}}
-									className={`w-full ${errors.nombres ? 'p-invalid' : ''}`}
-								/>
+<InputText
+	id='nombres_input'
+	value={nombres}
+	onChange={(e) => setNombres(e.target.value)}
+	readOnly={docType === 'DNI'}
+	className={`w-full ${errors.nombres ? 'p-invalid' : ''}`}
+/>
 								<label htmlFor='nombres_input'>Nombres</label>
 							</FloatLabel>
 							{errors.nombres && <p className='mt-1 text-xs text-red-600'>{errors.nombres}</p>}
@@ -533,28 +519,12 @@ const handleFinishClick = () => {
 						<div>
 							<FloatLabel>
 								<InputText
-									id='apellidos_input'
-									value={apellidos}
-									onChange={(e) => {
-										const val = e.target.value;
-										setApellidos(val);
-										if (submitted) {
-											setErrors((prev) => ({
-												...prev,
-												apellidos: validateNameField(val, 'Apellidos'),
-											}));
-										}
-									}}
-									onBlur={() => {
-										if (submitted) {
-											setErrors((prev) => ({
-												...prev,
-												apellidos: validateNameField(apellidos, 'Apellidos'),
-											}));
-										}
-									}}
-									className={`w-full ${errors.apellidos ? 'p-invalid' : ''}`}
-								/>
+	id='apellidos_input'
+	value={apellidos}
+	onChange={(e) => setApellidos(e.target.value)}
+	readOnly={docType === 'DNI'}
+	className={`w-full ${errors.apellidos ? 'p-invalid' : ''}`}
+/>
 								<label htmlFor='apellidos_input'>Apellidos</label>
 							</FloatLabel>
 							{errors.apellidos && <p className='mt-1 text-xs text-red-600'>{errors.apellidos}</p>}
@@ -796,6 +766,8 @@ const handleFinishClick = () => {
 									}));
 								}
 							}}
+								readOnly={docType === 'RUC'} // 👈 AQUÍ
+
 							className={`w-full ${errors.address ? 'p-invalid' : ''}`}
 						/>
 						<label htmlFor='address_input'>Dirección</label>

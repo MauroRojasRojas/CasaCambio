@@ -13,7 +13,8 @@ import { registrarPersonaNatural, registrarPersonaJuridica } from '../../lib/ser
 import { LegalEntityModel, LegalRepresentativeModel, NaturalPersonModel, ShareholderModel } from '@/data/persons.model';
 import { DepartmentModel, DistrictModel, ProvinceModel } from '@/data/ubigeo.model';
 import { COUNTRIES } from '../../lib/utils/constants';
-
+import { fetchDniData } from '@/lib/services/dniService';
+import { fetchRucData } from '@/lib/services/rucService';
 export default function Page() {
 	const router = useRouter();
 	const toast = useRef<Toast>(null);
@@ -80,6 +81,109 @@ export default function Page() {
 		};
 		fetchDepartamentos();
 	}, []);
+
+//DNI 
+useEffect(() => {
+	if (profile === 'persona') {
+		setDni('');
+		setNombres('');
+		setApellidos('');
+		setFullName('');
+		setAddress('');
+		if (docType === 'DNI') {
+			setDni('');
+		}
+
+		if (docType === 'Pasaporte') {
+			setNombres('');
+			setApellidos('');
+			setFullName('');
+			setAddress('');
+		}
+
+		if (docType === 'Carnet de Extranjeria') {
+			setNombres('');
+			setApellidos('');
+			setFullName('');
+			setAddress('');
+		}
+	} else if (profile === 'empresa') {
+				setDni('');
+		setNombres('');
+		setApellidos('');
+		setFullName('');
+		setAddress('');
+
+		if (docType === 'DNI') {
+			setDni('');
+			
+		}
+
+		if (docType === 'Pasaporte') {
+			setNombres('');
+			setApellidos('');
+			setFullName('');
+			setAddress('');
+		}
+
+		if (docType === 'Carnet de Extranjeria') {
+			setNombres('');
+			setApellidos('');
+			setFullName('');
+			setAddress('');
+		}
+
+	}
+}, [profile, docType]);
+
+
+useEffect(() => {
+	const timeout = setTimeout(async () => {
+		if (docType !== 'DNI') return;
+
+		if (dni.length !== 8) {
+			setNombres('');
+			setApellidos('');
+			return;
+		}
+
+		const data = await fetchDniData(dni);
+
+		if (data) {
+			setNombres(data.nombres || '');
+			setApellidos(data.apellidos || '');
+		}
+	}, 400);
+
+	return () => clearTimeout(timeout);
+}, [dni, docType]);
+
+
+
+
+useEffect(() => {
+	const timeout = setTimeout(async () => {
+		if (docType !== 'RUC') return;
+
+		if (dni.length !== 11) {
+			setFullName('');
+			setAddress('');
+			return;
+		}
+
+		const data = await fetchRucData(dni);
+
+		console.log('RUC RESPONSE:', data);
+
+		if (data) {
+			setFullName(data.razonSocial || data.data?.razonSocial || '');
+			setAddress(data.direccion || data.data?.direccion || '');
+		}
+	}, 400);
+
+	return () => clearTimeout(timeout);
+}, [dni, docType]);
+
 
 	// Fetch provincias when departamento changes
 	useEffect(() => {
@@ -280,6 +384,9 @@ export default function Page() {
 		actualizarRepresentante={actualizarRepresentante}
 		onBack={() => setStep(2)}
 		isSubmitting={isSubmitting}
+		
+
+
 		onFinish={async () => {
 			if (isSubmitting) return;
 

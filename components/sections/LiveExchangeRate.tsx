@@ -264,7 +264,7 @@ export default function LiveExchangeRate() {
 						<table className='w-full text-xs sm:text-sm rounded-xl overflow-hidden min-w-[280px]'>
 							<thead>
 								<tr className='bg-[#02254A] text-white rounded-xl'>
-									<th className='px-2 sm:px-4 py-2 sm:py-3 text-left font-bold'>Proveedor</th>
+									<th className='px-2 sm:px-4 py-2 sm:py-3 text-left font-bold'>Institución</th>
 									<th className='px-2 sm:px-4 py-2 sm:py-3 text-center'>Compra</th>
 									<th className='px-2 sm:px-4 py-2 sm:py-3 text-center'>Venta</th>
 								</tr>

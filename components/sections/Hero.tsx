@@ -1,94 +1,135 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import ConverterCard from '../ConverterCard';
-import Image from 'next/image';
+import { bancosService } from '@/lib/services/bancosService';
+import type { Banco } from '@/lib/services/bancosService';
 
 export default function Hero() {
-	return (
-		<section className='w-full flex flex-col justify-between items-center bg-[#02254A]'>
-			{/* Parte superior */}
-			<div className='w-full mx-auto pt-36 px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 4k:px-16 pb-0 shadow-md relative z-10 overflow-hidden'>
-				<div className='max-w-[1440px] mx-auto'>
-					{/* 3 BLOQUES: TEXTO | IMAGEN | CARD */}
-					<div className='flex flex-col lg:flex-row lg:items-end justify-between gap-6 pt-4 md:pt-6 lg:pt-8'>
+  const [bancos, setBancos] = useState<Banco[]>([]);
+  const [loading, setLoading] = useState(true);
 
-						{/* BLOQUE 1: TEXTO */}
-						<div className='text-center lg:text-left pb-4 lg:pb-0 shrink lg:self-start md:pr-2 lg:pr-0 lg:mt-10 xl:mt-0 lg:mr-8 xl:mr-0'>
-							<h1 className='text-white text-xl sm:text-2xl lg:text-3xl xl:text-4xl 4k:text-5xl font-bold tracking-wide leading-tight mb-4 lg:mb-6 xl:mb-10'>
-								OPERACIONES DE <br /> CAMBIO
-								<span className='text-[#FAB73D]'> 100% ONLINE</span> <br />
-								AL MEJOR TIPO DE <br /> CAMBIO DEL <br /> MERCADO
-							</h1>
+  useEffect(() => {
+    bancosService.getBancosPublic()
+      .then(setBancos)
+      .catch(() => setBancos([]))
+      .finally(() => setLoading(false));
+  }, []);
 
-							<ul className='space-y-3 xl:space-y-5 mt-4 lg:mt-5 xl:mt-8'>
-								<li className='flex items-center gap-3 justify-center lg:justify-start'>
-									<img src='/icons/protect.png' className='w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12' alt='Seguridad' />
-									<span className='text-[#FAB73D] text-base lg:text-lg xl:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Seguridad</span>
-								</li>
-								<li className='flex items-center gap-3 justify-center lg:justify-start'>
-									<img src='/icons/speedy.png' className='w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12' alt='Rapidez' />
-									<span className='text-[#FAB73D] text-base lg:text-lg xl:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Rapidez</span>
-								</li>
-								<li className='flex items-center gap-3 justify-center lg:justify-start'>
-									<img src='/icons/handshake.png' className='w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12' alt='Transparencia' />
-									<span className='text-[#FAB73D] text-base lg:text-lg xl:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Transparencia</span>
-								</li>
-							</ul>
-						</div>
+  return (
+    <section className='w-full flex flex-col justify-between items-center bg-[#02254A]'>
+      {/* Parte superior */}
+      <div className='w-full mx-auto pt-36 px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 4k:px-16 pb-0 shadow-md relative z-10 overflow-hidden'>
+        <div className='max-w-[1440px] mx-auto'>
+          {/* 3 BLOQUES: TEXTO | IMAGEN | CARD */}
+          <div className='flex flex-col lg:flex-row lg:items-end justify-between gap-6 pt-4 md:pt-6 lg:pt-8'>
 
-						{/* BLOQUE 2: IMAGEN — flex-1, siempre pegada al fondo */}
-						<div className='hidden lg:flex flex-1 items-end justify-center min-w-0 self-end'>
-							<img
-								src='/assets/womens.png'
-								alt='Equipo Dollariza'
-								className='h-[500px] md:min-w-[300px] min-w-64 lg:min-w-[530px] object-bottom block'
-							/>
-						</div>
+            {/* BLOQUE 1: TEXTO */}
+            <div className='text-center lg:text-left pb-4 lg:pb-0 shrink lg:self-start md:pr-2 lg:pr-0 lg:mt-10 xl:mt-0 lg:mr-8 xl:mr-0'>
+              <h1 className='text-white text-xl sm:text-2xl lg:text-3xl xl:text-4xl 4k:text-5xl font-bold tracking-wide leading-tight mb-4 lg:mb-6 xl:mb-10'>
+                OPERACIONES DE <br /> CAMBIO
+                <span className='text-[#FAB73D]'> 100% ONLINE</span> <br />
+                AL MEJOR TIPO DE <br /> CAMBIO DEL <br /> MERCADO
+              </h1>
 
-						{/* BLOQUE 3: CARD */}
-						<div className='w-full lg:w-auto lg:min-w-[300px] lg:max-w-[320px] xl:max-w-[400px] shrink-0 self-center lg:self-auto pb-4 lg:pb-6'>
-							<ConverterCard />
-						</div>
+              <ul className='space-y-3 xl:space-y-5 mt-4 lg:mt-5 xl:mt-8'>
+                <li className='flex items-center gap-3 justify-center lg:justify-start'>
+                  <img src='/icons/protect.png' className='w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12' alt='Seguridad' />
+                  <span className='text-[#FAB73D] text-base lg:text-lg xl:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Seguridad</span>
+                </li>
+                <li className='flex items-center gap-3 justify-center lg:justify-start'>
+                  <img src='/icons/speedy.png' className='w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12' alt='Rapidez' />
+                  <span className='text-[#FAB73D] text-base lg:text-lg xl:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Rapidez</span>
+                </li>
+                <li className='flex items-center gap-3 justify-center lg:justify-start'>
+                  <img src='/icons/handshake.png' className='w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12' alt='Transparencia' />
+                  <span className='text-[#FAB73D] text-base lg:text-lg xl:text-xl font-bold tracking-wide drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]'>Transparencia</span>
+                </li>
+              </ul>
+            </div>
 
-					</div>
-				</div>
-			</div>
+            {/* BLOQUE 2: IMAGEN — visible en todos los tamaños */}
+            <div className='flex items-center justify-center min-w-0 self-center lg:self-end'>
+              <img
+                src='/assets/womens.png'
+                alt='Equipo Dollariza'
+                className='h-[200px] sm:h-[250px] md:h-[300px] lg:h-[500px] lg:min-w-[530px] object-bottom block'
+              />
+            </div>
 
-			{/* ===== FRANJA TRANSFERENCIAS ===== */}
-			<div className='w-full relative bg-[#f2f2f2] overflow-hidden'>
-				<div className='absolute inset-0 z-0 pointer-events-none bg-[linear-gradient(135deg,#f2f2f2_60%,#e9e9e9_60%)]' />
+            {/* BLOQUE 3: CARD */}
+            <div className='w-full lg:w-auto lg:min-w-[300px] lg:max-w-[320px] xl:max-w-[400px] shrink-0 self-center lg:self-auto pb-4 lg:pb-6'>
+              <ConverterCard />
+            </div>
 
-				<div className='relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 py-6 md:py-8'>
+          </div>
+        </div>
+      </div>
 
-					<div className='flex flex-col md:flex-row items-center justify-between gap-2'>
+      {/* ===== FRANJA INFERIOR: REGULACIÓN + TRANSFERENCIAS + BANCOS ===== */}
+      {!loading && bancos.length > 0 && (
+        <div className='w-full bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.08)]'>
+          <div className='max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12'>
+            <div className='grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200'>
 
-						{/* BLOQUE IZQUIERDO */}
-						<div className='flex flex-col items-center md:items-start gap-3'>
-							<div className='flex items-center gap-3'>
-								<span className='text-yellow-500 text-lg'>⚡</span>
-								<span className='bg-white text-[#02254A] font-bold px-4 xl:px-6 py-2 rounded-lg text-xs xl:text-sm shadow-sm whitespace-nowrap'>
-									TRANSFERENCIAS INMEDIATAS E INTERBANCARIAS
-								</span>
-							</div>
-							<div className='flex justify-center w-full'>
-								<div className='flex items-center gap-2 bg-white px-4 py-1 rounded-md shadow-sm text-[#02254A] text-sm font-medium'>
-									<span>🕒</span>
-									<span>DE 15 a 40 MINUTOS</span>
-								</div>
-							</div>
-						</div>
+              {/* COLUMNA 1: REGULACIÓN */}
+              <div className='flex flex-col items-center justify-center gap-3 py-5 md:py-6 px-4'>
+                <span className='text-[11px] uppercase tracking-[0.15em] font-semibold text-gray-400'>
+                  Regulados por
+                </span>
+                <div className='flex items-center gap-6'>
+                  <img src='/icons/sbsblanco.png' alt='SBS' className='h-12 w-auto object-contain' />
+                  <img
+                    src='/icons/sunat.png'
+                    alt='SUNAT'
+                    className='h-12 w-auto object-contain bg-amber-900 rounded-md p-2 border border-slate-300'
+                  />
+                </div>
+              </div>
 
-						{/* LOGOS BANCOS */}
-						<div className='flex items-center gap-5 lg:gap-6 xl:gap-10 bg-white px-5 lg:px-6 xl:px-8 py-4 rounded-xl shadow-sm'>
-							<Image src='/assets/bcp.png' width={120} height={60} className='object-contain h-9 lg:h-10 xl:h-12 w-auto' alt='BCP' />
-							<Image src='/assets/bbva.png' width={120} height={60} className='object-contain h-9 lg:h-10 xl:h-12 w-auto' alt='BBVA' />
-							<Image src='/assets/pichincha.svg' width={120} height={60} className='object-contain h-9 lg:h-10 xl:h-12 w-auto' alt='Pichincha' />
-						</div>
+              {/* COLUMNA 2: TRANSFERENCIAS */}
+              <div className='flex flex-col items-center justify-center gap-2 py-5 md:py-6 px-4'>
+                <div className='flex items-center gap-2'>
+                  <span className='text-yellow-500 text-base'>⚡</span>
+                  <span className='bg-[#02254A] text-white font-bold px-4 py-1.5 rounded-lg text-[11px] xl:text-xs shadow-sm whitespace-nowrap tracking-wide'>
+                    TRANSFERENCIAS INMEDIATAS E INTERBANCARIAS
+                  </span>
+                </div>
+                <div className='flex items-center gap-2 bg-gray-100 px-4 py-1 rounded-md text-[#02254A] text-xs font-medium'>
+                  <span>🕒</span>
+                  <span>DE 15 a 40 MINUTOS</span>
+                </div>
+              </div>
 
-					</div>
+              {/* COLUMNA 3: BANCOS */}
+              <div className='flex flex-col items-center justify-center gap-3 py-5 md:py-6 px-4'>
+                <span className='text-[11px] uppercase tracking-[0.15em] font-semibold text-gray-400'>
+                  Operamos con
+                </span>
+                <div className='flex items-center gap-5 lg:gap-6 xl:gap-8'>
+                  {bancos.map((banco) => (
+                    <div key={banco.id} className='flex flex-col items-center gap-0.5'>
+                      <img
+                        src={banco.logo}
+                        alt={banco.nombre}
+                        className={`object-contain h-10 lg:h-12 xl:h-14 w-auto transition-all duration-200 ${
+                          banco.disponible ? '' : 'grayscale opacity-40'
+                        }`}
+                      />
+                      {!banco.disponible && (
+                        <span className='text-[9px] text-red-500 font-semibold whitespace-nowrap'>
+                          No disponible
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-				</div>
-			</div>
-		</section>
-	);
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
 }

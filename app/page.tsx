@@ -8,6 +8,8 @@ import Workflow from '../components/sections/Workflow';
 import LiveExchangeRate from '../components/sections/LiveExchangeRate';
 import Benefits from '../components/sections/Benefits';
 import Footer from '../components/Footer';
+import EmpresasAliadas from '../components/sections/EmpresasAliadas';
+import SeccionNoticias from '../components/sections/SeccionNoticias';
 
 export default function Home() {
 	return (
@@ -24,7 +26,11 @@ export default function Home() {
 
 			<LiveExchangeRate />
 
+			<SeccionNoticias />
+
 			<Testimonials />
+
+			<EmpresasAliadas />
 
 			<Footer />
 		</main>

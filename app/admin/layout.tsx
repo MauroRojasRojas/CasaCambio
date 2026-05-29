@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Sidenav from '@/components/admin/Sidenav';
 import HeaderUser from '@/components/admin/HeaderUser';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
-
+//import { AdminRoute } from '@/components/AdminRoute';
 export default function Layout({ children }: { children: React.ReactNode }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const router = useRouter();

@@ -107,6 +107,7 @@ export default function AddEntityModal({
 	const [distritos, setDistritos] = useState<DistrictModel[]>([]);
 	const [errors, setErrors] = useState<FormErrors>(initialErrors);
 	const [submitted, setSubmitted] = useState(false);
+const [loadingDni, setLoadingDni] = useState(false);
 
 	addLocale('es', {
 		firstDayOfWeek: 1,
@@ -165,6 +166,33 @@ export default function AddEntityModal({
 		setErrors(initialErrors);
 		setSubmitted(false);
 	}, [visible, isEditing, entityToEdit]);
+
+
+
+
+
+
+
+
+
+	
+
+
+useEffect(() => {
+	if (
+		formData.tipoDocumento === 'DNI' &&
+		formData.numeroDocumento.length === 8
+	) {
+		fetchDniData(formData.numeroDocumento);
+	}
+}, [formData.numeroDocumento]);
+
+
+
+
+
+const isDni = formData.tipoDocumento === 'DNI';
+
 
 	useEffect(() => {
 		if (!selectedDepartamentoId) {
@@ -344,6 +372,8 @@ export default function AddEntityModal({
 	};
 
 	const updateField = (field: keyof FormDataType, value: any) => {
+
+	
 		setFormData((prev) => ({
 			...prev,
 			[field]: value,
@@ -373,6 +403,36 @@ export default function AddEntityModal({
 			return nextErrors;
 		});
 	};
+////eliminar
+const fetchDniData = async (dni: string) => {
+	try {
+		setLoadingDni(true);
+	
+		setFormData((prev) => ({
+			...prev,
+			nombres: '',
+			apellidos: ''
+		}));
+
+		const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001/api'}/dni/${dni}`);
+
+		if (!response.ok) throw new Error('Error al consultar DNI');
+
+		const data = await response.json();
+
+		setFormData((prev) => ({
+			...prev,
+			nombres: data.nombres || '',
+			apellidos: data.apellidos || '',
+		}));
+	} catch (error) {
+		console.error(error);
+	} finally {
+		setLoadingDni(false);
+	}
+};
+
+
 
 	const handleSave = () => {
 		setSubmitted(true);
@@ -404,6 +464,8 @@ export default function AddEntityModal({
 		onHide();
 	};
 
+
+
 	const footer = (
 		<div className='flex flex-col gap-4 sm:flex-row sm:justify-end'>
 			<Button label='Cancelar' severity='secondary' outlined icon='pi pi-times' onClick={handleClose} className='p-button-text' />
@@ -433,10 +495,21 @@ export default function AddEntityModal({
 					<FloatLabel>
 						<Dropdown
 							value={formData.tipoDocumento}
-							onChange={(e) => {
-								updateField('tipoDocumento', e.value);
-								updateField('numeroDocumento', '');
-							}}
+onChange={(e) => {
+	const newType = e.value;
+
+	updateField('tipoDocumento', newType);
+	updateField('numeroDocumento', '');
+
+	// 🔥 limpiar nombres/apellidos si ya no es DNI
+	if (newType !== 'DNI') {
+		setFormData((prev) => ({
+			...prev,
+			nombres: '',
+			apellidos: '',
+		}));
+	}
+}}
 							options={[
 								{ label: 'DNI', value: 'DNI' },
 								{ label: 'Carnet de Extranjería', value: 'CE' },
@@ -454,46 +527,59 @@ export default function AddEntityModal({
 				<div>
 					<FloatLabel>
 						<InputText
-							value={formData.numeroDocumento}
-							onChange={(e) => {
-								const value = e.target.value;
+	value={formData.numeroDocumento}
+	onChange={(e) => {
+		const value = e.target.value;
 
-								if (formData.tipoDocumento === 'DNI' && !/^\d*$/.test(value)) return;
-								if ((formData.tipoDocumento === 'CE' || formData.tipoDocumento === 'PAS') && !/^[a-zA-Z0-9]*$/.test(value)) return;
+		if (formData.tipoDocumento === 'DNI' && !/^\d*$/.test(value)) return;
+		if ((formData.tipoDocumento === 'CE' || formData.tipoDocumento === 'PAS') && !/^[a-zA-Z0-9]*$/.test(value)) return;
 
-								updateField('numeroDocumento', value);
-							}}
-							maxLength={formData.tipoDocumento === 'DNI' ? 8 : 20}
-							className={`w-full ${errors.numeroDocumento ? 'p-invalid' : ''}`}
-						/>
-						<label>Número de documento</label>
-					</FloatLabel>
-					{errors.numeroDocumento && <small className='text-red-500'>{errors.numeroDocumento}</small>}
-				</div>
+		updateField('numeroDocumento', value);
+	}}
+	onKeyDown={(e) => {
+		if (e.key === 'Enter') {
+			const dni = formData.numeroDocumento;
 
-				<div>
-					<FloatLabel>
-						<InputText
-							value={formData.nombres}
-							onChange={(e) => updateField('nombres', e.target.value)}
-							className={`w-full ${errors.nombres ? 'p-invalid' : ''}`}
-						/>
-						<label>Nombres</label>
-					</FloatLabel>
-					{errors.nombres && <small className='text-red-500'>{errors.nombres}</small>}
-				</div>
+			if (formData.tipoDocumento === 'DNI' && /^\d{8}$/.test(dni)) {
+				fetchDniData(dni);
+			}
+		}
+	}}
+	disabled={loadingDni}
+	maxLength={formData.tipoDocumento === 'DNI' ? 8 : 20}
+	className={`w-full ${errors.numeroDocumento ? 'p-invalid' : ''}`}
+/>
+	<label>Número de documento</label>
+</FloatLabel>
+{errors.numeroDocumento && <small className='text-red-500'>{errors.numeroDocumento}</small>}
+</div>
+<div>
+	<FloatLabel>
+<InputText
+	value={formData.nombres}
+	onChange={(e) => updateField('nombres', e.target.value)}
+	disabled={isDni}
+	readOnly={isDni}
+	className={`w-full ${isDni ? 'bg-gray-100 border-gray-300 cursor-not-allowed' : ''} ${errors.nombres ? 'p-invalid' : ''}`}
+/>
+		<label>Nombres</label>
+	</FloatLabel>
+	{errors.nombres && <small className='text-red-500'>{errors.nombres}</small>}
+</div>
 
-				<div>
-					<FloatLabel>
-						<InputText
-							value={formData.apellidos}
-							onChange={(e) => updateField('apellidos', e.target.value)}
-							className={`w-full ${errors.apellidos ? 'p-invalid' : ''}`}
-						/>
-						<label>Apellidos</label>
-					</FloatLabel>
-					{errors.apellidos && <small className='text-red-500'>{errors.apellidos}</small>}
-				</div>
+<div>
+	<FloatLabel>
+<InputText
+	value={formData.apellidos}
+	onChange={(e) => updateField('apellidos', e.target.value)}
+	disabled={isDni}
+	readOnly={isDni}
+	className={`w-full ${isDni ? 'bg-gray-100 border-gray-300 cursor-not-allowed' : ''} ${errors.apellidos ? 'p-invalid' : ''}`}
+/>
+		<label>Apellidos</label>
+	</FloatLabel>
+	{errors.apellidos && <small className='text-red-500'>{errors.apellidos}</small>}
+</div>
 
 				<div>
 					<FloatLabel>

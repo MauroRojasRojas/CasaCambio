@@ -34,7 +34,7 @@ export default function Historial() {
 	const [globalFilterValue, setGlobalFilterValue] = useState('');
 	const [tiposOperacion] = useState(['COMPRA', 'VENTA']);
 	const [monedas] = useState(['PEN', 'USD']);
-	const [estados] = useState(['Completada', 'Pendiente', 'Cancelada']);
+	const [estados] = useState(['PENDIENTE', 'TRANSFERIDO', 'RECHAZADO']);
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -80,11 +80,11 @@ export default function Historial() {
 
 	const getSeverity = (estado: string) => {
 		switch (estado) {
-			case 'Completada':
+			case 'TRANSFERIDO':
 				return 'success';
-			case 'Pendiente':
+			case 'PENDIENTE':
 				return 'warning';
-			case 'Cancelada':
+			case 'RECHAZADO':
 				return 'danger';
 			default:
 				return null;
@@ -264,13 +264,15 @@ export default function Historial() {
 					<Column field='monedaEnviada' header='Moneda Origen' sortable style={{ minWidth: '10rem' }} />
 					<Column field='monedaRecibida' header='Moneda Destino' sortable style={{ minWidth: '10rem' }} />
 					<Column
-						field='tasaCompra'
 						header='Tasa de Cambio'
-						sortable
 						dataType='numeric'
 						style={{ minWidth: '10rem' }}
-						body={(rowData) => Number(rowData.tasaCompra || rowData.tasaVenta || 0).toFixed(4)}
+						body={(rowData) => {
+							const tasa = rowData.tipoOperacion === 'COMPRA' ? rowData.tasaCompra : rowData.tasaVenta;
+							return Number(tasa || 0).toFixed(4);
+						}}
 					/>
+					<Column field='estado' header='Estado' sortable style={{ minWidth: '10rem' }} body={estadoBodyTemplate} />
 					<Column headerStyle={{ width: '3rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
 				</DataTable>
 			</div>

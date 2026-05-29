@@ -22,3 +22,11 @@ body {
 .font-anton {
 	font-family: var(--font-anton);
 }
+
+@keyframes ticker-scroll {
+	0% { transform: translateX(0); }
+	100% { transform: translateX(-50%); }
+}
+.animate-ticker {
+	animation: ticker-scroll 20s linear infinite;
+}

@@ -12,15 +12,17 @@ import AddEditCuentaModal from '@/components/AddEditCuentaModal';
 import ConstanciaPDF from '@/components/ConstanciaPDF';
 import { obtenerCuentasPorPersona } from '@/lib/services/cuentaBancariaService';
 import { registrarOperacion } from '@/lib/services/operacionService';
+import { getTasaActual } from '@/lib/services/tasaCambioService';
 import type { BankAccountModel } from '@/data/bank-account.model';
 import { OperationModel } from '@/data/operation.model';
 import { RAZON_SOCIAL, RUC } from '@/lib/utils/constants';
 import { BANK_ACCOUNTS } from '@/data/banks';
+import { cuentasInternasService, CuentaInterna } from '@/lib/services/cuentasInternasService';
 
 export default function Operacion() {
-	const compra = 3.3465;
-	const venta = 3.3765;
 	const toast = useRef<Toast>(null);
+	const [compra, setCompra] = useState(0);
+	const [venta, setVenta] = useState(0);
 
 	const [step, setStep] = useState(1);
 	const [isComplete, setIsComplete] = useState(false);
@@ -39,12 +41,15 @@ export default function Operacion() {
 	const [filePreview, setFilePreview] = useState<string | null>(null);
 	const [generatedOperationCode, setGeneratedOperationCode] = useState('');
 	const [cuentas, setCuentas] = useState<BankAccountModel[]>([]);
+	const [internalAccounts, setInternalAccounts] = useState<CuentaInterna[]>([]);
+	const [loadingAccounts, setLoadingAccounts] = useState(false);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [cuentaToEdit, setCuentaToEdit] = useState<BankAccountModel | null>(null);
 	const [userName, setUserName] = useState('');
 	const [emissionDate, setEmissionDate] = useState('');
 	const [selectedCuentaOrigen, setSelectedCuentaOrigen] = useState<BankAccountModel | null>(null);
 	const [selectedCuentaDestino, setSelectedCuentaDestino] = useState<BankAccountModel | null>(null);
+	const [submitting, setSubmitting] = useState(false);
 
 	const router = useRouter();
 
@@ -54,11 +59,19 @@ export default function Operacion() {
 			if (user.fullName) {
 				setUserName(user.fullName);
 			}
-			// Obtener fecha y hora actual en formato ISO 8601
 			setEmissionDate(new Date().toISOString());
 		} catch (error) {
 			console.error('Error getting user data:', error);
 		}
+		getTasaActual()
+			.then((tasa) => {
+				setCompra(Number(tasa.tasa_compra_usd));
+				setVenta(Number(tasa.tasa_venta_usd));
+			})
+			.catch(() => {
+				setCompra(3.3465);
+				setVenta(3.3765);
+			});
 	}, []);
 
 	const items = [
@@ -259,8 +272,25 @@ export default function Operacion() {
 	const effectiveSentCurrency = sentCurrency || sentCurrencyFromStorage || 'PEN';
 	const bankMoneyFilter = mapSentCurrencyToBankMoney(effectiveSentCurrency);
 
+	useEffect(() => {
+		if (step === 3) {
+			const fetchAccounts = async () => {
+				setLoadingAccounts(true);
+				try {
+					const data = await cuentasInternasService.getCuentasByMoneda(effectiveSentCurrency as 'PEN' | 'USD');
+					setInternalAccounts(data);
+				} catch (error) {
+					console.error('Error fetching internal accounts', error);
+				} finally {
+					setLoadingAccounts(false);
+				}
+			};
+			fetchAccounts();
+		}
+	}, [step, effectiveSentCurrency]);
+
 	const isContinueDisabled =
-	step === 1 ||
+	//step === 1 ||
 	(step === 2 && (!selectedOrigen || !selectedDestino)) ||
 	(step === 3 && (!transferAmount || transferAmount <= 0));
 
@@ -375,40 +405,54 @@ export default function Operacion() {
 								<p className='text-sm'>RUC: {RUC}</p>
 							</div>
 							<div className='py-4'>
-								<div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4'>
-									{BANK_ACCOUNTS.filter((acc) => acc.money === bankMoneyFilter).map((acc, idx) => (
-										<div
-											key={`${acc.bank}-${acc.money}-${idx}`}
-											className='p-3 rounded-lg border border-zinc-200 shadow-sm hover:shadow-md'
-											style={{ background: 'linear-gradient(135deg, #ffffff 0%, #eff6ff 180%)' }}
-										>
-											<div className='flex flex-col sm:flex-row sm:items-center justify-between gap-2'>
-												<div className='min-w-0'>
-													<div className='font-semibold text-sm truncate text-blue-900'>{acc.bank}</div>
-													<div className='text-xs sm:text-sm text-zinc-500 truncate'>
-														{acc.type} · {acc.money === 'SOLES' ? 'Soles' : acc.money === 'DOLARES' ? 'Dólares' : acc.money}
+								{loadingAccounts ? (
+									<div className='flex justify-center my-8'>
+										<i className='pi pi-spin pi-spinner text-3xl text-blue-500' />
+									</div>
+								) : internalAccounts.length === 0 ? (
+									<div className='text-center my-8 p-6 bg-orange-50 text-orange-600 rounded-lg border border-orange-200'>
+										<i className='pi pi-exclamation-circle text-3xl mb-2' />
+										<p className='font-medium'>No hay cuentas bancarias activas disponibles para {effectiveSentCurrency}.</p>
+										<p className='text-sm mt-1'>Por favor contacta a soporte.</p>
+									</div>
+								) : (
+									<div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4'>
+										{internalAccounts.map((acc, idx) => (
+											<div
+												key={`${acc.id}-${idx}`}
+												className='p-4 rounded-lg border border-zinc-200 shadow-sm hover:shadow-md transition-all'
+												style={{ background: 'linear-gradient(135deg, #ffffff 0%, #eff6ff 180%)' }}
+											>
+												<div className='flex flex-col sm:flex-row sm:items-center justify-between gap-2'>
+													<div className='min-w-0'>
+														<div className='font-bold text-sm truncate text-[#02254A]'>{acc.banco}</div>
+														<div className='text-xs sm:text-sm text-zinc-500 truncate uppercase mt-0.5'>
+															{acc.tipo_cuenta} · {acc.moneda}
+														</div>
+													</div>
+													<div className='mt-2 sm:mt-0 text-lg font-mono font-bold text-zinc-800 wrap-break-word'>{acc.numero_cuenta ?? <span className='text-zinc-400'>Pendiente</span>}</div>
+												</div>
+												<div className='mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-slate-200 pt-3'>
+													<div className='text-xs sm:text-sm text-zinc-500 wrap-break-word'>
+														CCI: {acc.cci ? <span className='text-zinc-700 font-mono'>{acc.cci}</span> : <span className='text-zinc-400'>No registrado</span>}
+													</div>
+													<div className='flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto'>
+														{acc.numero_cuenta && (
+															<button onClick={() => copyToClipboard(acc.numero_cuenta)} className='text-[#0053A4] font-medium text-xs hover:underline w-full sm:w-auto text-left flex items-center gap-1'>
+																<i className='pi pi-copy text-[10px]' /> Copiar cuenta
+															</button>
+														)}
+														{acc.cci && (
+															<button onClick={() => copyToClipboard(acc.cci!)} className='text-[#0053A4] font-medium text-xs hover:underline w-full sm:w-auto text-left flex items-center gap-1'>
+																<i className='pi pi-copy text-[10px]' /> Copiar CCI
+															</button>
+														)}
 													</div>
 												</div>
-												<div className='mt-2 sm:mt-0 text-sm font-mono text-zinc-700 wrap-break-word'>{acc.account ?? <span className='text-zinc-400'>Pendiente</span>}</div>
 											</div>
-											<div className='mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2'>
-												<div className='text-xs sm:text-sm text-zinc-500 wrap-break-word'>CCI: {acc.cci ? <span className='text-zinc-700'>{acc.cci}</span> : <span className='text-zinc-400'>Pendiente</span>}</div>
-												<div className='flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto'>
-													{acc.account && (
-														<button onClick={() => copyToClipboard(acc.account)} className='text-blue-600 text-xs hover:underline w-full sm:w-auto text-left'>
-															Copiar cuenta
-														</button>
-													)}
-													{acc.cci && (
-														<button onClick={() => copyToClipboard(acc.cci)} className='text-blue-600 text-xs hover:underline w-full sm:w-auto text-left'>
-															Copiar CCI
-														</button>
-													)}
-												</div>
-											</div>
-										</div>
-									))}
-								</div>
+										))}
+									</div>
+								)}
 							</div>
 						</div>
 					</div>
@@ -525,18 +569,17 @@ export default function Operacion() {
 						className='flex-1'
 					/>
 					<Button
-						label='Continuar'
-						disabled={isContinueDisabled}
+						label={submitting ? 'Procesando...' : 'Continuar'}
+						disabled={isContinueDisabled || submitting}
 						onClick={async () => {
-							
+							if (submitting) return;
 							if (step === 3) {
-								// Generar código si no existe
+								setSubmitting(true);
 								let code = generatedOperationCode;
 								if (!code) {
 									code = generateOperationCode();
 									setGeneratedOperationCode(code);
 								}
-								// Construir operación
 								const user = JSON.parse(localStorage.getItem('user') || '{}');
 								const operacion: Omit<OperationModel, 'id'> = {
 									personaCode: user.perfilCompleto,
@@ -549,7 +592,7 @@ export default function Operacion() {
 									tipoOperacion: transferMode,
 									codigoOperacion: code,
 									fechaEmision: emissionDate,
-									estado: 'COMPLETADA',
+									estado: 'PENDIENTE',
 									tasaCompra: compra,
 									tasaVenta: venta,
 								};
@@ -564,6 +607,8 @@ export default function Operacion() {
 									}
 								} catch (error) {
 									toast.current?.show({ severity: 'error', summary: 'Error', detail: 'Error de conexión al registrar la operación.', life: 3000 });
+								} finally {
+									setSubmitting(false);
 								}
 								return;
 							}
